@@ -1,0 +1,381 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/evil_cube.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui elements/HealthBar.gd" type="Script" id=3]
+[ext_resource path="res://assets/audio/sound/step2.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/sound/enemies/unillama_attack.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/sound/enemies/unillama_emerge.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/sound/step1.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/audio/sound/enemies/unillama_zap.wav" type="AudioStream" id=9]
+[ext_resource path="res://scenes/ui elements/HealthBar.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Animation" id=10]
+length = 1.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "delete"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("cube:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 2, 0.01, 2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("cube:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -4.67558, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("cube:material/0:albedo_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawned"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("emerge")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("cube:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -9.49593, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("cube:material/0:albedo_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.0416667
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("cube:material/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("cube:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("cube:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "spear"
+length = 0.7
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "charge"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("stab")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("cube:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.130177, 0.126327, 2.34818 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("cube:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 1.1927, 0 ), Vector3( 3.72355, -0.287395, 0 ), Vector3( 0, 1.1927, 0 ), Vector3( -4.70189, -0.423976, -0.0103397 ), Vector3( 0, 1.1927, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("cube:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -18.426 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 16.264 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("cube:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="CubeMesh" id=18]
+size = Vector3( 8, 8, 8 )
+
+[sub_resource type="SpatialMaterial" id=20]
+flags_transparent = true
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 6, 6, 6 )
+
+[sub_resource type="BoxShape" id=19]
+extents = Vector3( 4, 4, 4 )
+
+[sub_resource type="SphereShape" id=17]
+radius = 350.0
+
+[node name="evil_cube" type="KinematicBody"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.5516, 0 )
+script = ExtResource( 2 )
+health = 80
+roam_speed = 24
+turn_rate = 20
+attack_speed = 50
+max_attack_range = 100
+reacquire_speed = 0.1
+track_time = 0.2
+idle_track = 0.1
+track_int = 0.3
+attack_dict = {
+"spear": {
+"a_range": 100.0,
+"animation": "spear",
+"cooldown": 2.5,
+"damage": 14.0,
+"track_int": 0.1
+}
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "emerge"
+playback_default_blend_time = 0.3
+anims/die = SubResource( 10 )
+anims/emerge = SubResource( 11 )
+anims/idle = SubResource( 13 )
+anims/spear = SubResource( 12 )
+anims/walk = SubResource( 15 )
+
+[node name="cube" type="MeshInstance" parent="."]
+mesh = SubResource( 18 )
+material/0 = SubResource( 20 )
+
+[node name="hit_zone" type="Area" parent="cube"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1927, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="cube/hit_zone"]
+shape = SubResource( 21 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 19 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 11 )]
+script = ExtResource( 3 )
+
+[node name="HealthPoint" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.13246, 0 )
+
+[node name="detect" type="Area" parent="."]
+input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="detect"]
+shape = SubResource( 17 )
+
+[node name="reacquire" type="Timer" parent="."]
+one_shot = true
+
+[node name="retarget" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="stab" type="Spatial" parent="."]
+script = ExtResource( 1 )
+volume_range = 2.0
+pitch_range = 0.3
+
+[node name="woosh" type="AudioStreamPlayer3D" parent="stab"]
+stream = ExtResource( 6 )
+unit_db = 4.0
+unit_size = 16.0
+bus = "FX"
+
+[node name="zap" type="Spatial" parent="."]
+script = ExtResource( 1 )
+volume_range = 2.0
+pitch_range = 0.3
+
+[node name="zap" type="AudioStreamPlayer3D" parent="zap"]
+stream = ExtResource( 9 )
+unit_db = -2.0
+unit_size = 20.0
+bus = "FX"
+
+[node name="emerge" type="Spatial" parent="."]
+script = ExtResource( 1 )
+volume_range = 2.0
+pitch_range = 0.3
+
+[node name="break" type="AudioStreamPlayer3D" parent="emerge"]
+stream = ExtResource( 7 )
+unit_size = 25.0
+pitch_scale = 1.3
+bus = "FX"
+
+[node name="walk" type="Spatial" parent="."]
+script = ExtResource( 1 )
+volume_range = 3.0
+pitch_range = 0.3
+
+[node name="step1" type="AudioStreamPlayer3D" parent="walk"]
+stream = ExtResource( 8 )
+unit_db = -6.0
+unit_size = 15.0
+pitch_scale = 0.8
+bus = "FX"
+
+[node name="step2" type="AudioStreamPlayer3D" parent="walk"]
+stream = ExtResource( 5 )
+attenuation_model = 2
+unit_db = -6.0
+unit_size = 15.0
+pitch_scale = 0.8
+bus = "FX"
+
+[node name="attack_tween" type="Tween" parent="."]
+[connection signal="body_entered" from="cube/hit_zone" to="." method="collide"]
+[connection signal="tween_completed" from="attack_tween" to="." method="spear_over"]

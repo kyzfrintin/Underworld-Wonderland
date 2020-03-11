@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/unillama_charge_laser.wav-e68f771b4fdeef34f3eaa4ab0917137c.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/enemies/unillama_charge_laser.wav"
+dest_files=[ "res://.import/unillama_charge_laser.wav-e68f771b4fdeef34f3eaa4ab0917137c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

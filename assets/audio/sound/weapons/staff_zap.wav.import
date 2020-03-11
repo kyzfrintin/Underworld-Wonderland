@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/staff_zap.wav-8b177329b6467bb0079525265e3296b9.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/staff_zap.wav"
+dest_files=[ "res://.import/staff_zap.wav-8b177329b6467bb0079525265e3296b9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/staff_flame.wav-8d10a967923f24e38ecefb46c8498d56.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/staff_flame.wav"
+dest_files=[ "res://.import/staff_flame.wav-8d10a967923f24e38ecefb46c8498d56.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=true
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/laser_sword_spin.wav-be00f484af7d68a02bd588fef4b93c7f.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/laser_sword_spin.wav"
+dest_files=[ "res://.import/laser_sword_spin.wav-be00f484af7d68a02bd588fef4b93c7f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

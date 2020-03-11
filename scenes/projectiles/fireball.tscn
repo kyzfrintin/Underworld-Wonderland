@@ -1,0 +1,184 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://scenes/projectiles/fireball.gd" type="Script" id=1]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/sound/weapons/staff_woosh.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sound/weapons/fb_flame.wav" type="AudioStream" id=4]
+
+[sub_resource type="SphereMesh" id=1]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=2]
+constant = 1.0
+
+[sub_resource type="VisualShaderNodeColorConstant" id=3]
+constant = Color( 0.832031, 0.0325012, 0.0325012, 1 )
+
+[sub_resource type="VisualShader" id=4]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode blend_add, diffuse_burley, unshaded, shadows_disabled, ambient_light_disabled, vertex_lighting;
+
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:3
+	vec3 n_out3p0 = vec3(0.832031, 0.032501, 0.032501);
+	float n_out3p1 = 1.000000;
+
+// Scalar:2
+	float n_out2p0 = 1.000000;
+
+// Output:0
+	ALBEDO = n_out3p0;
+	ALPHA = n_out2p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -183, 66 )
+modes/blend = 1
+modes/diffuse = 3
+flags/ambient_light_disabled = true
+flags/shadows_disabled = true
+flags/unshaded = true
+flags/vertex_lighting = true
+nodes/fragment/2/node = SubResource( 2 )
+nodes/fragment/2/position = Vector2( -120, 280 )
+nodes/fragment/3/node = SubResource( 3 )
+nodes/fragment/3/position = Vector2( 40, 180 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 0, 0, 2, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 4 )
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.63416
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=7]
+constant = 1.0
+
+[sub_resource type="VisualShaderNodeColorConstant" id=8]
+constant = Color( 0.941406, 0.0809021, 0.0809021, 1 )
+
+[sub_resource type="VisualShader" id=9]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode blend_add, diffuse_burley, unshaded, shadows_disabled, ambient_light_disabled, vertex_lighting;
+
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:3
+	vec3 n_out3p0 = vec3(0.941406, 0.080902, 0.080902);
+	float n_out3p1 = 1.000000;
+
+// Scalar:2
+	float n_out2p0 = 1.000000;
+
+// Output:0
+	ALBEDO = n_out3p0;
+	ALPHA = n_out2p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -183, 66 )
+modes/blend = 1
+modes/diffuse = 3
+flags/ambient_light_disabled = true
+flags/shadows_disabled = true
+flags/unshaded = true
+flags/vertex_lighting = true
+nodes/fragment/2/node = SubResource( 7 )
+nodes/fragment/2/position = Vector2( -120, 280 )
+nodes/fragment/3/node = SubResource( 8 )
+nodes/fragment/3/position = Vector2( 40, 180 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 0, 0, 2, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+
+[sub_resource type="SphereMesh" id=11]
+resource_local_to_scene = true
+material = SubResource( 10 )
+radius = 0.01
+height = 0.02
+
+[node name="fireball" type="Area"]
+script = ExtResource( 1 )
+speed = 3.5
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = SubResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 6 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 7.5
+one_shot = true
+
+[node name="spawn_sound" type="Spatial" parent="."]
+script = ExtResource( 2 )
+volume_range = 2.0
+pitch_range = 0.2
+
+[node name="fire" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 4 )
+unit_db = -4.0
+unit_size = 18.0
+pitch_scale = 0.9
+bus = "FX"
+
+[node name="thud" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 3 )
+unit_db = 2.0
+unit_size = 22.0
+bus = "FX"
+
+[node name="fire" type="Spatial" parent="."]
+
+[node name="Red2" type="CPUParticles" parent="fire"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+amount = 10
+local_coords = false
+mesh = SubResource( 11 )
+emission_shape = 1
+emission_sphere_radius = 0.1
+emission_points = PoolVector3Array( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.8
+initial_velocity_random = 1.0
+scale_amount = 5.0
+scale_amount_random = 1.0
+__meta__ = {
+"_editor_description_": ""
+}
+[connection signal="body_entered" from="." to="." method="collide"]
+[connection signal="timeout" from="Timer" to="." method="remove"]

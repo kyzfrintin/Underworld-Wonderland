@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/structures/tower.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/proc gen/StructureSpawner.gd" type="Script" id=2]
+
+[node name="StructureSpawner" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="StructPool" type="ResourcePreloader" parent="."]
+resources = [ PoolStringArray( "tower" ), [ ExtResource( 1 ) ] ]

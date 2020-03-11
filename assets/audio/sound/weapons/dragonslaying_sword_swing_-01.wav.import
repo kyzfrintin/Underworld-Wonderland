@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/dragonslaying_sword_swing_-01.wav-4d0ac2f9801810d0f303d30acf91fa42.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/dragonslaying_sword_swing_-01.wav"
+dest_files=[ "res://.import/dragonslaying_sword_swing_-01.wav-4d0ac2f9801810d0f303d30acf91fa42.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,302 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scenes/weapons/stick.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/weapon_icons/stick.png" type="Texture" id=2]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=3]
+[ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=4]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 4.42214, 1.79887, 1.93937 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.2, 4, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.27451, 0.0901961, 0.0901961, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
+size = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="Animation" id=5]
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 1.87212, 1.59145 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.16, 0.24, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 1.87212, 1.59145 ), Vector3( -2.033, 1.872, -1.553 ), Vector3( 4.319, 1.872, -1.553 ), Vector3( -2.12972, 1.87212, -0.440507 ), Vector3( 0, 1.87212, 1.59145 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.16, 0.24, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -81.504, -1.31509e-06, 24.457 ), Vector3( -81.504, -68.049, 24.457 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "melee_attack"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("woosh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.16, 0.24, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -51.756, -41.646, 0 ), Vector3( -51.756, 58.822, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.16, 0.24, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 1.87212, 1.59145 ), Vector3( 2.238, 1.872, -1.584 ), Vector3( -4.631, 1.872, -1.584 ), Vector3( 1.53827, 1.87212, -0.283907 ), Vector3( 0, 1.87212, 1.59145 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.32 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "melee_attack"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("woosh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="Animation" id=8]
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -3.60957, 0.370395, -3.43513 ), Vector3( 3.45002, 0.370395, -3.43513 ), Vector3( -3.60957, 0.370395, -3.43513 ), Vector3( 3.45002, 0.370395, -3.43513 ), Vector3( -3.60957, 0.370395, -3.43513 ), Vector3( 3.45002, 0.370395, -3.43513 ), Vector3( -3.60957, 0.370395, -3.43513 ), Vector3( 3.45002, 0.370395, -3.43513 ), Vector3( -3.60957, 0.370395, -3.43513 ), Vector3( 3.45002, 0.370395, -3.43513 ), Vector3( -3.60957, 0.370395, -3.43513 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -58.235, 0, 0 ), Vector3( 40.266, 0, 0 ), Vector3( -58.235, 0, 0 ), Vector3( 40.266, 0, 0 ), Vector3( -58.235, 0, 0 ), Vector3( 40.266, 0, 0 ), Vector3( -58.235, 0, 0 ), Vector3( 40.266, 0, 0 ), Vector3( -58.235, 0, 0 ), Vector3( 40.266, 0, 0 ), Vector3( -58.235, 0, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.3, 0.5, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "clobber"
+}, {
+"args": [  ],
+"method": "clobber"
+}, {
+"args": [  ],
+"method": "clobber"
+}, {
+"args": [  ],
+"method": "clobber"
+}, {
+"args": [  ],
+"method": "clobber"
+}, {
+"args": [  ],
+"method": "reenable_primary"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("woosh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+}, {
+"args": [ null ],
+"method": "play"
+} ]
+}
+
+[node name="stick" type="Spatial"]
+script = ExtResource( 1 )
+secondary_cooldown = 6.0
+primary_damage = 40.0
+secondary_damage = 15.0
+wep_name = "Stick"
+rate = 1.0
+icon = ExtResource( 2 )
+hurt_box = NodePath("../stick/Area")
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0359175, 0, -3.64743 )
+visible = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.87212, 1.59145 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19963, 0.950862, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="MeshInstance3" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, -0.855, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "def"
+anims/def = SubResource( 5 )
+anims/prim_left = SubResource( 6 )
+anims/prim_right = SubResource( 7 )
+anims/secondary_attack = SubResource( 8 )
+
+[node name="woosh" type="Spatial" parent="."]
+visible = false
+script = ExtResource( 3 )
+volume_range = 2.0
+pitch_range = 0.2
+
+[node name="1" type="AudioStreamPlayer3D" parent="woosh"]
+stream = ExtResource( 4 )
+unit_db = -5.0
+unit_size = 9.0
+bus = "FX"

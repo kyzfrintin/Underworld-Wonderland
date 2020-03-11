@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/player/Controller.gd" type="Script" id=1]
+
+[node name="Controller" type="Spatial"]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+script = ExtResource( 1 )
+PlayerPath = NodePath("..")
+MovementSpeed = 50.0
+Acceleration = 6.0
+MaxJump = 50.0
+MouseSensitivity = 5.0
+MaxZoom = 0.3
+MinZoom = 2.0
+
+[node name="InnerGimbal" type="Spatial" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.45646, 0 )
+
+[node name="Camera" type="Camera" parent="InnerGimbal"]
+transform = Transform( 0.333333, 0, 0, 0, 0.319712, 0.0943143, 0, -0.0943143, 0.319712, 0.356198, 0.936855, 3.75437 )
+doppler_tracking = 1
+current = true
+fov = 100.0
+near = 0.01
+far = 2776.9
+
+[node name="RayCast" type="RayCast" parent="InnerGimbal/Camera"]
+enabled = true
+cast_to = Vector3( 0, 0, -750 )
+
+[node name="cast_point" type="Position3D" parent="InnerGimbal/Camera/RayCast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )
+
+[node name="RayCast" type="RayCast" parent="InnerGimbal"]
+enabled = true
+cast_to = Vector3( 0.36, 0.946, 3.792 )
