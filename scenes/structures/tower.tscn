@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://scenes/structures/turret.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/structures/tower.gd" type="Script" id=2]
@@ -18,6 +18,11 @@
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 12, 70, 12 )
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
+metallic = 0.55
+metallic_specular = 0.77
 
 [sub_resource type="ConcavePolygonShape" id=2]
 data = PoolVector3Array( -6, 35, 6, 6, 35, 6, -6, -35, 6, 6, 35, 6, 6, -35, 6, -6, -35, 6, 6, 35, -6, -6, 35, -6, 6, -35, -6, -6, 35, -6, -6, -35, -6, 6, -35, -6, 6, 35, 6, 6, 35, -6, 6, -35, 6, 6, 35, -6, 6, -35, -6, 6, -35, 6, -6, 35, -6, -6, 35, 6, -6, -35, -6, -6, 35, 6, -6, -35, 6, -6, -35, -6, 6, 35, 6, -6, 35, 6, 6, 35, -6, -6, 35, 6, -6, 35, -6, 6, 35, -6, -6, -35, 6, 6, -35, 6, -6, -35, -6, 6, -35, 6, 6, -35, -6, -6, -35, -6 )
@@ -458,7 +463,7 @@ script = ExtResource( 2 )
 [node name="body" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0 )
 mesh = SubResource( 1 )
-material/0 = null
+material/0 = SubResource( 16 )
 
 [node name="main_body" type="StaticBody" parent="body"]
 
@@ -540,6 +545,11 @@ anims/rise = SubResource( 11 )
 [node name="detect" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30143, 0 )
 input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="detect"]
 shape = SubResource( 12 )

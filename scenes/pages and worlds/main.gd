@@ -9,8 +9,8 @@ onready var enhance = load("res://scenes/items/enhancement_spawner.tscn")
 func _ready():
 	Engine.time_scale = 1
 	randomize()
-#	var ran_pos = nav.get_closest_point(Vector3(rand_range(-2700,2700),100,rand_range(-2700,2700)))
-#	player.global_transform.origin = ran_pos + Vector3(0,5,0)
+	var ran_pos = nav.get_closest_point(Vector3(rand_range(-2700,2700),100,rand_range(-2700,2700)))
+	player.global_transform.origin = ran_pos + Vector3(0,5,0)
 	place_weapon_pickups()
 	place_enhance_pickups()
 

@@ -1,13 +1,10 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=1]
 [ext_resource path="res://scenes/enemies/evil_cube.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui elements/HealthBar.gd" type="Script" id=3]
-[ext_resource path="res://assets/audio/sound/step2.wav" type="AudioStream" id=5]
 [ext_resource path="res://assets/audio/sound/enemies/unillama_attack.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/audio/sound/enemies/unillama_emerge.wav" type="AudioStream" id=7]
-[ext_resource path="res://assets/audio/sound/step1.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/audio/sound/enemies/unillama_zap.wav" type="AudioStream" id=9]
 [ext_resource path="res://scenes/ui elements/HealthBar.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
@@ -293,6 +290,12 @@ material/0 = SubResource( 7 )
 
 [node name="hit_zone" type="Area" parent="cube"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1927, 0 )
+input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="cube/hit_zone"]
 shape = SubResource( 8 )
@@ -313,6 +316,7 @@ gravity_vec = Vector3( 0, 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
+monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="detect"]
 shape = SubResource( 10 )
@@ -335,17 +339,6 @@ unit_db = 4.0
 unit_size = 16.0
 bus = "FX"
 
-[node name="zap" type="Spatial" parent="."]
-script = ExtResource( 1 )
-volume_range = 2.0
-pitch_range = 0.3
-
-[node name="zap" type="AudioStreamPlayer3D" parent="zap"]
-stream = ExtResource( 9 )
-unit_db = -2.0
-unit_size = 20.0
-bus = "FX"
-
 [node name="emerge" type="Spatial" parent="."]
 script = ExtResource( 1 )
 volume_range = 2.0
@@ -355,26 +348,6 @@ pitch_range = 0.3
 stream = ExtResource( 7 )
 unit_size = 25.0
 pitch_scale = 1.3
-bus = "FX"
-
-[node name="walk" type="Spatial" parent="."]
-script = ExtResource( 1 )
-volume_range = 3.0
-pitch_range = 0.3
-
-[node name="step1" type="AudioStreamPlayer3D" parent="walk"]
-stream = ExtResource( 8 )
-unit_db = -6.0
-unit_size = 15.0
-pitch_scale = 0.8
-bus = "FX"
-
-[node name="step2" type="AudioStreamPlayer3D" parent="walk"]
-stream = ExtResource( 5 )
-attenuation_model = 2
-unit_db = -6.0
-unit_size = 15.0
-pitch_scale = 0.8
 bus = "FX"
 
 [node name="attack_tween" type="Tween" parent="."]
