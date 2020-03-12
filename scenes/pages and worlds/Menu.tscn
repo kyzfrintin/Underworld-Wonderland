@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/shaders/main_ui.tres" type="Theme" id=1]
 [ext_resource path="res://assets/textures/weapon_icons/plasma_rifle.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/textures/weapon_icons/dragonslaying_sword.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/weapon_icons/fire_staff.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/weapon_icons/stick.png" type="Texture" id=8]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=9]
 
 [sub_resource type="ParticlesMaterial" id=1]
 lifetime_randomness = 1.0
@@ -207,5 +208,8 @@ margin_top = 316.0
 margin_right = 75.0
 margin_bottom = 391.0
 texture = ExtResource( 6 )
+
+[node name="MixingDeskMusic" type="Node" parent="."]
+script = ExtResource( 9 )
 [connection signal="pressed" from="Middle/Divide/Menu/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Middle/Divide/Menu/Quit" to="." method="_on_Quit_pressed"]

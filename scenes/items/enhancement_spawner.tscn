@@ -1,0 +1,233 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://assets/shaders/glowblue.tres" type="Material" id=1]
+[ext_resource path="res://scenes/items/enhancements/buffs/medkit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/items/enhancement_spawner.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ui elements/EnhancementPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=5]
+[ext_resource path="res://assets/audio/sound/character/recharge.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/sound/structures/tower_hum.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/sound/character/levelup_hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/audio/sound/character/levelup_hum.wav" type="AudioStream" id=9]
+[ext_resource path="res://scenes/items/enhancements/buffs/intensive_training.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/items/enhancements/buffs/moneybag.tscn" type="PackedScene" id=11]
+
+[sub_resource type="SphereMesh" id=1]
+resource_local_to_scene = true
+material = ExtResource( 1 )
+radius = 4.0
+height = 8.0
+
+[sub_resource type="SphereShape" id=2]
+radius = 14.6263
+
+[sub_resource type="Animation" id=3]
+resource_name = "pickup"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "begin_delete"
+}, {
+"args": [  ],
+"method": "remove"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("item:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 4, 0.965937 ),
+"update": 0,
+"values": [ Vector3( 0, 0.8, 0 ), Vector3( 0, 50, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("item:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 3.4822, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.01, 0.01, 0.01 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("glow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.01, 0.01, 0.01 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("glow:mesh:material:shader_param/ScalarUniform")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 0.0883884 ),
+"update": 0,
+"values": [ 0.3, 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("OmniLight:light_energy")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 11.33, 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("hum:pitch_scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.8, 0.1 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("hum:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 1.9 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 14.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("item:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 7, 14 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.8, 0 ), Vector3( 0, 1.4, 0 ), Vector3( 0, 0.8, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("item:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 14 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[node name="enhancement_spawner" type="Spatial"]
+script = ExtResource( 3 )
+pool_path = NodePath("EnhancementList")
+popup_path = NodePath("popup_pivot/EnhancementPopup")
+
+[node name="glow" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87086, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.618799, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 2 )
+
+[node name="item" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rotate"
+anims/pickup = SubResource( 3 )
+anims/rotate = SubResource( 4 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.887443, 0 )
+light_color = Color( 0.505882, 0.72549, 0.8, 1 )
+light_energy = 11.33
+omni_range = 7.7049
+omni_attenuation = 0.757858
+
+[node name="EnhancementList" type="ResourcePreloader" parent="."]
+resources = [ PoolStringArray( "intensive_training", "medkit", "moneybag" ), [ ExtResource( 10 ), ExtResource( 2 ), ExtResource( 11 ) ] ]
+
+[node name="popup_pivot" type="Spatial" parent="."]
+
+[node name="EnhancementPopup" parent="popup_pivot" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8.5 )
+visible = false
+
+[node name="enter" type="Spatial" parent="."]
+script = ExtResource( 5 )
+volume_range = 2.0
+pitch_range = 0.01
+
+[node name="boop" type="AudioStreamPlayer3D" parent="enter"]
+stream = ExtResource( 6 )
+unit_size = 7.0
+pitch_scale = 0.2
+bus = "FX"
+
+[node name="hum" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 7 )
+pitch_scale = 0.8
+autoplay = true
+bus = "Ambience"
+
+[node name="buy" type="Spatial" parent="."]
+script = ExtResource( 5 )
+volume_range = 4.0
+pitch_range = 0.2
+
+[node name="up" type="AudioStreamPlayer3D" parent="buy"]
+stream = ExtResource( 9 )
+unit_db = -2.0
+unit_size = 4.0
+pitch_scale = 2.5
+bus = "FX"
+
+[node name="hit" type="AudioStreamPlayer3D" parent="buy"]
+stream = ExtResource( 8 )
+unit_db = -2.0
+unit_size = 4.0
+pitch_scale = 2.5
+bus = "FX"
+[connection signal="body_entered" from="Area" to="." method="enter"]
+[connection signal="body_exited" from="Area" to="." method="exited"]

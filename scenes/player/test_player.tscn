@@ -155,5 +155,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )
 
 [node name="DNumPoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3 )
+
+[node name="items" type="Node" parent="."]
 [connection signal="timeout" from="heal_timer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="heal_interval" to="." method="heal"]

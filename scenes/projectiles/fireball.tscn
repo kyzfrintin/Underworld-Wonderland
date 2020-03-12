@@ -165,6 +165,7 @@ bus = "FX"
 
 [node name="Red2" type="CPUParticles" parent="fire"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+visible = false
 amount = 10
 local_coords = false
 mesh = SubResource( 11 )

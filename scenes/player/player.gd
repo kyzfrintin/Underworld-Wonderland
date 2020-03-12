@@ -7,6 +7,7 @@ var hp = 100
 var speed_scale = 1.0
 var jump_scale = 1.0
 var damage_scale = 1.0
+var cash_scale = 1.0
 var attack_speed_scale = 1.0
 var heal_amnt = 0.2
 var level : int = 1 
@@ -20,7 +21,7 @@ var left_weapon
 var cast_point
 var healing = false setget set_healing
 var can_heal = true
-var in_wep_bubble = false
+var in_bubble = false
 var dead = false
 
 onready var ray = get_node("Controller").get_node("InnerGimbal/Camera/RayCast")
@@ -109,20 +110,17 @@ func update_exp():
 	cash_label.text = ("Cash: %s" % cash)
 
 func level_up():
-	self.max_hp *= 1.15
+	self.max_hp *= 1.04
 	hp = max_hp
 	$levelup.play()
 	update_hp()
-	damage_scale *= 1.1
-	speed_scale *= 1.05
-	jump_scale *= 1.08
-	heal_amnt *= 1.1
+	damage_scale *= 1.04
 	level += 1
 	xp_threshold *= 1.3
 	self.xp = 0.0
 
 func enemy_killed(xp_amnt):
-	cash += int(round(xp_amnt*0.8))
+	cash += int(round((xp_amnt * 0.8) * cash_scale))
 	self.xp += xp_amnt
 	update_exp()
 

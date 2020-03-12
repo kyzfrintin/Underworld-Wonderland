@@ -34,7 +34,7 @@ func stop():
 func _iplay(sound):
 	var snd = sound.duplicate()
 	if spawn_node:
-		snd.translation = global_transform.origin
+		snd.global_transform.origin = global_transform.origin
 	root.add_child(snd)
 	snd.play()
 	snd.set_script(preload("res://addons/mixing-desk/sound/3d/spawn_sound.gd"))

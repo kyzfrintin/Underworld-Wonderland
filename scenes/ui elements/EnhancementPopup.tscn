@@ -1,0 +1,146 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/shaders/main_ui.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/ui elements/EnhancementPopup.gd" type="Script" id=2]
+[ext_resource path="res://assets/textures/weapon_icons/laser_sword.png" type="Texture" id=3]
+[ext_resource path="res://scenes/ui elements/key_icon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/shaders/Audiowide-Regular.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=4]
+size = 60
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 70
+font_data = ExtResource( 5 )
+
+[node name="EnhancementPopup" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1300, 800 )
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+disable_3d = true
+usage = 1
+render_target_v_flip = true
+gui_disable_input = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="ColorRect" type="ColorRect" parent="Viewport"]
+margin_right = 1300.0
+margin_bottom = 800.0
+theme = ExtResource( 1 )
+color = Color( 0, 0, 0, 0.576471 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Split" type="HBoxContainer" parent="Viewport/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 126.0
+margin_right = -0.00012207
+margin_bottom = -6.10352e-05
+size_flags_horizontal = 2
+size_flags_vertical = 4
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stats" type="VBoxContainer" parent="Viewport/ColorRect/Split"]
+margin_right = 695.0
+margin_bottom = 673.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Price" type="Label" parent="Viewport/ColorRect/Split/Stats"]
+margin_right = 695.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.905882, 0.596078, 0.0941176, 1 )
+text = "PRICE: 10"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="Viewport/ColorRect/Split/Stats"]
+margin_top = 83.0
+margin_right = 695.0
+margin_bottom = 498.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Desc" type="Label" parent="Viewport/ColorRect/Split/Stats"]
+margin_top = 503.0
+margin_right = 695.0
+margin_bottom = 673.0
+rect_min_size = Vector2( 0, 170 )
+custom_fonts/font = SubResource( 2 )
+text = "Increases max health by 10%. Dude, you'll love this."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="VBoxContainer" parent="Viewport/ColorRect/Split"]
+margin_left = 699.0
+margin_right = 1299.0
+margin_bottom = 673.0
+custom_constants/separation = 50
+
+[node name="Label" type="Label" parent="Viewport/ColorRect/Split/Right"]
+margin_right = 600.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 600, 0 )
+custom_fonts/font = SubResource( 3 )
+text = "BUY:"
+align = 1
+
+[node name="Key2" parent="Viewport/ColorRect/Split/Right" instance=ExtResource( 4 )]
+margin_top = 140.0
+margin_right = 600.0
+margin_bottom = 673.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+expand = true
+stretch_mode = 6
+key = "F"
+scale = 8.0
+
+[node name="Name" type="Label" parent="Viewport/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -400.0
+margin_right = 400.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 800, 0 )
+size_flags_horizontal = 6
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 3 )
+text = "ITEM"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="Sprite3D" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )

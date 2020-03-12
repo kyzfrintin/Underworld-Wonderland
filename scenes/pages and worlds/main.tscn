@@ -74,5 +74,8 @@ navmesh = SubResource( 3 )
 max_num = 15
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 9 )]
+max_allocation = 20
+max_per_spawn = 3
+diff_level_interval = 45
 
 [node name="UI" parent="." instance=ExtResource( 3 )]

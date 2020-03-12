@@ -17,7 +17,7 @@ onready var pool = get_node("EnemyPool")
 
 func _ready():
 	if !enabled: return
-	$countdown.start(rand_range(1,5))
+	$countdown.start(rand_range(6,14))
 	$diff_countdown.start(diff_level_interval)
 
 func place(loc):

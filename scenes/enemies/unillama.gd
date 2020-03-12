@@ -1,6 +1,6 @@
 extends base_enemy
 
-var can_stab = true
+var can_stab = false
 
 func on_death():
 	if $attack_tween.is_active():
@@ -12,6 +12,7 @@ func charge():
 	var dis : float = cpos.distance_to(ppos)
 	var dir : Vector3 = cpos.direction_to(ppos)
 	var pos = (cpos + (dir * (dis - 7)))
+	can_stab = true
 	$Armature/Unillama/hit_zone.monitoring = true
 	$attack_tween.interpolate_property(parent, "translation", parent.global_transform.origin, pos, (0.5*(dis/25)), Tween.TRANS_BACK, Tween.EASE_IN)
 	$attack_tween.start()
@@ -39,7 +40,6 @@ func beam_attack():
 	$cast.enabled = false
 	
 func end_charge(object, key):
-	can_stab = true
 	attack_over()
 
 func horn_stab(body):

@@ -76,7 +76,7 @@ func _process(delta):
 	if Input.is_action_just_released("gp_right_hand_prim_attack"):
 		r_attack_held = false
 	if Input.is_action_just_pressed("gp_right_hand_second_attack"):
-		if !Player.in_wep_bubble:
+		if !Player.in_bubble:
 			get_parent().right_hand_attack2()
 	
 	if Input.is_action_pressed("gp_left_hand_prim_attack"):
@@ -85,7 +85,7 @@ func _process(delta):
 	if Input.is_action_just_released("gp_left_hand_prim_attack"):
 		l_attack_held = false
 	if Input.is_action_just_pressed("gp_left_hand_second_attack"):
-		if !Player.in_wep_bubble:
+		if !Player.in_bubble:
 			get_parent().left_hand_attack2()
 	
 	#sprinting

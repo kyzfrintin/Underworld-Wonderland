@@ -1,6 +1,6 @@
 extends base_enemy
 
-var can_hit
+var can_hit = false
 
 func on_death():
 	if $attack_tween.is_active():
@@ -14,7 +14,7 @@ func charge():
 	var pos = (cpos + (dir * (dis * 1.4)))
 	$cube/hit_zone.monitoring = true
 	can_hit = true
-	$attack_tween.interpolate_property(parent, "translation", parent.global_transform.origin, pos, (0.4*(dis/25)), Tween.TRANS_BACK, Tween.EASE_IN)
+	$attack_tween.interpolate_property(parent, "translation", parent.global_transform.origin, pos, (0.4*(dis/25)), Tween.TRANS_SINE, Tween.EASE_OUT)
 	$attack_tween.start()
 
 func on_end_attack():
