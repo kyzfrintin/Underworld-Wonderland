@@ -10,3 +10,7 @@ func attack():
 	if col:
 		if col.has_method("hit") and !col.friendly:
 			col.hit(primary_damage * parent.damage_scale,loc,nrml)
+			shot(loc)
+
+func shot(loc):
+	pass

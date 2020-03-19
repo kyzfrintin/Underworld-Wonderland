@@ -22,11 +22,12 @@ doppler_tracking = 1
 current = true
 fov = 100.0
 near = 0.01
-far = 2776.9
+far = 4000.0
 
 [node name="RayCast" type="RayCast" parent="InnerGimbal/Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -750 )
+collide_with_areas = true
 
 [node name="cast_point" type="Position3D" parent="InnerGimbal/Camera/RayCast"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )

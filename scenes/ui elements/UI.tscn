@@ -363,19 +363,19 @@ size_flags_vertical = 0
 [node name="GameStats" type="VBoxContainer" parent="Main/TopRight"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -173.0
-margin_right = -11.0
-margin_bottom = 163.0
+margin_left = -478.0
+margin_bottom = 287.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="FPSLabel" type="Label" parent="Main/TopRight/GameStats"]
-margin_left = 89.0
-margin_right = 162.0
+margin_left = 278.0
+margin_right = 478.0
 margin_bottom = 21.0
 grow_horizontal = 0
 grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 8
 theme = ExtResource( 1 )
 text = "FPS: 60"
@@ -385,43 +385,65 @@ __meta__ = {
 }
 
 [node name="Time" type="Label" parent="Main/TopRight/GameStats"]
-margin_left = 54.0
+margin_left = 278.0
 margin_top = 25.0
-margin_right = 162.0
+margin_right = 478.0
 margin_bottom = 46.0
 grow_horizontal = 0
 grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 8
 theme = ExtResource( 1 )
 text = "Time: 0m 0s"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Diff" type="Label" parent="Main/TopRight/GameStats"]
-margin_left = 10.0
+margin_left = 278.0
 margin_top = 50.0
-margin_right = 162.0
+margin_right = 478.0
 margin_bottom = 71.0
 grow_horizontal = 0
 grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 8
 theme = ExtResource( 1 )
 text = "Difficulty Scale: 1"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Enemies" type="Label" parent="Main/TopRight/GameStats"]
-margin_left = 67.0
+margin_left = 278.0
 margin_top = 75.0
-margin_right = 162.0
+margin_right = 478.0
 margin_bottom = 96.0
 grow_horizontal = 0
 grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 8
 theme = ExtResource( 1 )
 text = "Enemies: 0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coords" type="Label" parent="Main/TopRight/GameStats"]
+margin_left = 223.0
+margin_top = 100.0
+margin_right = 478.0
+margin_bottom = 121.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 8
+theme = ExtResource( 1 )
+text = "Location: 2000, 100, 3000"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }

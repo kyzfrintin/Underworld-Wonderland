@@ -9,17 +9,17 @@
 radius = 0.3
 height = 0.6
 
-[sub_resource type="SpatialMaterial" id=29]
+[sub_resource type="SpatialMaterial" id=2]
 resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
 albedo_color = Color( 0.968627, 0.0901961, 0.0901961, 0.788235 )
 
-[sub_resource type="SphereShape" id=6]
+[sub_resource type="SphereShape" id=3]
 radius = 0.63416
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=4]
 emission_shape = 1
 emission_sphere_radius = 0.15
 spread = 180.0
@@ -29,19 +29,19 @@ initial_velocity_random = 1.0
 scale = 6.0
 scale_random = 1.0
 
-[sub_resource type="SpatialMaterial" id=30]
+[sub_resource type="SpatialMaterial" id=5]
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
 albedo_color = Color( 0.968627, 0.0901961, 0.0901961, 0.788235 )
 
-[sub_resource type="SphereMesh" id=28]
+[sub_resource type="SphereMesh" id=6]
 resource_local_to_scene = true
-material = SubResource( 30 )
+material = SubResource( 5 )
 radius = 0.01
 height = 0.02
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 1
 emission_sphere_radius = 0.15
 spread = 180.0
@@ -51,18 +51,18 @@ initial_velocity_random = 1.0
 scale = 5.0
 scale_random = 1.0
 
-[sub_resource type="SpatialMaterial" id=31]
+[sub_resource type="SpatialMaterial" id=8]
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
 albedo_color = Color( 0.87451, 0.584314, 0.12549, 0.788235 )
 
-[sub_resource type="SphereMesh" id=19]
-material = SubResource( 31 )
+[sub_resource type="SphereMesh" id=9]
+material = SubResource( 8 )
 radius = 0.01
 height = 0.02
 
-[sub_resource type="ParticlesMaterial" id=20]
+[sub_resource type="ParticlesMaterial" id=10]
 emission_shape = 1
 emission_sphere_radius = 0.15
 spread = 180.0
@@ -72,30 +72,33 @@ initial_velocity_random = 1.0
 scale = 3.0
 scale_random = 1.0
 
-[sub_resource type="SpatialMaterial" id=32]
+[sub_resource type="SpatialMaterial" id=11]
 resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
 albedo_color = Color( 0.933333, 0.917647, 0.0313726, 0.788235 )
 
-[sub_resource type="SphereMesh" id=25]
-material = SubResource( 32 )
+[sub_resource type="SphereMesh" id=12]
+material = SubResource( 11 )
 radius = 0.01
 height = 0.02
 
 [node name="fireball" type="Area"]
 input_ray_pickable = false
-monitorable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
 script = ExtResource( 1 )
-speed = 3.5
+speed = 0.6
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
-material/0 = SubResource( 29 )
+material/0 = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 12.0
@@ -108,15 +111,15 @@ pitch_range = 0.2
 
 [node name="fire" type="AudioStreamPlayer3D" parent="spawn_sound"]
 stream = ExtResource( 4 )
-unit_db = -4.0
-unit_size = 18.0
+unit_db = -8.0
 pitch_scale = 0.9
+max_distance = 250.0
 bus = "FX"
 
 [node name="thud" type="AudioStreamPlayer3D" parent="spawn_sound"]
 stream = ExtResource( 3 )
 unit_db = 2.0
-unit_size = 22.0
+max_distance = 250.0
 bus = "FX"
 
 [node name="FireParticles" type="Spatial" parent="."]
@@ -125,8 +128,8 @@ bus = "FX"
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 amount = 30
 local_coords = false
-process_material = SubResource( 8 )
-draw_pass_1 = SubResource( 28 )
+process_material = SubResource( 4 )
+draw_pass_1 = SubResource( 6 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -135,8 +138,8 @@ __meta__ = {
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 amount = 20
 local_coords = false
-process_material = SubResource( 14 )
-draw_pass_1 = SubResource( 19 )
+process_material = SubResource( 7 )
+draw_pass_1 = SubResource( 9 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -144,9 +147,15 @@ __meta__ = {
 [node name="Yellow" type="Particles" parent="FireParticles"]
 amount = 10
 local_coords = false
-process_material = SubResource( 20 )
-draw_pass_1 = SubResource( 25 )
+process_material = SubResource( 10 )
+draw_pass_1 = SubResource( 12 )
 __meta__ = {
 "_editor_description_": ""
 }
-[connection signal="body_entered" from="." to="." method="collide"]
+
+[node name="OmniLight" type="OmniLight" parent="."]
+light_color = Color( 0.968627, 0.0901961, 0.0901961, 1 )
+light_energy = 1.76
+omni_range = 8.5
+omni_attenuation = 1.68179
+[connection signal="timeout" from="Timer" to="." method="remove"]

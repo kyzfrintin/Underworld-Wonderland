@@ -1,7 +1,7 @@
 extends Spatial
 
 export(NodePath) var PlayerPath  = "" #You must specify this in the inspector!
-export(float) var MovementSpeed = 10.0
+export(float) var MovementSpeed = 5.0
 export(float) var Acceleration = 3
 export(float) var MaxJump = 19
 export(float) var MouseSensitivity = 2
@@ -14,13 +14,18 @@ var first_person = false
 var r_attack_held = false
 var l_attack_held = false
 
+
+var anim_dir = Vector2(0,0)
 var multi = 1.0
-var sprint = 1.7
+var sprint = 1.6
 var Player
+var Anim
+var AnimState
+var freeze = false
 var InnerGimbal
 var Direction = Vector3()
 var Rotation = Vector2()
-var gravity = -10
+var gravity = -20
 var Movement = Vector3()
 var ZoomFactor = 0.7
 var FovFactor = 100
@@ -28,12 +33,15 @@ var ActualZoom = 1
 var Speed = Vector3()
 var CurrentVerticalSpeed = Vector3()
 var JumpAcceleration = 3
-var IsAirborne = false
+var IsAirborne = true
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$InnerGimbal/Camera/RayCast.add_exception(get_parent())
 	Player = get_node(PlayerPath)
+	Anim = Player.get_node("body_pivot/robot/AnimationTree")
+	AnimState = Anim.get("parameters/playback")
+	AnimState.start("falling")
 	InnerGimbal =  $InnerGimbal
 	pass
 
@@ -48,13 +56,13 @@ func _process(delta):
 		Player.game.get_node("UI").pause()
 	
 	if Input.is_action_pressed("cam_up"):
-		Rotation.y -= Input.get_action_strength("cam_up") * 15
+		Rotation.y -= Input.get_action_strength("cam_up") * 10
 	if Input.is_action_pressed("cam_down"):
-		Rotation.y += Input.get_action_strength("cam_down") * 15
+		Rotation.y += Input.get_action_strength("cam_down") * 10
 	if Input.is_action_pressed("cam_right"):
-		Rotation.x += Input.get_action_strength("cam_right") * 15
+		Rotation.x += Input.get_action_strength("cam_right") * 10
 	if Input.is_action_pressed("cam_left"):
-		Rotation.x -= Input.get_action_strength("cam_left") * 15
+		Rotation.x -= Input.get_action_strength("cam_left") * 10
 	
 	#camera
 	if Input.is_action_just_pressed("cam_zoomin"):
@@ -103,21 +111,25 @@ func _process(delta):
 			else:
 				FovFactor = 100
 	
-	#movement press
-	if Input.is_action_pressed("gp_forward"):
-		Direction.z -= Input.get_action_strength("gp_forward")
-	if Input.is_action_pressed("gp_back"):
-		Direction.z += Input.get_action_strength("gp_back")
-	if Input.is_action_pressed("gp_left"):
-		Direction.x -= Input.get_action_strength("gp_left")
-	if Input.is_action_pressed("gp_right"):
-		Direction.x += Input.get_action_strength("gp_right")
-	if Input.is_action_just_pressed("gp_jump"):
-		if !IsAirborne:
-			CurrentVerticalSpeed = Vector3(0,MaxJump * Player.jump_scale,0)
-			IsAirborne = true
-			Player.get_node("jump").play()
+	Direction = Vector3()
 	
+	#movement press
+	if !freeze:
+		if Input.is_action_pressed("gp_forward"):
+			Direction.z -= Input.get_action_strength("gp_forward")
+		if Input.is_action_pressed("gp_back"):
+			Direction.z += Input.get_action_strength("gp_back")
+		if Input.is_action_pressed("gp_left"):
+			Direction.x -= Input.get_action_strength("gp_left")
+		if Input.is_action_pressed("gp_right"):
+			Direction.x += Input.get_action_strength("gp_right")
+		if Input.is_action_just_pressed("gp_jump"):
+			if !IsAirborne:
+				CurrentVerticalSpeed = Vector3(0,MaxJump * Player.jump_scale,0)
+				IsAirborne = true
+				Player.get_node("jump").play()
+				AnimState.travel("falling")
+		
 	#detect backwards sprinting
 	if Direction.z >= 0 and multi == sprint:
 		multi = 1.0
@@ -135,9 +147,25 @@ func _process(delta):
 		Direction.x += 1
 	if Input.is_action_just_released("gp_right"):
 		Direction.x -= 1
+	
 	Direction.z = clamp(Direction.z, -1,1)
 	Direction.x = clamp(Direction.x, -1,1)
+	
+	var d : Vector2 = Vector2(Direction.x, -Direction.z)
+	if d.y > 0:
+		match multi:
+			1.0:
+				d.y = 0.4
+			sprint:
+				d.y = 1.0
+	anim_dir = lerp(anim_dir, d, 0.05)
+	
+	if !IsAirborne:
+		movement_anims(anim_dir)
 
+func movement_anims(dir):
+	Anim.set("parameters/ground_movement/blend_position", dir)
+	
 func _physics_process(delta):
 	#Rotation
 	Player.rotate_y(deg2rad(-Rotation.x)*delta*MouseSensitivity)
@@ -156,7 +184,13 @@ func _physics_process(delta):
 	Player.move_and_slide(Movement,Vector3(0,1,0))
 	if Player.is_on_floor() :
 		CurrentVerticalSpeed.y = 0
-		IsAirborne = false
+		if IsAirborne:
+			IsAirborne = false
+			AnimState.travel("ground_movement")
+	if !Player.on_floor():
+		if !IsAirborne:
+			IsAirborne = true
+			AnimState.travel("falling")
 	
 	#Zoom
 	ActualZoom = lerp(ActualZoom, ZoomFactor, delta * ZoomSpeed)

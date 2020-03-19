@@ -393,7 +393,7 @@ shape = SubResource( 9 )
 [node name="looper" type="AudioStreamPlayer3D" parent="meshes"]
 stream = ExtResource( 7 )
 unit_db = -4.0
-unit_size = 6.0
+max_distance = 250.0
 bus = "FX"
 
 [node name="swing" type="Spatial" parent="meshes"]
@@ -403,8 +403,7 @@ pitch_range = 0.12
 
 [node name="1" type="AudioStreamPlayer3D" parent="meshes/swing"]
 stream = ExtResource( 6 )
-unit_db = -7.0
-unit_size = 6.0
+max_distance = 250.0
 bus = "FX"
 
 [node name="Particles" type="Particles" parent="meshes"]

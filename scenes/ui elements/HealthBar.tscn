@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[sub_resource type="StyleBoxFlat" id=20]
+[ext_resource path="res://scenes/ui elements/HealthBar.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 1, 0.0862745, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -8,7 +10,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=21]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 0, 0, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -22,10 +24,11 @@ margin_left = -24.251
 margin_top = -4.43557
 margin_right = 25.749
 margin_bottom = 5.56443
-custom_styles/fg = SubResource( 20 )
-custom_styles/bg = SubResource( 21 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
 value = 100.0
 percent_visible = false
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""

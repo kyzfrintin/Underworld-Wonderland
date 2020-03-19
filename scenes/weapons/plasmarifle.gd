@@ -6,7 +6,7 @@ onready var bt = get_node("trail_point/Bullettrail")
 onready var btp = get_node("trail_point")
 
 func heavy_fire():
-	var cols = $secondary_damage.get_overlapping_bodies()
+	var cols = $secondary_damage.get_overlapping_bodies() + $secondary_damage.get_overlapping_areas()
 	var loc = $secondary_damage.global_transform.origin
 	var nrml = loc
 	bullet_trail(true)

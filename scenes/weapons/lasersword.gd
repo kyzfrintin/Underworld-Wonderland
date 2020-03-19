@@ -10,7 +10,7 @@ func on_second_attack():
 	$secondary_hit.start()
 
 func damage():
-	var col = $meshes/secondary.get_overlapping_bodies()
+	var col = $meshes/secondary.get_overlapping_areas() + $meshes/secondary.get_overlapping_bodies()
 	var loc = $meshes/secondary.global_transform.origin
 	var nrm = $meshes/secondary.global_transform.origin
 	for i in col:

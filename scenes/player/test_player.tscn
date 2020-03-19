@@ -1,35 +1,29 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/player/3rdPersonController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=2]
-[ext_resource path="res://scenes/weapons/lasersword.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/weapons/stick.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/shaders/glowblue.tres" type="Material" id=4]
 [ext_resource path="res://scenes/ui elements/SecondaryCooldown.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=6]
 [ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=7]
-[ext_resource path="res://scenes/weapons/firestaff.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/weapons/plasmarifle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/shaders/nfc_particles.tres" type="Material" id=9]
 [ext_resource path="res://assets/audio/sound/character/levelup_woosh.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/sound/character/levelup_hum.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/sound/character/levelup_hit.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/meshes/character/robot.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.59358
 height = 2.50927
 
-[sub_resource type="CapsuleMesh" id=2]
-radius = 1.3
-mid_height = 2.3
-
-[sub_resource type="SpatialMaterial" id=3]
-roughness = 0.0
-
-[sub_resource type="SphereMesh" id=4]
+[sub_resource type="SphereMesh" id=2]
 material = ExtResource( 4 )
 radius = 0.3
 height = 0.6
 
-[sub_resource type="SphereMesh" id=5]
+[sub_resource type="SphereMesh" id=3]
 radius = 0.01
 height = 0.02
 
@@ -40,13 +34,14 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.289364, 0 )
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+[node name="body_pivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36331, 0.30694 )
+
+[node name="robot" parent="body_pivot" instance=ExtResource( 13 )]
+transform = Transform( -0.697235, 0, -0.0621529, 0, 0.7, 0, 0.0621529, 0, -0.697235, 0, -3.86198, 0 )
 
 [node name="Controller" parent="." instance=ExtResource( 1 )]
-MovementSpeed = 25.0
+MovementSpeed = 15.0
 Acceleration = 3.0
 MaxJump = 30.0
 RotationLimit = 65.0
@@ -55,11 +50,11 @@ MaxZoom = 0.15
 [node name="WeaponMountR" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.832, 0, -1.282 )
 
-[node name="firestaff" parent="WeaponMountR" instance=ExtResource( 8 )]
+[node name="plasmarifle" parent="WeaponMountR" instance=ExtResource( 8 )]
 
 [node name="hand" type="MeshInstance" parent="WeaponMountR"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.283075, 1.23728 )
-mesh = SubResource( 4 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="WeaponMountR/hand"]
@@ -69,7 +64,7 @@ lifetime = 2.0
 preprocess = 10.0
 speed_scale = 0.2
 process_material = ExtResource( 9 )
-draw_pass_1 = SubResource( 5 )
+draw_pass_1 = SubResource( 3 )
 
 [node name="Cooldown" parent="WeaponMountR" instance=ExtResource( 5 )]
 transform = Transform( 0.1, 0, 0, 0, 0.0766044, 0.0642788, 0, -0.0642788, 0.0766044, 0.142688, -3.72529e-08, 1.85698 )
@@ -77,11 +72,11 @@ transform = Transform( 0.1, 0, 0, 0, 0.0766044, 0.0642788, 0, -0.0642788, 0.0766
 [node name="WeaponMountL" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.926, 0, -1.282 )
 
-[node name="lasersword" parent="WeaponMountL" instance=ExtResource( 3 )]
+[node name="stick" parent="WeaponMountL" instance=ExtResource( 3 )]
 
 [node name="hand" type="MeshInstance" parent="WeaponMountL"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.283075, 1.23728 )
-mesh = SubResource( 4 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="WeaponMountL/hand"]
@@ -91,7 +86,7 @@ lifetime = 2.0
 preprocess = 10.0
 speed_scale = 0.2
 process_material = ExtResource( 9 )
-draw_pass_1 = SubResource( 5 )
+draw_pass_1 = SubResource( 3 )
 
 [node name="Cooldown" parent="WeaponMountL" instance=ExtResource( 5 )]
 transform = Transform( 0.1, 0, 0, 0, 0.0881864, 0.0471504, 0, -0.0471504, 0.0881864, 0.169702, 2.98023e-08, 1.85699 )
@@ -103,8 +98,8 @@ pitch_range = 0.2
 
 [node name="1" type="AudioStreamPlayer3D" parent="jump"]
 stream = ExtResource( 7 )
-unit_size = 9.0
 pitch_scale = 0.5
+max_distance = 250.0
 bus = "FX"
 
 [node name="levelup" type="Spatial" parent="."]
@@ -114,21 +109,21 @@ pitch_range = 0.2
 
 [node name="hit" type="AudioStreamPlayer3D" parent="levelup"]
 stream = ExtResource( 12 )
-unit_size = 10.0
+max_distance = 250.0
 bus = "FX"
 
 [node name="hum" type="AudioStreamPlayer3D" parent="levelup"]
 stream = ExtResource( 11 )
 unit_db = -4.0
-unit_size = 10.0
 pitch_scale = 1.4
+max_distance = 250.0
 bus = "FX"
 
 [node name="woosh" type="AudioStreamPlayer3D" parent="levelup"]
 stream = ExtResource( 10 )
 unit_db = -16.0
-unit_size = 10.0
 pitch_scale = 0.8
+max_distance = 250.0
 bus = "FX"
 
 [node name="heal_timer" type="Timer" parent="."]
@@ -145,11 +140,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, -1.06966 )
 doppler_tracking = 2
 fov = 100.0
 near = 0.01
-far = 2871.8
+far = 4000.0
 
 [node name="RayCast" type="RayCast" parent="Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -750 )
+collide_with_areas = true
 
 [node name="cast_point" type="Position3D" parent="Camera/RayCast"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )
@@ -158,5 +154,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3 )
 
 [node name="items" type="Node" parent="."]
+
+[node name="floor_detect" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.48704, 0 )
+enabled = true
+cast_to = Vector3( 0, -4, 0 )
 [connection signal="timeout" from="heal_timer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="heal_interval" to="." method="heal"]

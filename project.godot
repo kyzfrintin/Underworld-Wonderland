@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody",
+"base": "Area",
 "class": "base_enemy",
 "language": "GDScript",
 "path": "res://scenes/enemies/enemy.gd"
@@ -23,6 +23,11 @@ _global_script_classes=[ {
 "class": "effect_item",
 "language": "GDScript",
 "path": "res://scenes/items/enhancements/effect_item.gd"
+}, {
+"base": "KinematicBody",
+"class": "enemy_ai",
+"language": "GDScript",
+"path": "res://scenes/enemies/enemy_container.gd"
 }, {
 "base": "Node",
 "class": "enhancement",
@@ -68,6 +73,7 @@ _global_script_class_icons={
 "base_enemy": "",
 "buff_item": "",
 "effect_item": "",
+"enemy_ai": "",
 "enhancement": "",
 "melee_weapon": "",
 "pickup": "",
@@ -83,10 +89,6 @@ _global_script_class_icons={
 config/name="Underworld Wonderland"
 run/main_scene="res://scenes/pages and worlds/Menu.tscn"
 config/icon="res://icon.png"
-
-[audio]
-
-driver="ALSA"
 
 [display]
 
@@ -215,14 +217,12 @@ gp_interact={
 
 [rendering]
 
-quality/intended_usage/framebuffer_allocation=3
 threads/thread_model=2
 quality/filters/anisotropic_filter_level=1
-quality/directional_shadow/size=512
+quality/directional_shadow/size=1024
 quality/shadow_atlas/size=512
-quality/shadows/filter_mode=2
 quality/reflections/texture_array_reflections=false
 quality/reflections/high_quality_ggx=false
 quality/subsurface_scattering/quality=0
-environment/default_environment="res://default_env.tres"
-quality/dynamic_fonts/use_oversampling=false
+quality/filters/msaa=1
+environment/default_environment="res://assets/shaders/mainenv.tres"

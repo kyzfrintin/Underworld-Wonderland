@@ -45,7 +45,7 @@ func enter(body):
 			update_info()
 			if body.get_node("Controller").first_person:
 				popup.set_scale(0.4)
-				popup.translation.y = 1
+				popup.translation.y = 0
 			else:
 				popup.set_scale(1)
 				popup.translation.y = 3

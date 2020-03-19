@@ -4,27 +4,26 @@ var can_stab = false
 
 func on_death():
 	if $attack_tween.is_active():
-		$attack_tween.stop(parent, "translation")
+		$attack_tween.stop(self, "translation")
 
 func charge():
-	var cpos : Vector3 = parent.global_transform.origin
-	var ppos : Vector3 = parent.player.global_transform.origin
+	var cpos : Vector3 = global_transform.origin
+	var ppos : Vector3 = player.global_transform.origin
 	var dis : float = cpos.distance_to(ppos)
 	var dir : Vector3 = cpos.direction_to(ppos)
-	var pos = (cpos + (dir * (dis - 7)))
+	var pos = (cpos + (dir * (dis - 2)))
+	pos = nav_spot(pos)
 	can_stab = true
-	$Armature/Unillama/hit_zone.monitoring = true
-	$attack_tween.interpolate_property(parent, "translation", parent.global_transform.origin, pos, (0.5*(dis/25)), Tween.TRANS_BACK, Tween.EASE_IN)
+	$attack_tween.interpolate_property(self, "translation", global_transform.origin, pos, (0.5*(dis/25)), Tween.TRANS_BACK, Tween.EASE_IN)
 	$attack_tween.start()
 
-func on_end_attack():
-	$Armature/Unillama/hit_zone.monitoring = false
-	
 func beam_target():
+	var target_pos = player.global_transform.origin
+	face_target(target_pos)
 	$cast.enabled = true
 	var loc = $laserbeam.global_transform.origin
-	$cast.look_at(parent.get_node("states/attack").target_pos, Vector3(0,1,0))
-	$laserbeam.look_at(parent.get_node("states/attack").target_pos, Vector3(0,1,0))
+	$cast.look_at(target_pos, Vector3(0,1,0))
+	$laserbeam.look_at(target_pos, Vector3(0,1,0))
 	var cast_pos = $cast.get_collision_point()
 	$laserbeam.scale.z = loc.distance_to(cast_pos) * 5
 
@@ -42,10 +41,12 @@ func beam_attack():
 func end_charge(object, key):
 	attack_over()
 
-func horn_stab(body):
+func collided_with_player(body):
 	if can_stab:
 		var nrml = body.translation.direction_to(global_transform.origin)
-		if body.has_method("hit") and body.friendly:
-			body.hit(attack_dict.get(current_attack).get("damage"), global_transform.origin, nrml)
-			can_stab = false
+		body.hit(attack_dict.get(current_attack).get("damage"), global_transform.origin, nrml)
+		can_stab = false
 
+func anim_finished(anim_name):
+	if anim_name == "die":
+		delete()

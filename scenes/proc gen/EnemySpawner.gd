@@ -4,14 +4,14 @@ export var enabled = true
 export var max_allocation = 75
 export var max_per_spawn = 7
 export var diff_level_interval = 30
+export var spawn_max_distance = 100
 
 var diff = 1.0
 var allocated = 0
 
-onready var base = preload("res://scenes/enemies/enemy_container.tscn")
 onready var game = get_node("../")
 onready var player = game.get_node("player")
-onready var nav = game.get_node("Navigation")
+onready var nav = game.get_node("World/Navigation")
 onready var root = game.get_node("Enemies")
 onready var pool = get_node("EnemyPool")
 
@@ -23,16 +23,11 @@ func _ready():
 func place(loc):
 	randomize()
 	var list = pool.get_resource_list()
-	var enem = base.instance()
-	enem.type = pool.get_resource(list[randi() % list.size()])
-	var ranger = loc + Vector3(rand_range(-200,200),rand_range(-200,200),rand_range(-200,200))
+	var enem = pool.get_resource(list[randi() % list.size()]).instance()
+	var ranger = loc + Vector3(rand_range(-spawn_max_distance,spawn_max_distance),300,rand_range(-spawn_max_distance,spawn_max_distance))
 	ranger = nav.get_closest_point(ranger)
-	enem.translate(ranger)
-	call_deferred("add", enem)
-
-func add(enem):
-	root.add_child(enem)
-	allocated += enem.agent.allocation
+	root.call_deferred("add_child", enem)
+	enem.translation = ranger
 
 func spawn_enemies():
 	if allocated < max_allocation:
@@ -41,7 +36,7 @@ func spawn_enemies():
 			num = randi() % max_per_spawn
 		else:
 			num = randi() % (allocated - max_allocation)
-		var ppos = player.global_transform.origin
+		var ppos = player.translation
 		for i in num:
 			place(ppos)
 	$countdown.start(rand_range((8/diff),(18/diff)))

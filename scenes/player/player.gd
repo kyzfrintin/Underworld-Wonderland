@@ -30,6 +30,8 @@ onready var cam_cast = get_node("Controller/InnerGimbal/RayCast")
 onready var controller = $Controller
 onready var r_mount = $WeaponMountR
 onready var l_mount = $WeaponMountL
+onready var body = $body_pivot/robot
+onready var anim = body.get_node("AnimationTree")
 
 onready var game = get_parent()
 onready var dnum_res = preload("res://scenes/ui elements/DamageNum2D.tscn")
@@ -85,6 +87,7 @@ func enter_first_person():
 	right_weapon.cast = ray
 	left_weapon.cast = ray
 	$DNumPoint.translation = Vector3(0,1.5,-3)
+	$body_pivot.hide()
 	$Controller/InnerGimbal/Camera.current = false
 	$WeaponMountR.translation = Vector3(2.632, 0, -4.282)
 	$WeaponMountL.translation = Vector3(-2.732, 0, -4.282)
@@ -95,6 +98,7 @@ func exit_first_person():
 	ray = get_node("Controller").get_node("InnerGimbal/Camera/RayCast")
 	right_weapon.cast = ray
 	left_weapon.cast = ray
+	$body_pivot.show()
 	$DNumPoint.translation = Vector3(0,3.5,0)
 	$Camera.current = false
 	$WeaponMountR.translation = Vector3(1.832, 0, -1.282)
@@ -141,6 +145,7 @@ func hit(amnt, loc, nrm):
 		spawn_damage_number(amnt)
 
 func die():
+	
 	call_deferred("remove_parts")
 	game.died()
 
@@ -224,3 +229,10 @@ func _on_heal_timer_timeout():
 
 func heal():
 	can_heal = true
+	
+func on_floor() -> bool:
+	if $floor_detect.is_colliding():
+		return true
+	else:
+		return false
+		

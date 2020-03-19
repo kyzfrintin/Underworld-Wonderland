@@ -21,6 +21,7 @@ var cooldown
 var interval
 
 func _ready():
+	parent.connect("death", self, "player_death")
 	cooldown = Timer.new()
 	interval = Timer.new()
 	cooldown.one_shot = true
@@ -39,6 +40,9 @@ func equip():
 	else:
 		right_hand = false
 	on_equip()
+
+func player_death():
+	pass
 
 func primary_attack():
 	if can_fire:

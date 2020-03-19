@@ -96,14 +96,11 @@ void vertex() {
 
 void fragment() {
 // Color:3
-	vec3 n_out3p0;
-	float n_out3p1;
-	n_out3p0 = vec3(0.387726,0.757607,0.902344);
-	n_out3p1 = 1.000000;
+	vec3 n_out3p0 = vec3(0.387726, 0.757607, 0.902344);
+	float n_out3p1 = 1.000000;
 
 // Scalar:2
-	float n_out2p0;
-	n_out2p0 = 1.000000;
+	float n_out2p0 = 1.000000;
 
 // Output:0
 	ALBEDO = n_out3p0;
@@ -350,7 +347,7 @@ icon = ExtResource( 9 )
 hurt_box = NodePath("prim_attack")
 
 [node name="meshes" type="Spatial" parent="."]
-transform = Transform( 0.218569, 0.975821, 0, -0.975821, 0.218569, 0, 0, 0, 1, 1.04674, 0, -0.389856 )
+transform = Transform( 1, 0, 0, 0, 0.961736, -0.273976, 0, 0.273976, 0.961737, 0, 0, 0.70686 )
 
 [node name="pommel" type="MeshInstance" parent="meshes"]
 transform = Transform( -1.5178e-06, -9.31619, -9.84298e-06, 0, -1.5178e-06, 60.4158, -9.31619, 1.5178e-06, 1.60363e-12, 0, 0.277256, 0 )
@@ -396,14 +393,16 @@ sound_number = 1
 
 [node name="1" type="AudioStreamPlayer3D" parent="meshes/swing"]
 stream = ExtResource( 8 )
-unit_size = 10.0
+unit_size = 2.0
 pitch_scale = 0.9
+max_distance = 250.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="meshes/swing"]
 stream = ExtResource( 7 )
-unit_size = 10.0
+unit_size = 2.0
 pitch_scale = 0.9
+max_distance = 250.0
 bus = "FX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -442,15 +441,19 @@ sound_number = 1
 [node name="1" type="AudioStreamPlayer3D" parent="throw/swing"]
 stream = ExtResource( 8 )
 unit_db = 3.0
-unit_size = 12.0
+unit_size = 2.0
+max_db = 1.0
 pitch_scale = 0.9
+max_distance = 250.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="throw/swing"]
 stream = ExtResource( 7 )
 unit_db = 3.0
-unit_size = 12.0
+unit_size = 2.0
+max_db = 1.0
 pitch_scale = 0.9
+max_distance = 250.0
 bus = "FX"
 
 [node name="woosh" type="Spatial" parent="throw"]
@@ -461,7 +464,9 @@ pitch_range = 0.1
 [node name="3" type="AudioStreamPlayer3D" parent="throw/woosh"]
 transform = Transform( 1, 0, 0, 0, 0.141661, 0.989915, 0, -0.989915, 0.141661, 0, 0, -1.64433 )
 stream = ExtResource( 3 )
-unit_size = 18.0
+unit_size = 2.0
+max_db = 1.0
 pitch_scale = 0.5
+max_distance = 250.0
 bus = "FX"
 [connection signal="timeout" from="recall" to="." method="recall_sword"]

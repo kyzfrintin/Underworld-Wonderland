@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/proc gen/base_spawner.gd" type="Script" id=1]
+[ext_resource path="res://scenes/items/enhancement_spawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/items/weapon_spawner.tscn" type="PackedScene" id=3]
+
+[node name="PickUpSpawner" type="Spatial"]
+script = ExtResource( 1 )
+min_height = 1.0
+max_height = 3.0
+
+[node name="Pool" type="ResourcePreloader" parent="."]
+resources = [ PoolStringArray( "enhancement_spawner", "weapon_spawner" ), [ ExtResource( 2 ), ExtResource( 3 ) ] ]

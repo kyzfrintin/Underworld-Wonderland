@@ -3,7 +3,7 @@
 [sub_resource type="AudioEffectReverb" id=1]
 resource_name = "Reverb"
 room_size = 1.0
-damping = 0.04
+damping = 0.03
 wet = 0.05
 
 [sub_resource type="AudioEffectCompressor" id=2]

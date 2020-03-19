@@ -45,6 +45,11 @@ func quit():
 	get_tree().paused = false
 	get_tree().change_scene_to(menu)
 
+func _process(delta):
+	if !is_instance_valid(game.player): return
+	var ppos = game.player.translation
+	var pos = Vector3(round(ppos.x),round(ppos.y),round(ppos.z))
+	$Main/TopRight/GameStats/Coords.text = ('Location: %s' % str(pos))
 
 func add_second():
 	seconds += 1

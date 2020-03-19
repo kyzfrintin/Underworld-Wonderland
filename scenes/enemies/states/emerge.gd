@@ -3,7 +3,7 @@ extends Node
 onready var parent = get_node("../../")
 
 func enter():
-	parent.agent.anim.play("emerge")
+	parent.anim.play("emerge")
 	
 func update():
 	pass

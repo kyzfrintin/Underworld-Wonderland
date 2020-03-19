@@ -12,12 +12,14 @@ onready var detect = $detect
 onready var turret = $body/turret
 onready var ray = $body/turret/RayCast
 onready var bp = $body/turret/beam_point
+onready var healthbar = $body/HealthBar
 
 signal destroyed
 
 func _ready():
-	$body/HealthBar3D.set_max(hp)
-	$body/HealthBar3D.set_percent(hp)
+	healthbar.max_value = hp
+	healthbar.value = hp
+	set_hp_point()
 	ray.add_exception($body/diamond_body)
 
 func on_enter(body : Object):
@@ -31,7 +33,8 @@ func on_enter(body : Object):
 
 func hit(amnt, loc, nrml):
 	hp -= amnt
-	$body/HealthBar3D.set_percent(hp)
+	healthbar.value = hp
+	healthbar.wake()
 	if hp <= 0:
 		die()
 
@@ -63,6 +66,9 @@ func _process(delta):
 		global_transform.origin = spos + rpos
 		offset += 0.02
 
+func set_hp_point():
+	healthbar.point = $body/health_point.global_transform.origin
+
 func killed():
 	get_node("body/turret").killed()
 	active = false
@@ -71,13 +77,13 @@ func begin_rumble():
 	rumble = true
 
 func activate():
+	set_hp_point()
 	spos = global_transform.origin
 	turret.active = true
 	ray.enabled = true
 	active = true
 	$hum.play()
 	$hum2.play()
-	$body/HealthBar3D.show()
 	$beamparticles.visible = true
 	$beamparticles/sear.play()
 	$AnimationPlayer.play("cubeanim")

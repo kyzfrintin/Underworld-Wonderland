@@ -1,9 +1,9 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scenes/structures/turret.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/structures/tower.gd" type="Script" id=2]
 [ext_resource path="res://scenes/structures/tower_diamond.gd" type="Script" id=3]
-[ext_resource path="res://scenes/ui elements/HealthBar3D.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ui elements/HealthBar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/sound/structures/tower_hum.wav" type="AudioStream" id=5]
 [ext_resource path="res://assets/audio/sound/structures/tower_sear.wav" type="AudioStream" id=6]
 [ext_resource path="res://addons/mixing-desk/sound/3d/scatter_cont.gd" type="Script" id=7]
@@ -14,60 +14,41 @@
 [ext_resource path="res://assets/audio/sound/structures/tower_rise.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/audio/sound/weapons/laser_sword_swing.wav" type="AudioStream" id=13]
 [ext_resource path="res://assets/audio/sound/weapons/laser_shot.wav" type="AudioStream" id=14]
-[ext_resource path="res://assets/shaders/laser_mat.tres" type="Material" id=15]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 12, 70, 12 )
 
-[sub_resource type="SpatialMaterial" id=16]
+[sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.0627451, 0.0627451, 0.0627451, 1 )
 metallic = 0.55
 metallic_specular = 0.77
 
-[sub_resource type="ConcavePolygonShape" id=2]
+[sub_resource type="ConcavePolygonShape" id=3]
 data = PoolVector3Array( -6, 35, 6, 6, 35, 6, -6, -35, 6, 6, 35, 6, 6, -35, 6, -6, -35, 6, 6, 35, -6, -6, 35, -6, 6, -35, -6, -6, 35, -6, -6, -35, -6, 6, -35, -6, 6, 35, 6, 6, 35, -6, 6, -35, 6, 6, 35, -6, 6, -35, -6, 6, -35, 6, -6, 35, -6, -6, 35, 6, -6, -35, -6, -6, 35, 6, -6, -35, 6, -6, -35, -6, 6, 35, 6, -6, 35, 6, 6, 35, -6, -6, 35, 6, -6, 35, -6, 6, 35, -6, -6, -35, 6, 6, -35, 6, -6, -35, -6, 6, -35, 6, 6, -35, -6, -6, -35, -6 )
 
-[sub_resource type="CylinderMesh" id=3]
+[sub_resource type="SpatialMaterial" id=4]
 resource_local_to_scene = true
-material = ExtResource( 15 )
+flags_transparent = true
+flags_unshaded = true
+params_blend_mode = 1
+albedo_color = Color( 0.6, 0.145098, 0.145098, 0.85098 )
+
+[sub_resource type="CylinderMesh" id=5]
+resource_local_to_scene = true
+material = SubResource( 4 )
 top_radius = 0.02
 bottom_radius = 0.2
 height = 1.0
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="CubeMesh" id=6]
 resource_local_to_scene = true
-material = ExtResource( 15 )
+material = SubResource( 4 )
 size = Vector3( 15, 15, 15 )
 
-[sub_resource type="SpatialMaterial" id=5]
-flags_transparent = true
-flags_unshaded = true
-flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
-params_diffuse_mode = 4
-params_depth_draw_mode = 2
-params_billboard_mode = 1
-
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0, 1, 0.0862745, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 1, 0, 0, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="SphereShape" id=8]
+[sub_resource type="SphereShape" id=7]
 radius = 9.0
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 15.0
 loop = true
 tracks/0/type = "value"
@@ -95,8 +76,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 48, -0.816 ), Vector3( 0, 50, -0.816 ), Vector3( 0, 48, -0.816 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "die"
+[sub_resource type="Animation" id=9]
 length = 5.0
 tracks/0/type = "method"
 tracks/0/path = NodePath("body/turret")
@@ -165,26 +145,12 @@ tracks/4/keys = {
 } ]
 }
 tracks/5/type = "method"
-tracks/5/path = NodePath("body/HealthBar3D")
+tracks/5/path = NodePath("beamparticles")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "hide"
-} ]
-}
-tracks/6/type = "method"
-tracks/6/path = NodePath("beamparticles")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
 "times": PoolRealArray( 0.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -192,37 +158,37 @@ tracks/6/keys = {
 "method": "hide"
 } ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("body:translation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 2.2, 4, 4.4 ),
+"transitions": PoolRealArray( 1, 3.605, 0.870551 ),
+"update": 0,
+"values": [ Vector3( 0, 35, 0 ), Vector3( 0, 35, 0 ), Vector3( 0, 600, 0 ) ]
+}
 tracks/7/type = "value"
-tracks/7/path = NodePath("body:translation")
+tracks/7/path = NodePath("body:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
 "times": PoolRealArray( 2.2, 4, 4.4 ),
-"transitions": PoolRealArray( 1, 3.605, 0.870551 ),
+"transitions": PoolRealArray( 1.68179, 2.46229, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 35, 0 ), Vector3( 0, 35, 0 ), Vector3( 0, 600, 0 ) ]
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.293574, 1, 0.293574 ), Vector3( 0.01, 25, 0.01 ) ]
 }
-tracks/8/type = "value"
-tracks/8/path = NodePath("body:scale")
+tracks/8/type = "method"
+tracks/8/path = NodePath("body")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 2.2, 4, 4.4 ),
-"transitions": PoolRealArray( 1.68179, 2.46229, 1 ),
-"update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 0.293574, 1, 0.293574 ), Vector3( 0.01, 25, 0.01 ) ]
-}
-tracks/9/type = "method"
-tracks/9/path = NodePath("body")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/keys = {
 "times": PoolRealArray( 4.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -230,13 +196,13 @@ tracks/9/keys = {
 "method": "hide"
 } ]
 }
-tracks/10/type = "method"
-tracks/10/path = NodePath(".")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
+tracks/9/type = "method"
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
 "times": PoolRealArray( 2.2, 4.8, 5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
@@ -250,32 +216,44 @@ tracks/10/keys = {
 "method": "call_deferred"
 } ]
 }
-tracks/11/type = "value"
-tracks/11/path = NodePath("hum:unit_db")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/keys = {
+tracks/10/type = "value"
+tracks/10/path = NodePath("hum:unit_db")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
 "times": PoolRealArray( 0, 3.9 ),
 "transitions": PoolRealArray( 11.3137, 1 ),
 "update": 0,
 "values": [ -4.0, -60.0 ]
 }
-tracks/12/type = "value"
-tracks/12/path = NodePath("hum2:unit_db")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/keys = {
+tracks/11/type = "value"
+tracks/11/path = NodePath("hum2:unit_db")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
 "times": PoolRealArray( 0, 4.9 ),
 "transitions": PoolRealArray( 13.4543, 1 ),
 "update": 0,
 "values": [ 0.0, -60.0 ]
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("hum:pitch_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 2.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.7, 0.4 ]
+}
 tracks/13/type = "value"
-tracks/13/path = NodePath("hum:pitch_scale")
+tracks/13/path = NodePath("hum2:pitch_scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -284,27 +262,15 @@ tracks/13/keys = {
 "times": PoolRealArray( 0, 2.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.7, 0.4 ]
+"values": [ 0.5, 0.4 ]
 }
-tracks/14/type = "value"
-tracks/14/path = NodePath("hum2:pitch_scale")
+tracks/14/type = "method"
+tracks/14/path = NodePath("blocks")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
 tracks/14/enabled = true
 tracks/14/keys = {
-"times": PoolRealArray( 0, 2.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.5, 0.4 ]
-}
-tracks/15/type = "method"
-tracks/15/path = NodePath("blocks")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
 "times": PoolRealArray( 1.6, 4.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
@@ -315,13 +281,13 @@ tracks/15/keys = {
 "method": "stop"
 } ]
 }
-tracks/16/type = "method"
-tracks/16/path = NodePath("disappear")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/keys = {
+tracks/15/type = "method"
+tracks/15/path = NodePath("disappear")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
 "times": PoolRealArray( 3.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -330,7 +296,7 @@ tracks/16/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("body/diamond:mesh:material:albedo_color")
 tracks/0/interp = 1
@@ -425,26 +391,10 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="SphereShape" id=12]
+[sub_resource type="SphereShape" id=11]
 radius = 300.0
 
-[sub_resource type="ParticlesMaterial" id=13]
-emission_shape = 1
-emission_sphere_radius = 1.0
-flag_align_y = true
-direction = Vector3( 0, 12, 0 )
-spread = 66.64
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 5.0
-initial_velocity_random = 0.39
-angular_velocity_random = 1.0
-radial_accel = 1.0
-angle = 309.7
-angle_random = 0.99
-scale = 15.0
-scale_random = 0.7
-
-[sub_resource type="SpatialMaterial" id=14]
+[sub_resource type="SpatialMaterial" id=12]
 resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
@@ -453,22 +403,38 @@ params_billboard_mode = 2
 params_billboard_keep_scale = true
 albedo_color = Color( 0.6, 0.145098, 0.145098, 0.768627 )
 
-[sub_resource type="PlaneMesh" id=15]
-material = SubResource( 14 )
-size = Vector2( 0.05, 0.05 )
+[sub_resource type="ParticlesMaterial" id=13]
+emission_shape = 1
+emission_sphere_radius = 0.1
+flag_align_y = true
+direction = Vector3( 0, 0, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity_random = 0.39
+angular_velocity_random = 1.0
+radial_accel = 1.94
+angle = 720.0
+angle_random = 1.0
+scale = 15.0
+scale_random = 1.0
+
+[sub_resource type="CylinderMesh" id=14]
+top_radius = 0.01
+bottom_radius = 0.02
+height = 1.0
 
 [node name="tower" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="body" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, 0 )
 mesh = SubResource( 1 )
-material/0 = SubResource( 16 )
+material/0 = SubResource( 2 )
 
 [node name="main_body" type="StaticBody" parent="body"]
 
 [node name="CollisionShape" type="CollisionShape" parent="body/main_body"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="turret" parent="body" instance=ExtResource( 1 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 48.3133, 0 )
@@ -479,7 +445,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, -0.844832 )
 
 [node name="beam" type="MeshInstance" parent="body/turret/beam_point"]
 transform = Transform( 1, 0, 0, 0, 0.00366528, 0.999993, 0, -0.999993, 0.00366528, 0, 0, -0.5 )
-mesh = SubResource( 3 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="RayCast" type="RayCast" parent="body/turret"]
@@ -488,59 +454,36 @@ cast_to = Vector3( 0, 0, -300 )
 
 [node name="diamond" type="MeshInstance" parent="body"]
 transform = Transform( 0.662319, 0.749221, 0, -0.601355, 0.531604, 0.596463, 0.446883, -0.395049, 0.80264, 0, 48, -0.816 )
-mesh = SubResource( 4 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [node name="OmniLight" type="OmniLight" parent="body"]
-transform = Transform( 1.0055, 0, 0, 0, 1, 0, 0, 0, 1.0055, 0, 50.6444, 0 )
-light_color = Color( 0.901961, 0.14902, 0.14902, 1 )
-light_energy = 9.13
-shadow_enabled = true
-omni_range = 144.463
-omni_attenuation = 0.574349
-
-[node name="HealthBar3D" type="Sprite3D" parent="body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 62.6628, 0 )
-material_override = SubResource( 5 )
-cast_shadow = 0
-double_sided = false
-alpha_cut = 2
-script = ExtResource( 4 )
-
-[node name="Viewport" type="Viewport" parent="body/HealthBar3D"]
-size = Vector2( 2000, 200 )
-transparent_bg = true
-handle_input_locally = false
-hdr = false
-disable_3d = true
-usage = 0
-render_target_v_flip = true
-gui_disable_input = true
-
-[node name="ProgressBar" type="ProgressBar" parent="body/HealthBar3D/Viewport"]
-margin_right = 2000.0
-margin_bottom = 200.0
-custom_styles/fg = SubResource( 6 )
-custom_styles/bg = SubResource( 7 )
-value = 100.0
-percent_visible = false
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.1232, 0 )
+light_color = Color( 0.6, 0.145098, 0.145098, 1 )
+light_energy = 11.33
+omni_range = 187.8
+omni_attenuation = 0.757858
 __meta__ = {
-"_edit_use_anchors_": false,
 "_editor_description_": ""
 }
+
+[node name="HealthBar" parent="body" instance=ExtResource( 4 )]
 
 [node name="diamond_body" type="KinematicBody" parent="body"]
 transform = Transform( 0.861015, 0.973988, 0, -0.781762, 0.691085, 0.775402, 0.580948, -0.513564, 1.04343, 0, 48, -0.816 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="body/diamond_body"]
-shape = SubResource( 8 )
+shape = SubResource( 7 )
+
+[node name="health_point" type="Position3D" parent="body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 56.1732, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 0.3
-anims/cubeanim = SubResource( 9 )
-anims/die = SubResource( 10 )
-anims/rise = SubResource( 11 )
+anims/cubeanim = SubResource( 8 )
+anims/die = SubResource( 9 )
+anims/rise = SubResource( 10 )
 
 [node name="detect" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30143, 0 )
@@ -549,46 +492,50 @@ gravity_vec = Vector3( 0, 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
-monitoring = false
+monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="detect"]
-shape = SubResource( 12 )
+shape = SubResource( 11 )
 
 [node name="beamparticles" type="Particles" parent="."]
 visible = false
-amount = 40
-lifetime = 0.5
+material_override = SubResource( 12 )
+amount = 20
+speed_scale = 2.76
 local_coords = false
 process_material = SubResource( 13 )
-draw_pass_1 = SubResource( 15 )
+draw_pass_1 = SubResource( 14 )
 
 [node name="sear" type="AudioStreamPlayer3D" parent="beamparticles"]
 stream = ExtResource( 6 )
-unit_db = -15.0
-unit_size = 10.0
+unit_size = 3.0
 pitch_scale = 2.0
+max_distance = 350.0
 bus = "FX"
 
 [node name="OmniLight2" type="OmniLight" parent="beamparticles"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-light_color = Color( 0.901961, 0.14902, 0.14902, 1 )
-light_energy = 14.63
-shadow_enabled = true
-omni_range = 8.3
-omni_attenuation = 0.574349
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.887443, 0 )
+light_color = Color( 0.6, 0.145098, 0.145098, 1 )
+light_energy = 11.33
+omni_range = 9.7
+omni_attenuation = 0.757858
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="hum" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
-unit_db = -60.0
-unit_size = 90.0
+unit_db = -4.0
+unit_size = 5.0
 pitch_scale = 0.7
+max_distance = 750.0
 bus = "Ambience"
 
 [node name="hum2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
-unit_db = -60.0
-unit_size = 100.0
+unit_size = 6.0
 pitch_scale = 0.5
+max_distance = 1000.0
 bus = "Ambience"
 
 [node name="blocks" type="Spatial" parent="."]
@@ -603,31 +550,31 @@ timeout = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 8 )
-unit_size = 25.0
+max_distance = 300.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 9 )
-unit_size = 25.0
 pitch_scale = 1.2
+max_distance = 300.0
 bus = "FX"
 
 [node name="3" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 9 )
-unit_size = 25.0
 pitch_scale = 0.7
+max_distance = 300.0
 bus = "FX"
 
 [node name="4" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 10 )
-unit_size = 25.0
 pitch_scale = 0.7
+max_distance = 300.0
 bus = "FX"
 
 [node name="5" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 10 )
-unit_size = 25.0
 pitch_scale = 1.1
+max_distance = 300.0
 bus = "FX"
 
 [node name="rise" type="Spatial" parent="."]
@@ -636,7 +583,7 @@ script = ExtResource( 11 )
 [node name="1" type="AudioStreamPlayer3D" parent="rise"]
 stream = ExtResource( 12 )
 unit_db = 6.0
-unit_size = 50.0
+max_distance = 300.0
 bus = "FX"
 
 [node name="disappear" type="Spatial" parent="."]
@@ -644,13 +591,13 @@ script = ExtResource( 11 )
 
 [node name="1" type="AudioStreamPlayer3D" parent="disappear"]
 stream = ExtResource( 13 )
-unit_size = 100.0
 pitch_scale = 0.4
+max_distance = 300.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="disappear"]
 stream = ExtResource( 14 )
-unit_size = 100.0
 pitch_scale = 0.12
+max_distance = 300.0
 bus = "FX"
 [connection signal="body_entered" from="detect" to="." method="on_enter"]
