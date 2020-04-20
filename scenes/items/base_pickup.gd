@@ -59,7 +59,7 @@ func _process(_delta):
 		$item.rotation += Vector3(0,spin_factor,0)
 		spin_factor += 0.01
 	if !inside: return
-	$popup_pivot.look_at(player.translation + Vector3(0,4,0), Vector3(0,1,0))
+	$popup_pivot.look_at(player.cam.global_transform.origin, Vector3(0,1,0))
 	get_input()
 
 func get_input():

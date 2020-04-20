@@ -13,6 +13,7 @@ onready var turret = $body/turret
 onready var ray = $body/turret/RayCast
 onready var bp = $body/turret/beam_point
 onready var healthbar = $body/HealthBar
+onready var game = get_node("../../")
 
 signal destroyed
 
@@ -39,6 +40,7 @@ func hit(amnt, loc, nrml):
 		die()
 
 func die():
+	game.danger -= 10
 	active = false
 	$beamparticles.visible = false
 	$beamparticles/sear.stop()
@@ -78,6 +80,7 @@ func begin_rumble():
 
 func activate():
 	set_hp_point()
+	game.danger += 10
 	spos = global_transform.origin
 	turret.active = true
 	ray.enabled = true

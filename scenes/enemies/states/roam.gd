@@ -4,7 +4,6 @@ onready var parent = get_node("../../")
 
 func enter():
 	parent.anim.play("walk")
-	parent.track_int = parent.idle_track
 	parent.anim.playback_speed = 1.0
 	parent.reacq.connect("timeout", self, "acquire")
 	parent.reacq.start(parent.reacquire_speed)

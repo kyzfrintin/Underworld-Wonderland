@@ -7,7 +7,7 @@ func on_death():
 		$attack_tween.stop(self, "translation")
 
 func charge():
-	var cpos : Vector3 = global_transform.origin
+	var cpos : Vector3 = player_pos
 	var ppos : Vector3 = player.global_transform.origin
 	face_target(ppos)
 	var dis : float = cpos.distance_to(ppos)

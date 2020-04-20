@@ -34,7 +34,7 @@ func _update(beat):
 			num += max_range
 			num /= (max_range - min_range)
 		num *= (get_child_count())
-		layer = clamp(floor(num), 0, get_child_count())
+		layer = clamp(floor(num), -1, get_child_count())
 	match play_style:
 		0:
 			layer_min = -1
@@ -69,6 +69,5 @@ func _fade_to(target, vol):
 		if vol == 0:
 			if cvol != vol:
 				target.volume_db = 0
-				print('full volume')
 		elif cvol != vol:
 			target.volume_db = vol

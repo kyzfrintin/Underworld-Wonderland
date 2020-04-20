@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/proc gen/EnemySpawner.gd" type="Script" id=1]
-[ext_resource path="res://scenes/enemies/uni_llama.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/enemies/flying_spitter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/enemies/cube_enem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/enemies/uni_llama.tscn" type="PackedScene" id=4]
 
 [node name="EnemySpawner" type="Spatial"]
 script = ExtResource( 1 )
@@ -20,7 +21,7 @@ one_shot = true
 autostart = true
 
 [node name="EnemyPool" type="ResourcePreloader" parent="."]
-resources = [ PoolStringArray( "cube_enem", "uni_llama" ), [ ExtResource( 3 ), ExtResource( 2 ) ] ]
+resources = [ PoolStringArray( "cube_enem", "flying_spitter", "uni_llama" ), [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ] ]
 [connection signal="timeout" from="countdown" to="." method="spawn_enemies"]
 [connection signal="timeout" from="diff_countdown" to="." method="increase_difficulty"]
 [connection signal="timeout" from="recount_enemies" to="." method="count_enemies"]

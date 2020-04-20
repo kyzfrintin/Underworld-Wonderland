@@ -42,6 +42,10 @@ func update():
 	track_attack()
 	if dis > parent.max_attack_range:
 		parent.restate("chase")
+	if !parent.player_dead:
+		var ppos = parent.player.global_transform.origin
+		if parent.player_pos.distance_to(ppos) > (parent.track_speed * 1.5):
+			parent.player_pos += (parent.player_pos.direction_to(ppos) * parent.track_speed)
 
 func exit():
 	pass

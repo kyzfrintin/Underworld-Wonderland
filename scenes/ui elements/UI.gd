@@ -21,11 +21,12 @@ func pause():
 	pause_menu.show()
 	pause_menu.grab_focus()
 	
-func died():
+func died(stats):
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	crosshair.hide()
 	weapons_panel.hide()
 	death_menu.show()
+	death_menu.get_node("Center/Menu/Killed").text = ("Creeps killed: %s" % stats["killed"])
 	death_menu.grab_focus()
 
 func resume():

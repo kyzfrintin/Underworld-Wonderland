@@ -31,7 +31,7 @@ resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
-albedo_color = Color( 0.6, 0.145098, 0.145098, 0.85098 )
+albedo_color = Color( 0.6, 0.145098, 0.145098, 0 )
 
 [sub_resource type="CylinderMesh" id=5]
 resource_local_to_scene = true
@@ -345,7 +345,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ -60.0, -4.0 ]
+"values": [ -60.0, 0.0 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("hum2:unit_db")
@@ -357,7 +357,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ -60.0, 0.0 ]
+"values": [ -60.0, 5.0 ]
 }
 tracks/5/type = "method"
 tracks/5/path = NodePath("rise")
@@ -389,6 +389,18 @@ tracks/6/keys = {
 "args": [  ],
 "method": "stop"
 } ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("body/OmniLight:light_energy")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1.8025, 1 ),
+"update": 0,
+"values": [ 0.0, 11.33 ]
 }
 
 [sub_resource type="SphereShape" id=11]
@@ -427,7 +439,7 @@ height = 1.0
 script = ExtResource( 2 )
 
 [node name="body" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
@@ -460,7 +472,7 @@ material/0 = null
 [node name="OmniLight" type="OmniLight" parent="body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.1232, 0 )
 light_color = Color( 0.6, 0.145098, 0.145098, 1 )
-light_energy = 11.33
+light_energy = 0.0
 omni_range = 187.8
 omni_attenuation = 0.757858
 __meta__ = {
@@ -508,7 +520,6 @@ draw_pass_1 = SubResource( 14 )
 
 [node name="sear" type="AudioStreamPlayer3D" parent="beamparticles"]
 stream = ExtResource( 6 )
-unit_size = 3.0
 pitch_scale = 2.0
 max_distance = 350.0
 bus = "FX"
@@ -525,7 +536,7 @@ __meta__ = {
 
 [node name="hum" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
-unit_db = -4.0
+unit_db = -60.0
 unit_size = 5.0
 pitch_scale = 0.7
 max_distance = 750.0
@@ -533,6 +544,7 @@ bus = "Ambience"
 
 [node name="hum2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
+unit_db = -60.0
 unit_size = 6.0
 pitch_scale = 0.5
 max_distance = 1000.0
@@ -550,54 +562,70 @@ timeout = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 8 )
-max_distance = 300.0
+unit_size = 4.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 9 )
+unit_size = 4.0
 pitch_scale = 1.2
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="3" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 9 )
+unit_size = 4.0
 pitch_scale = 0.7
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="4" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 10 )
+unit_size = 4.0
 pitch_scale = 0.7
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="5" type="AudioStreamPlayer3D" parent="blocks"]
 stream = ExtResource( 10 )
+unit_size = 4.0
 pitch_scale = 1.1
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="rise" type="Spatial" parent="."]
 script = ExtResource( 11 )
+spawn_node = NodePath("")
+autoplay = false
+volume_range = 0.0
+pitch_range = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="rise"]
 stream = ExtResource( 12 )
 unit_db = 6.0
-max_distance = 300.0
+unit_size = 4.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="disappear" type="Spatial" parent="."]
 script = ExtResource( 11 )
+spawn_node = NodePath("")
+autoplay = false
+volume_range = 0.0
+pitch_range = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="disappear"]
 stream = ExtResource( 13 )
+unit_size = 4.0
 pitch_scale = 0.4
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="disappear"]
 stream = ExtResource( 14 )
+unit_size = 4.0
 pitch_scale = 0.12
-max_distance = 300.0
+max_distance = 1000.0
 bus = "FX"
 [connection signal="body_entered" from="detect" to="." method="on_enter"]

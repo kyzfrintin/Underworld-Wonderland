@@ -274,29 +274,35 @@ material/0 = SubResource( 7 )
 
 [node name="shoot" type="Spatial" parent="."]
 script = ExtResource( 6 )
+spawn_node = NodePath("")
+autoplay = false
 volume_range = 0.3
 pitch_range = 0.04
 
 [node name="1" type="AudioStreamPlayer3D" parent="shoot"]
 stream = ExtResource( 7 )
+unit_db = -4.974
 pitch_scale = 0.8
 max_distance = 250.0
 bus = "FX"
 
 [node name="shoot2" type="Spatial" parent="."]
 script = ExtResource( 6 )
+spawn_node = NodePath("")
+autoplay = false
 volume_range = 0.3
 pitch_range = 0.04
 
 [node name="1" type="AudioStreamPlayer3D" parent="shoot2"]
 stream = ExtResource( 7 )
+unit_db = -4.0
 pitch_scale = 0.4
 max_distance = 250.0
 bus = "FX"
 
 [node name="2" type="AudioStreamPlayer3D" parent="shoot2"]
 stream = ExtResource( 9 )
-unit_db = -7.0
+unit_db = -11.0
 pitch_scale = 0.4
 max_distance = 250.0
 bus = "FX"

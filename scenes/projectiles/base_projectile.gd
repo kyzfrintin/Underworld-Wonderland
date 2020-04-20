@@ -11,6 +11,7 @@ var dir
 var active
 var swarm
 var friendly
+var damage
 
 func _ready():
 	connect("area_entered", self, "collide")
@@ -34,11 +35,9 @@ func collide(body):
 	on_contact(translation)
 	if body.has_method("hit"):
 		if !body.friendly == friendly:
-			print('collided with %s' % body.name)
-			print('projecile is %s' % type)
 			match type:
 				"Absorb":
-					body.hit(parent.primary_damage, translation, body.global_transform.origin.direction_to(translation))
+					body.hit(damage, translation, body.global_transform.origin.direction_to(translation))
 				"AOE":
 					var s = spawner.instance()
 					s.translation = translation

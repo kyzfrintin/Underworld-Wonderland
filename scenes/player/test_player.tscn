@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/player/3rdPersonController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://scenes/ui elements/SecondaryCooldown.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=6]
 [ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=7]
-[ext_resource path="res://scenes/weapons/plasmarifle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/shaders/nfc_particles.tres" type="Material" id=9]
 [ext_resource path="res://assets/audio/sound/character/levelup_woosh.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/sound/character/levelup_hum.wav" type="AudioStream" id=11]
@@ -50,7 +49,7 @@ MaxZoom = 0.15
 [node name="WeaponMountR" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.832, 0, -1.282 )
 
-[node name="plasmarifle" parent="WeaponMountR" instance=ExtResource( 8 )]
+[node name="stick" parent="WeaponMountR" instance=ExtResource( 3 )]
 
 [node name="hand" type="MeshInstance" parent="WeaponMountR"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.283075, 1.23728 )
@@ -93,6 +92,8 @@ transform = Transform( 0.1, 0, 0, 0, 0.0881864, 0.0471504, 0, -0.0471504, 0.0881
 
 [node name="jump" type="Spatial" parent="."]
 script = ExtResource( 6 )
+spawn_node = NodePath("")
+autoplay = false
 volume_range = 2.0
 pitch_range = 0.2
 
@@ -104,6 +105,8 @@ bus = "FX"
 
 [node name="levelup" type="Spatial" parent="."]
 script = ExtResource( 6 )
+spawn_node = NodePath("")
+autoplay = false
 volume_range = 2.0
 pitch_range = 0.2
 

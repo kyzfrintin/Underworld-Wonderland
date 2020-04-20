@@ -11,7 +11,6 @@ export var attack_speed = 30
 export var max_attack_range = 150
 export var reacquire_speed = 0.2
 export var track_time = 0.3
-export var idle_track = 0.5
 export var track_int = 0.5
 export var enem_name : String
 export var attack_dict : Dictionary = {
@@ -33,6 +32,8 @@ var path : PoolVector3Array
 var path_draw
 var state = "emerge"
 var target_loc = Vector3()
+var player_pos = Vector3()
+var track_speed : float = (attack_speed / 15)
 var player_dead = false
 var attack_enabled_array = []
 var attack_state = []
@@ -72,7 +73,7 @@ func hit(amnt, loc, nrml):
 	if (state == "idle") or (state == "roam"):
 		restate("chase")
 	if health <= 0:
-		die()
+		restate("die")
 
 func generate_attack_array():
 	var attacks : Dictionary = attack_dict
@@ -98,7 +99,10 @@ func get_path_to(pos=null):
 		spot = pos
 	spot = nav_spot(spot)
 	path = nav.get_simple_path(loc, spot)
-	path_updated()
+	if path:
+		path_updated()
+	else:
+		get_path_to()
 
 func path_updated():
 	target_loc = path[0]
@@ -135,33 +139,24 @@ func face_target(loc=target_loc):
 #	instant method
 	if loc != target_loc:
 		target_loc = loc
-	look_at(target_loc, Vector3(0,1,0))
+	$body.look_at(target_loc, Vector3(0,1,0))
 #	tween method
-#	var obj_scale: Vector3 = agent.global_transform.basis.get_scale()
-#	var target_transform: Transform = agent.global_transform.looking_at(target_loc, Vector3(0,1,0))
+#	var obj_scale: Vector3 = $body.global_transform.basis.get_scale()
+#	var target_transform: Transform = $body.global_transform.looking_at(target_loc, Vector3(0,1,0))
 #	target_transform.basis = target_transform.basis.scaled(obj_scale)
-#	var trans = agent.transform.looking_at(target_loc, Vector3(0,1,0))
+#	var trans = $body.transform.looking_at(target_loc, Vector3(0,1,0))
 #	var rot = trans.basis.get_euler()
-#	agent.turn.interpolate_property(agent, "global_transform", agent.global_transform, target_transform, agent.track_time, Tween.TRANS_LINEAR, Tween.EASE_IN)
-#	agent.turn.start()
-	retarget.start(track_int)
+#	$turn.interpolate_property($body, "global_transform", $body.global_transform, target_transform, track_time, Tween.TRANS_LINEAR, Tween.EASE_IN)
+#	$turn.start()
+#	retarget.start(track_int)
 
 func attack_cooldown(num):
 	attack_enabled_array[num] = true
 	
 func spawn_damage_number(num):
 	var dnum = dnum_res.instance()
-	dnum.wake(num, $HealthPoint.global_transform.origin, get_viewport())
+	dnum.wake(num, $body/HealthPoint.global_transform.origin, get_viewport())
 	call_deferred("add_child", dnum)
-
-func die():
-	if dead: return
-	dead = true
-	$AnimationPlayer.stop()
-	on_death()
-	$CollisionShape.call_deferred("queue_free")
-	restate("die")
-	manager.allocated -= allocation
 
 func attack_over():
 	on_end_attack()
@@ -177,11 +172,9 @@ func delete():
 func spawned():
 	restate("idle")
 	manager.allocated += allocation
+	game.danger += allocation
 	$HealthBar.max_value = health
 	$HealthBar.value = health
-#	var pd = ImmediateGeometry.new()
-#	game.get_node("Paths").add_child(pd)
-#	path_draw = pd
 
 func can_see_player():
 	var ppos = player.global_transform.origin
@@ -201,13 +194,14 @@ func player_killed():
 	restate("roam")
 	
 func restate(newstate):
+	if state == newstate: return
 	get_node("states/" + state).exit()
 	get_node("states/" + newstate).enter()
 	state = newstate
 
 func _process(delta):
 	get_node("states/" + state).update()
-	$HealthBar.point = $HealthPoint.global_transform.origin
+	$HealthBar.point = $body/HealthPoint.global_transform.origin
 
 func entered(body):
 	if body.has_method("hit") and body.friendly:

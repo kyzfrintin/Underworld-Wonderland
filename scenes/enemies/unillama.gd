@@ -1,6 +1,8 @@
 extends base_enemy
 
 var can_stab = false
+export var targeting = false
+onready var beam = $body/laserbeam
 
 func on_death():
 	if $attack_tween.is_active():
@@ -8,7 +10,7 @@ func on_death():
 
 func charge():
 	var cpos : Vector3 = global_transform.origin
-	var ppos : Vector3 = player.global_transform.origin
+	var ppos : Vector3 = player_pos
 	var dis : float = cpos.distance_to(ppos)
 	var dir : Vector3 = cpos.direction_to(ppos)
 	var pos = (cpos + (dir * (dis - 2)))
@@ -17,15 +19,19 @@ func charge():
 	$attack_tween.interpolate_property(self, "translation", global_transform.origin, pos, (0.5*(dis/25)), Tween.TRANS_BACK, Tween.EASE_IN)
 	$attack_tween.start()
 
+func _process(delta):
+	if targeting:
+		beam_target()
+
 func beam_target():
-	var target_pos = player.global_transform.origin
+	var target_pos = player_pos
 	face_target(target_pos)
 	$cast.enabled = true
-	var loc = $laserbeam.global_transform.origin
+	var loc = beam.global_transform.origin
 	$cast.look_at(target_pos, Vector3(0,1,0))
-	$laserbeam.look_at(target_pos, Vector3(0,1,0))
+	beam.look_at(target_pos, Vector3(0,1,0))
 	var cast_pos = $cast.get_collision_point()
-	$laserbeam.scale.z = loc.distance_to(cast_pos) * 5
+	beam.scale.z = loc.distance_to(cast_pos) * 5
 
 func beam_attack():
 	var col = $cast.get_collider()

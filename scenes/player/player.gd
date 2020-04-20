@@ -15,6 +15,10 @@ var xp = 0.0 setget set_xp
 var xp_threshold : int = 100
 var cash : int = 25
 
+var perf_stats : Dictionary = {
+	"killed": 0
+}
+
 var friendly = true
 var right_weapon
 var left_weapon
@@ -126,6 +130,7 @@ func level_up():
 func enemy_killed(xp_amnt):
 	cash += int(round((xp_amnt * 0.8) * cash_scale))
 	self.xp += xp_amnt
+	perf_stats["killed"] += 1
 	update_exp()
 
 func _ready():
@@ -145,9 +150,8 @@ func hit(amnt, loc, nrm):
 		spawn_damage_number(amnt)
 
 func die():
-	
 	call_deferred("remove_parts")
-	game.died()
+	game.died(perf_stats)
 
 func replace_weapon(right, weapon):
 	if right:

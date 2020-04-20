@@ -206,9 +206,9 @@ __meta__ = {
 
 [node name="Menu" type="VBoxContainer" parent="Main/MidScreen/retry/Center"]
 margin_left = 508.0
-margin_top = 215.0
+margin_top = 146.0
 margin_right = 892.0
-margin_bottom = 584.0
+margin_bottom = 654.0
 size_flags_horizontal = 3
 custom_constants/separation = 100
 alignment = 1
@@ -228,10 +228,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="try_again" type="Label" parent="Main/MidScreen/retry/Center/Menu"]
+[node name="Killed" type="Label" parent="Main/MidScreen/retry/Center/Menu"]
 margin_top = 190.0
 margin_right = 384.0
 margin_bottom = 229.0
+custom_fonts/font = SubResource( 6 )
+text = "Creeps killed: "
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="try_again2" type="Label" parent="Main/MidScreen/retry/Center/Menu"]
+margin_top = 329.0
+margin_right = 384.0
+margin_bottom = 368.0
 custom_fonts/font = SubResource( 6 )
 text = "Try again?"
 align = 1
@@ -240,9 +251,9 @@ __meta__ = {
 }
 
 [node name="Buttons" type="HBoxContainer" parent="Main/MidScreen/retry/Center/Menu"]
-margin_top = 329.0
+margin_top = 468.0
 margin_right = 384.0
-margin_bottom = 369.0
+margin_bottom = 508.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
