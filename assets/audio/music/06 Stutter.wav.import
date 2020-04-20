@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/06 Stutter.wav-4f3f93b031a624e3a4ea59a7fbd44daf.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/06 Stutter.wav"
+dest_files=[ "res://.import/06 Stutter.wav-4f3f93b031a624e3a4ea59a7fbd44daf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

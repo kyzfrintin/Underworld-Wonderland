@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/06 LeadSynth.wav-7b13c1f13c2b7490b778b4d8d080924c.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/06 LeadSynth.wav"
+dest_files=[ "res://.import/06 LeadSynth.wav-7b13c1f13c2b7490b778b4d8d080924c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

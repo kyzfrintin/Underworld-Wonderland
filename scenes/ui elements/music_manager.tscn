@@ -1,17 +1,26 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scenes/ui elements/music_manager.gd" type="Script" id=1]
 [ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=2]
-[ext_resource path="res://assets/audio/music/02 MT-PowerDrumKit.wav" type="AudioStream" id=3]
-[ext_resource path="res://assets/audio/music/04 Pad.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/audio/music/07 LeadGtr.wav" type="AudioStream" id=5]
-[ext_resource path="res://assets/audio/music/05 LeadSynth.wav" type="AudioStream" id=6]
-[ext_resource path="res://assets/audio/music/Strum Master.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/music/02 Drums.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/music/05 Pad.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/music/08 LeadGtr.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/music/06 LeadSynth.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/music/StrumDisto Master.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/audio/music/01 Toms.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/audio/music/06 Bass.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/music/07 Bass.wav" type="AudioStream" id=9]
 [ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=10]
 [ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=11]
 [ext_resource path="res://addons/mixing-desk/music/containers/autolayer_cont.gd" type="Script" id=12]
+[ext_resource path="res://assets/audio/music/01 Pluck.wav" type="AudioStream" id=13]
+[ext_resource path="res://assets/audio/music/06 Stutter.wav" type="AudioStream" id=14]
+[ext_resource path="res://assets/audio/music/07 Arp.wav" type="AudioStream" id=15]
+[ext_resource path="res://assets/audio/music/StrumClean Master.wav" type="AudioStream" id=16]
+[ext_resource path="res://assets/audio/music/03 Licks.wav" type="AudioStream" id=17]
+[ext_resource path="res://assets/audio/music/05 Riser.wav" type="AudioStream" id=18]
+[ext_resource path="res://assets/audio/music/04 Trem.wav" type="AudioStream" id=19]
+[ext_resource path="res://addons/mixing-desk/music/containers/ran_cont.gd" type="Script" id=20]
+[ext_resource path="res://addons/mixing-desk/music/containers/autofade_cont.gd" type="Script" id=21]
 
 [node name="music_manager" type="Node"]
 pause_mode = 2
@@ -38,7 +47,7 @@ stream = ExtResource( 4 )
 volume_db = -10.0
 bus = "Music"
 
-[node name="AutoLayerContainer" type="Node" parent="main_playlist/song1"]
+[node name="main_layers" type="Node" parent="main_playlist/song1"]
 script = ExtResource( 12 )
 layer_min = -1
 layer_max = -1
@@ -49,21 +58,96 @@ min_range = 1.0
 max_range = 6.0
 track_speed = 0.4
 
-[node name="toms" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
+[node name="toms" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 8 )
+volume_db = -10.0
 
-[node name="bass" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
+[node name="bass" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 9 )
+volume_db = -10.0
 
-[node name="drums" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
+[node name="drums" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 3 )
+volume_db = -10.0
 
-[node name="strum" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
+[node name="leadsynth" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="leadgtr" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
+stream = ExtResource( 5 )
+volume_db = -10.0
+
+[node name="guitar_switch" type="Node" parent="main_playlist/song1"]
+script = ExtResource( 12 )
+play_style = 1
+layer_min = -1
+layer_max = -1
+automate = true
+target_node = NodePath("../../..")
+target_property = "danger"
+min_range = 2.0
+max_range = 5.0
+track_speed = 0.4
+
+[node name="clean" type="AudioStreamPlayer" parent="main_playlist/song1/guitar_switch"]
+stream = ExtResource( 16 )
+volume_db = -10.715
+
+[node name="disto" type="AudioStreamPlayer" parent="main_playlist/song1/guitar_switch"]
 stream = ExtResource( 7 )
 volume_db = -10.715
 
-[node name="leadsynth" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
-stream = ExtResource( 6 )
+[node name="ran_leads" type="Node" parent="main_playlist/song1"]
+script = ExtResource( 21 )
+target_node = NodePath("../../..")
+target_property = "danger"
+min_range = 2.0
+max_range = 5.0
+track_speed = 0.678
 
-[node name="leadgtr" type="AudioStreamPlayer" parent="main_playlist/song1/AutoLayerContainer"]
-stream = ExtResource( 5 )
+[node name="licks" type="AudioStreamPlayer" parent="main_playlist/song1/ran_leads"]
+stream = ExtResource( 17 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="trem" type="AudioStreamPlayer" parent="main_playlist/song1/ran_leads"]
+stream = ExtResource( 19 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="ran_atmo" type="Node" parent="main_playlist/song1"]
+script = ExtResource( 21 )
+target_node = NodePath("../../..")
+target_property = "danger"
+max_range = 3.0
+track_speed = 0.678
+
+[node name="pluck1" type="AudioStreamPlayer" parent="main_playlist/song1/ran_atmo"]
+stream = ExtResource( 13 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="pluck2" type="AudioStreamPlayer" parent="main_playlist/song1/ran_atmo"]
+stream = ExtResource( 19 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="ransynth" type="Node" parent="main_playlist/song1"]
+script = ExtResource( 20 )
+random_chance = 0.5
+
+[node name="riser" type="AudioStreamPlayer" parent="main_playlist/song1/ransynth"]
+stream = ExtResource( 18 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="arp" type="AudioStreamPlayer" parent="main_playlist/song1/ransynth"]
+stream = ExtResource( 15 )
+volume_db = -10.0
+bus = "Music"
+
+[node name="stutter" type="AudioStreamPlayer" parent="main_playlist/song1/ransynth"]
+stream = ExtResource( 14 )
+volume_db = -10.0
+bus = "Music"

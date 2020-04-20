@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/StrumClean Master.wav-3bea1922531b0002fcc3a278d2e4ae5c.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/StrumClean Master.wav"
+dest_files=[ "res://.import/StrumClean Master.wav-3bea1922531b0002fcc3a278d2e4ae5c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

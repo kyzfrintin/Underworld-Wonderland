@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/03 Licks.wav-cb63f61ed3322e20c27e4603cc37dda7.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/03 Licks.wav"
+dest_files=[ "res://.import/03 Licks.wav-cb63f61ed3322e20c27e4603cc37dda7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
