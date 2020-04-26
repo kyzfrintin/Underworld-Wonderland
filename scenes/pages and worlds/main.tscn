@@ -10,7 +10,7 @@
 
 [node name="main" type="Spatial"]
 script = ExtResource( 7 )
-random_range = 460
+random_range = 250
 
 [node name="LightsAndFX" type="Spatial" parent="."]
 
@@ -35,7 +35,7 @@ directional_shadow_max_distance = 42.7
 [node name="World" parent="." instance=ExtResource( 4 )]
 
 [node name="player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.141368, 0, -0.989957, 0, 1, 0, 0.989957, 0, 0.141368, 0, 320, 0 )
+transform = Transform( 0.141368, 0, -0.989957, 0, 1, 0, 0.989957, 0, 0.141368, 0, 500, 0 )
 
 [node name="Enemies" type="Spatial" parent="."]
 
@@ -54,6 +54,7 @@ diff_level_interval = 45
 spawn_max_distance = 10
 
 [node name="StructureSpawner" parent="." instance=ExtResource( 1 )]
+enabled = false
 root_path = NodePath("../Structures")
 max_num = 2
 min_height = -30.0
@@ -61,6 +62,7 @@ max_height = 0.0
 spawn_range = 400.0
 
 [node name="PickUpSpawner" parent="." instance=ExtResource( 10 )]
+enabled = false
 root_path = NodePath("../Items")
 min_height = 2.0
 max_height = 5.0

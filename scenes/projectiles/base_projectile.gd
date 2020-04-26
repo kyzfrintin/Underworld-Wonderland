@@ -6,6 +6,7 @@ export (float) var speed
 export (String, "Absorb", "AOE", "Timed", "Aura") var type = "Absorb"
 export (PackedScene) var spawner
 
+var destination
 var parent
 var dir
 var active
@@ -48,8 +49,9 @@ func on_contact(loc):
 	pass
 
 func _process(delta):
-	if $MeshInstance.scale < Vector3(1,1,1):
-		$MeshInstance.scale += Vector3(0.07,0.07,0.07)
+	if swarm:
+		if $MeshInstance.scale < Vector3(1,1,1):
+			$MeshInstance.scale += Vector3(0.07,0.07,0.07)
 	if active:
 		translate(dir*speed)
 

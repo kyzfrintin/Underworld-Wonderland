@@ -41,11 +41,14 @@ func _update(beat):
 			for i in get_children():
 				_fade_to(i, -60)
 
+func is_equal(a : float,b : float):
+	return int(a) == int(b)
+
 func _fade_to(target, vol):
 	var is_match
 	var cvol = target.volume_db
 	var sum = vol - cvol
-	is_match = abs(cvol-vol) < .01
+	is_match = is_equal(cvol,vol)
 	if !is_match:
 		cvol = lerp(cvol,vol,track_speed)
 		target.volume_db = cvol

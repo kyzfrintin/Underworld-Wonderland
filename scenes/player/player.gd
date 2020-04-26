@@ -202,7 +202,10 @@ func _process(delta):
 	var cp = ray.get_node("cast_point").global_transform.origin
 	right_weapon.look_at(cp, Vector3(0,1,0))
 	left_weapon.look_at(cp, Vector3(0,1,0))
-	cast_point = cp
+	if ray.is_colliding():
+		cast_point = ray.get_collision_point()
+	else:
+		cast_point = cp
 	$WeaponMountR/Cooldown/Viewport/ProgressBar.value = ((right_weapon.cooldown.time_left) * -1 + right_weapon.cooldown.wait_time)
 	$WeaponMountL/Cooldown/Viewport/ProgressBar.value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)
 	$WeaponMountL/Cooldown/Viewport/ProgressBar.value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)

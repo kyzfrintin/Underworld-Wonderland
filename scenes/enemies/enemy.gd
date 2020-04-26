@@ -33,11 +33,12 @@ var path_draw
 var state = "emerge"
 var target_loc = Vector3()
 var player_pos = Vector3()
-var track_speed : float = (attack_speed / 15)
+var track_speed : float = (attack_speed / 25)
 var player_dead = false
 var attack_enabled_array = []
 var attack_state = []
 
+onready var true_pos = get_node("body/TruePos")
 onready var game = get_node("../../")
 onready var nav = game.get_node("World/Navigation")
 onready var player = get_node("../../player")

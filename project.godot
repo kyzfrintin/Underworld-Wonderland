@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/qodot/src/resources/game-definitions/trenchbroom/trenchbroom_tag.gd"
 }, {
+"base": "weapon",
+"class": "aoe_weapon",
+"language": "GDScript",
+"path": "res://scenes/weapons/aoe_weapon.gd"
+}, {
 "base": "Area",
 "class": "base_enemy",
 "language": "GDScript",
@@ -214,6 +219,7 @@ _global_script_class_icons={
 "TrenchBroomGameConfigFile": "",
 "TrenchBroomGameConfigFolder": "",
 "TrenchBroomTag": "",
+"aoe_weapon": "",
 "base_enemy": "",
 "buff_item": "",
 "effect_item": "",

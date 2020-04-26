@@ -458,6 +458,8 @@ bus = "FX"
 
 [node name="woosh" type="Spatial" parent="throw"]
 script = ExtResource( 5 )
+spawn_node = NodePath("")
+autoplay = false
 volume_range = 3.0
 pitch_range = 0.1
 

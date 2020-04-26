@@ -56,27 +56,27 @@ target_node = NodePath("../../..")
 target_property = "danger"
 min_range = 1.0
 max_range = 6.0
-track_speed = 0.4
+track_speed = 0.3
 
 [node name="toms" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 8 )
-volume_db = -10.0
+volume_db = -60.0
 
 [node name="bass" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 9 )
-volume_db = -10.0
+volume_db = -60.0
 
 [node name="drums" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 3 )
-volume_db = -10.0
+volume_db = -60.0
 
 [node name="leadsynth" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 6 )
-volume_db = -10.0
+volume_db = -60.0
 
 [node name="leadgtr" type="AudioStreamPlayer" parent="main_playlist/song1/main_layers"]
 stream = ExtResource( 5 )
-volume_db = -10.0
+volume_db = -60.0
 
 [node name="guitar_switch" type="Node" parent="main_playlist/song1"]
 script = ExtResource( 12 )
@@ -86,34 +86,34 @@ layer_max = -1
 automate = true
 target_node = NodePath("../../..")
 target_property = "danger"
-min_range = 2.0
+min_range = 4.0
 max_range = 5.0
-track_speed = 0.4
+track_speed = 0.3
 
 [node name="clean" type="AudioStreamPlayer" parent="main_playlist/song1/guitar_switch"]
 stream = ExtResource( 16 )
-volume_db = -10.715
+volume_db = -60.0
 
 [node name="disto" type="AudioStreamPlayer" parent="main_playlist/song1/guitar_switch"]
 stream = ExtResource( 7 )
-volume_db = -10.715
+volume_db = -60.0
 
 [node name="ran_leads" type="Node" parent="main_playlist/song1"]
 script = ExtResource( 21 )
 target_node = NodePath("../../..")
 target_property = "danger"
-min_range = 2.0
+min_range = 3.0
 max_range = 5.0
-track_speed = 0.678
+track_speed = 0.3
 
 [node name="licks" type="AudioStreamPlayer" parent="main_playlist/song1/ran_leads"]
 stream = ExtResource( 17 )
-volume_db = -10.0
+volume_db = -60.0
 bus = "Music"
 
 [node name="trem" type="AudioStreamPlayer" parent="main_playlist/song1/ran_leads"]
 stream = ExtResource( 19 )
-volume_db = -10.0
+volume_db = -60.0
 bus = "Music"
 
 [node name="ran_atmo" type="Node" parent="main_playlist/song1"]
@@ -121,16 +121,16 @@ script = ExtResource( 21 )
 target_node = NodePath("../../..")
 target_property = "danger"
 max_range = 3.0
-track_speed = 0.678
+track_speed = 0.3
 
 [node name="pluck1" type="AudioStreamPlayer" parent="main_playlist/song1/ran_atmo"]
 stream = ExtResource( 13 )
-volume_db = -10.0
+volume_db = -60.0
 bus = "Music"
 
 [node name="pluck2" type="AudioStreamPlayer" parent="main_playlist/song1/ran_atmo"]
 stream = ExtResource( 19 )
-volume_db = -10.0
+volume_db = -60.0
 bus = "Music"
 
 [node name="ransynth" type="Node" parent="main_playlist/song1"]
@@ -139,7 +139,7 @@ random_chance = 0.5
 
 [node name="riser" type="AudioStreamPlayer" parent="main_playlist/song1/ransynth"]
 stream = ExtResource( 18 )
-volume_db = -10.0
+volume_db = -15.0
 bus = "Music"
 
 [node name="arp" type="AudioStreamPlayer" parent="main_playlist/song1/ransynth"]

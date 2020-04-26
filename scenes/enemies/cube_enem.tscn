@@ -253,7 +253,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.86301, 0 )
 shape = SubResource( 6 )
 
 [node name="cube" type="MeshInstance" parent="body" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0 )
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
 

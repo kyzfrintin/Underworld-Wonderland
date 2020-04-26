@@ -56,12 +56,15 @@ func _fade_layers():
 				_fade_to(child,-60)
 			else:
 				_fade_to(child,0)
+				
+func is_equal(a : float,b : float):
+	return int(a) == int(b)
 
 func _fade_to(target, vol):
 	var is_match
 	var cvol = target.volume_db
 	var sum = vol - cvol
-	is_match = abs(cvol-vol) < .01
+	is_match = is_equal(vol,cvol)
 	if !is_match:
 		cvol = lerp(cvol,vol,track_speed)
 		target.volume_db = cvol

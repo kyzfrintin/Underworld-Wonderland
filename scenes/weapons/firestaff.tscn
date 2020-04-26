@@ -167,20 +167,12 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath("AnimationPlayer")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawn_projectile"
+} ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -282,7 +274,7 @@ projectile = ExtResource( 5 )
 launch_point = NodePath("meshes/launch_point")
 
 [node name="meshes" type="Spatial" parent="."]
-transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0.172631 )
+transform = Transform( 0.4, 0, 0, 0, -1.74846e-08, 0.4, 0, -0.4, -1.74846e-08, 0, 0, 0.172631 )
 
 [node name="Orb" type="MeshInstance" parent="meshes"]
 transform = Transform( 22, 0, 0, 0, -9.61651e-07, 650, 0, -22, -2.84124e-05, 0, 0, 0 )

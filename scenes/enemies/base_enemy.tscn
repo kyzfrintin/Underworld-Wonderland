@@ -234,6 +234,8 @@ cast_to = Vector3( 0, 0, -350 )
 [node name="HealthPoint" type="Position3D" parent="body"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1.80636e-07, -4.13246 )
 
+[node name="TruePos" type="Position3D" parent="body"]
+
 [node name="HealthBar" parent="." instance=ExtResource( 11 )]
 
 [node name="detect" type="Area" parent="."]

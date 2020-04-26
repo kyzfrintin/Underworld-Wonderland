@@ -9,7 +9,6 @@ var projectiles : Array = []
 
 func attack():
 	$AnimationPlayer.play("primary_attack")
-	spawn_projectile()
 
 func spawn_projectile():
 	var point = get_node(launch_point).global_transform.origin
@@ -20,6 +19,7 @@ func spawn_projectile():
 	proj.damage = primary_damage
 	proj.get_node("spawn_sound").spawn_node = self
 	proj.dir = point.direction_to(parent.cast_point)
+	proj.destination = parent.cast_point
 	parent.game.proj.add_child(proj)
 	projectiles.append(proj)
 	

@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
+[ext_resource path="res://scenes/weapons/elfbow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/plasmarifle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/items/weapon_spawner.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/lasersword.tscn" type="PackedScene" id=4]
@@ -178,7 +179,7 @@ omni_range = 7.7049
 omni_attenuation = 0.757858
 
 [node name="WeaponList" type="ResourcePreloader" parent="."]
-resources = [ PoolStringArray( "Dragonslaying Sword", "Fire Staff", "Laser Sword", "Plasma Rifle" ), [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 2 ) ] ]
+resources = [ PoolStringArray( "Dragonslaying Sword", "Elven Greatbow", "Fire Staff", "Laser Sword", "Plasma Rifle" ), [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 2 ) ] ]
 
 [node name="popup_pivot" type="Spatial" parent="."]
 
