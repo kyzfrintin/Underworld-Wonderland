@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/meshes/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scenes/projectiles/arrow.gd" type="Script" id=2]
-[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=3]
+[ext_resource path="res://assets/audio/sound/weapons/loop_woosh.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=4]
+[ext_resource path="res://addons/mixing-desk/sound/3d/ran_cont.gd" type="Script" id=5]
+[ext_resource path="res://assets/audio/sound/weapons/arrow_hit-01.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/sound/weapons/arrow_hit-02.wav" type="AudioStream" id=7]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 1 )
@@ -12,14 +16,14 @@ height = 8.0
 radial_segments = 6
 rings = 1
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=2]
 resource_name = "Material.001"
 params_cull_mode = 2
 albedo_color = Color( 0.580392, 0.580392, 0.580392, 1 )
 roughness = 0.75
 
 [sub_resource type="CylinderMesh" id=3]
-material = SubResource( 7 )
+material = SubResource( 2 )
 top_radius = 0.18
 bottom_radius = 0.03
 height = 0.6
@@ -60,12 +64,44 @@ shape = SubResource( 4 )
 wait_time = 10.0
 one_shot = true
 
-[node name="spawn_sound" type="Spatial" parent="."]
-script = ExtResource( 3 )
-spawn_node = NodePath("")
-autoplay = false
-volume_range = 0.0
-pitch_range = 0.0
+[node name="loop_woosh" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+pitch_scale = 2.0
+autoplay = true
+max_distance = 500.0
+bus = "FX"
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="spawn_sound"]
+[node name="spawn_sound" type="Spatial" parent="."]
+script = ExtResource( 5 )
+volume_range = 4.0
+pitch_range = 0.2
+sound_number = 1
+
+[node name="1" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 4 )
+unit_db = -2.0
+unit_size = 2.0
+pitch_scale = 1.4
+max_distance = 750.0
+bus = "FX"
+
+[node name="hit" type="Spatial" parent="."]
+script = ExtResource( 5 )
+volume_range = 5.0
+pitch_range = 0.3
+sound_number = 1
+
+[node name="1" type="AudioStreamPlayer3D" parent="hit"]
+stream = ExtResource( 6 )
+unit_db = -5.0
+pitch_scale = 1.8
+max_distance = 600.0
+bus = "FX"
+
+[node name="2" type="AudioStreamPlayer3D" parent="hit"]
+stream = ExtResource( 7 )
+unit_db = -5.0
+pitch_scale = 1.8
+max_distance = 600.0
+bus = "FX"
 [connection signal="timeout" from="Timer" to="." method="remove"]

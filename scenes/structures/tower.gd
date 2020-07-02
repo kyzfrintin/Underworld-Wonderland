@@ -15,7 +15,7 @@ onready var bp = $body/turret/beam_point
 onready var healthbar = $body/HealthBar
 onready var game = get_node("../../")
 
-signal destroyed
+signal death
 
 func _ready():
 	healthbar.max_value = hp
@@ -30,7 +30,7 @@ func on_enter(body : Object):
 			turret.target = body
 			$detect.queue_free()
 			body.connect("death", self, "killed")
-			connect("destroyed", body, "enemy_killed")
+			connect("death", body, "enemy_killed")
 
 func hit(amnt, loc, nrml):
 	hp -= amnt
@@ -40,6 +40,8 @@ func hit(amnt, loc, nrml):
 		die()
 
 func die():
+	emit_signal("death", 75)
+	$body/diamond_body.emit_signal("death", 0)
 	game.danger -= 10
 	active = false
 	$beamparticles.visible = false
@@ -47,9 +49,6 @@ func die():
 	$body/diamond_body.call_deferred("queue_free")
 	$AnimationPlayer.playback_speed = 0.7
 	$AnimationPlayer.play("die")
-
-func send_xp():
-	emit_signal("destroyed", 75)
 
 func _process(delta):
 	if active:

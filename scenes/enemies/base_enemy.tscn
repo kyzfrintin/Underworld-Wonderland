@@ -189,6 +189,7 @@ gravity_vec = Vector3( 0, 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
+collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="states" type="Node" parent="."]

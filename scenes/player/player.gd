@@ -23,6 +23,7 @@ var friendly = true
 var right_weapon
 var left_weapon
 var cast_point
+var cast_to : Vector3
 var healing = false setget set_healing
 var can_heal = true
 var in_bubble = false
@@ -92,6 +93,7 @@ func enter_first_person():
 	left_weapon.cast = ray
 	$DNumPoint.translation = Vector3(0,1.5,-3)
 	$body_pivot.hide()
+	AudioServer.set_bus_volume_db(4, -5)
 	$Controller/InnerGimbal/Camera.current = false
 	$WeaponMountR.translation = Vector3(2.632, 0, -4.282)
 	$WeaponMountL.translation = Vector3(-2.732, 0, -4.282)
@@ -104,6 +106,7 @@ func exit_first_person():
 	left_weapon.cast = ray
 	$body_pivot.show()
 	$DNumPoint.translation = Vector3(0,3.5,0)
+	AudioServer.set_bus_volume_db(4, 0)
 	$Camera.current = false
 	$WeaponMountR.translation = Vector3(1.832, 0, -1.282)
 	$WeaponMountL.translation = Vector3(-1.826, 0, -1.282)
@@ -167,16 +170,16 @@ func weapon_changed(right, weapon):
 	if right:
 		right_weapon = weapon
 		right_weapon.equip()
-		$WeaponMountR/Cooldown/Viewport/ProgressBar.max_value = right_weapon.secondary_cooldown
-		right_weapon.cooldown_display = $WeaponMountR/Cooldown
+		wep_ui.get_node("RightWeaponPanel/2ndCD").max_value = right_weapon.secondary_cooldown
+		right_weapon.cooldown_display = wep_ui.get_node("RightWeaponPanel/2ndCD")
 		wep_ui.get_node("RightWeaponPanel/Icon").texture = right_weapon.icon
 		wep_ui.get_node("RightWeaponPanel/Label").text = right_weapon.wep_name
 		wep_ui.get_node("RightWeaponPanel/DPS").text = ("DPS: " + str(round(right_weapon.primary_damage / right_weapon.rate)))
 	else:
 		left_weapon = weapon
 		left_weapon.equip()
-		$WeaponMountL/Cooldown/Viewport/ProgressBar.max_value = left_weapon.secondary_cooldown
-		left_weapon.cooldown_display = $WeaponMountL/Cooldown
+		wep_ui.get_node("LeftWeaponPanel/2ndCD").max_value = left_weapon.secondary_cooldown
+		left_weapon.cooldown_display = wep_ui.get_node("LeftWeaponPanel/2ndCD")
 		wep_ui.get_node("LeftWeaponPanel/Icon").texture = left_weapon.icon
 		wep_ui.get_node("LeftWeaponPanel/Label").text = left_weapon.wep_name
 		wep_ui.get_node("LeftWeaponPanel/DPS").text = ("DPS: " + str(round(left_weapon.primary_damage / left_weapon.rate)))
@@ -202,14 +205,13 @@ func _process(delta):
 	var cp = ray.get_node("cast_point").global_transform.origin
 	right_weapon.look_at(cp, Vector3(0,1,0))
 	left_weapon.look_at(cp, Vector3(0,1,0))
+	cast_to = cp
 	if ray.is_colliding():
 		cast_point = ray.get_collision_point()
 	else:
 		cast_point = cp
-	$WeaponMountR/Cooldown/Viewport/ProgressBar.value = ((right_weapon.cooldown.time_left) * -1 + right_weapon.cooldown.wait_time)
-	$WeaponMountL/Cooldown/Viewport/ProgressBar.value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)
-	$WeaponMountL/Cooldown/Viewport/ProgressBar.value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)
-	$WeaponMountL/Cooldown/Viewport/ProgressBar.value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)
+	wep_ui.get_node("RightWeaponPanel/2ndCD").value = ((right_weapon.cooldown.time_left) * -1 + right_weapon.cooldown.wait_time)
+	wep_ui.get_node("LeftWeaponPanel/2ndCD").value = ((left_weapon.cooldown.time_left) * -1 + left_weapon.cooldown.wait_time)
 	
 	if Input.is_action_pressed("add_xp"):
 		self.xp = xp + 1.0

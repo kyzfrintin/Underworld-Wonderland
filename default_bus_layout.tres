@@ -7,14 +7,17 @@ threshold_db = -4.7
 
 [sub_resource type="AudioEffectLimiter" id=2]
 resource_name = "Limiter"
-ceiling_db = -2.1
+ceiling_db = -10.3
 threshold_db = -3.0
+soft_clip_db = 0.0
+soft_clip_ratio = 19.0
 
 [sub_resource type="AudioEffectReverb" id=3]
 resource_name = "Reverb"
-room_size = 1.0
+room_size = 0.85
 damping = 0.03
-wet = 0.05
+hipass = 0.23
+wet = 0.04
 
 [sub_resource type="AudioEffectLimiter" id=4]
 resource_name = "Limiter"
@@ -25,13 +28,14 @@ threshold_db = -3.3
 resource_name = "Limiter"
 ceiling_db = -0.7
 threshold_db = -5.4
+soft_clip_db = 0.0
 
 [resource]
 bus/0/effect/0/effect = SubResource( 1 )
 bus/0/effect/0/enabled = true
 bus/1/name = "Music"
 bus/1/solo = false
-bus/1/mute = false
+bus/1/mute = true
 bus/1/bypass_fx = false
 bus/1/volume_db = -10.5236
 bus/1/send = "Master"
@@ -57,7 +61,7 @@ bus/4/name = "FX"
 bus/4/solo = false
 bus/4/mute = false
 bus/4/bypass_fx = false
-bus/4/volume_db = 1.06049
+bus/4/volume_db = 0.0
 bus/4/send = "Room"
 bus/4/effect/0/effect = SubResource( 5 )
 bus/4/effect/0/enabled = true

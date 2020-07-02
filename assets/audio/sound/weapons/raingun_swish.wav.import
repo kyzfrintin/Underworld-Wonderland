@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/raingun_swish.wav-66f4f9e893420f869673590550a2a4d6.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/raingun_swish.wav"
+dest_files=[ "res://.import/raingun_swish.wav-66f4f9e893420f869673590550a2a4d6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

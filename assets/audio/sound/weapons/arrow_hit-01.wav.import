@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/arrow_hit-01.wav-848c96cd8b0427f63c1e048fc9e5786a.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/arrow_hit-01.wav"
+dest_files=[ "res://.import/arrow_hit-01.wav-848c96cd8b0427f63c1e048fc9e5786a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

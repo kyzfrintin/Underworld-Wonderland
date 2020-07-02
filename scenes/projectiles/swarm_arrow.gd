@@ -7,6 +7,8 @@ var locked : bool
 var dir
 var speed = 1
 var damage
+var active = false
+var player
 
 func new_dest(value):
 	dest = value
@@ -14,21 +16,24 @@ func new_dest(value):
 	$root.look_at(dest, Vector3.UP)
 
 func _ready():
+	player.connect("death", self, "target_death")
 	match typeof(target):
 		TYPE_VECTOR3:
-			self.dest = target + Vector3(rand_range(-30,30), rand_range(75,125), rand_range(-30,30))
+			self.dest = target + Vector3(rand_range(-50,50), rand_range(50,75), rand_range(-50,50))
 			locked = false
 		TYPE_OBJECT:
-			self.dest = target.true_pos.global_transform.origin + Vector3(rand_range(-30,30), rand_range(75,125), rand_range(-30,30))
-			locked = true
 			target.connect("death", self, "target_death")
+			self.dest = target.true_pos.global_transform.origin + Vector3(rand_range(-50,50), rand_range(50,75), rand_range(-50,50))
+			locked = true
+	active = true
 
 func target_death(xp):
+	active = false
 	destroy()
 
 func _process(delta):
+	if !active: return
 	translate(dir*speed)
-	$tpoint.global_transform.origin = dest
 	if translation.distance_to(dest) < speed:
 		match phase:
 			0:
@@ -39,16 +44,21 @@ func _process(delta):
 				phase = 1
 			1:
 				if !locked:
+					$hit.play()
 					destroy()
 	if locked:
 		if phase == 1:
-			self.dest = target.true_pos.global_transform.origin
+			if target == null:
+				destroy()
+			else:
+				self.dest = target.true_pos.global_transform.origin
 
 func destroy():
 	call_deferred("queue_free")
 
 func collide(area):
 	if phase == 0: return
-	if area is base_enemy:
+	$hit.play()
+	if area.has_method('hit'):
 		area.hit(damage, translation, area.translation.direction_to(translation))
 		destroy()

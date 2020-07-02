@@ -30,6 +30,8 @@ func random_spawn():
 
 func _process(delta):
 	$UI/Main/TopRight/GameStats/FPSLabel.text = ("FPS: " + str(Engine.get_frames_per_second()))
+	if Input.is_key_pressed(KEY_G):
+		$EnemySpawner.spawn_enemies()
 
 func died(stats):
 	var ccam = get_viewport().get_camera()

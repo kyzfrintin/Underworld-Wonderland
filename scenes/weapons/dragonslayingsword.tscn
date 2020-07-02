@@ -458,8 +458,6 @@ bus = "FX"
 
 [node name="woosh" type="Spatial" parent="throw"]
 script = ExtResource( 5 )
-spawn_node = NodePath("")
-autoplay = false
 volume_range = 3.0
 pitch_range = 0.1
 
@@ -468,7 +466,7 @@ transform = Transform( 1, 0, 0, 0, 0.141661, 0.989915, 0, -0.989915, 0.141661, 0
 stream = ExtResource( 3 )
 unit_size = 2.0
 max_db = 1.0
-pitch_scale = 0.5
+pitch_scale = 2.0
 max_distance = 250.0
 bus = "FX"
 [connection signal="timeout" from="recall" to="." method="recall_sword"]

@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/meshes/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scenes/projectiles/swarm_arrow.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/sound/weapons/loop_woosh.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sound/weapons/arrow_hit-01.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/sound/weapons/arrow_hit-02.wav" type="AudioStream" id=5]
+[ext_resource path="res://addons/mixing-desk/sound/3d/ran_cont.gd" type="Script" id=6]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 1 )
@@ -11,24 +15,22 @@ height = 8.0
 radial_segments = 6
 rings = 1
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=2]
 resource_name = "Material.001"
 params_cull_mode = 2
 albedo_color = Color( 0.580392, 0.580392, 0.580392, 1 )
 roughness = 0.75
 
 [sub_resource type="CylinderMesh" id=3]
-material = SubResource( 7 )
+material = SubResource( 2 )
 top_radius = 0.18
 bottom_radius = 0.03
 height = 0.6
 radial_segments = 4
 rings = 1
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.261272, 0.137602, 4.25022 )
-
-[sub_resource type="SphereMesh" id=9]
 
 [node name="swarm_arrow" type="Spatial"]
 script = ExtResource( 2 )
@@ -49,18 +51,40 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, -0.136464, 2.22328e-08 )
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Shaft/Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 8 )
-
-[node name="tpoint" type="MeshInstance" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
-visible = false
-mesh = SubResource( 9 )
-material/0 = null
+shape = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
 autostart = true
+
+[node name="loop_woosh" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+unit_db = -5.0
+pitch_scale = 2.0
+autoplay = true
+max_distance = 500.0
+bus = "FX"
+
+[node name="hit" type="Spatial" parent="."]
+script = ExtResource( 6 )
+volume_range = 5.0
+pitch_range = 0.3
+sound_number = 1
+
+[node name="1" type="AudioStreamPlayer3D" parent="hit"]
+stream = ExtResource( 4 )
+unit_db = -5.0
+pitch_scale = 1.8
+max_distance = 600.0
+bus = "FX"
+
+[node name="2" type="AudioStreamPlayer3D" parent="hit"]
+stream = ExtResource( 5 )
+unit_db = -5.0
+pitch_scale = 1.8
+max_distance = 600.0
+bus = "FX"
 [connection signal="area_entered" from="root/Shaft/Area" to="." method="collide"]
+[connection signal="body_entered" from="root/Shaft/Area" to="." method="collide"]
 [connection signal="timeout" from="Timer" to="." method="destroy"]

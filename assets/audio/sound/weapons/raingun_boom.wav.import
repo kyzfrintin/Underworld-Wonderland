@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/raingun_boom.wav-22812d55e3ab546733d7481014e51d20.sample"
+
+[deps]
+
+source_file="res://assets/audio/sound/weapons/raingun_boom.wav"
+dest_files=[ "res://.import/raingun_boom.wav-22812d55e3ab546733d7481014e51d20.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

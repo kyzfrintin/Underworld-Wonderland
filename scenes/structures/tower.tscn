@@ -31,7 +31,7 @@ resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
-albedo_color = Color( 0.6, 0.145098, 0.145098, 0 )
+albedo_color = Color( 0.6, 0.145098, 0.145098, 0.768627 )
 
 [sub_resource type="CylinderMesh" id=5]
 resource_local_to_scene = true
@@ -203,14 +203,11 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 2.2, 4.8, 5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 2.2, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "begin_rumble"
-}, {
-"args": [  ],
-"method": "send_xp"
 }, {
 "args": [ "queue_free" ],
 "method": "call_deferred"
@@ -469,6 +466,8 @@ transform = Transform( 0.662319, 0.749221, 0, -0.601355, 0.531604, 0.596463, 0.4
 mesh = SubResource( 6 )
 material/0 = null
 
+[node name="trupos" type="Position3D" parent="body/diamond"]
+
 [node name="OmniLight" type="OmniLight" parent="body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.1232, 0 )
 light_color = Color( 0.6, 0.145098, 0.145098, 1 )
@@ -483,6 +482,7 @@ __meta__ = {
 
 [node name="diamond_body" type="KinematicBody" parent="body"]
 transform = Transform( 0.861015, 0.973988, 0, -0.781762, 0.691085, 0.775402, 0.580948, -0.513564, 1.04343, 0, 48, -0.816 )
+collision_layer = 3
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="body/diamond_body"]
@@ -537,7 +537,7 @@ __meta__ = {
 
 [node name="hum" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
-unit_db = -60.0
+unit_db = -4.0
 unit_size = 5.0
 pitch_scale = 0.7
 max_distance = 750.0
@@ -545,7 +545,6 @@ bus = "Ambience"
 
 [node name="hum2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
-unit_db = -60.0
 unit_size = 6.0
 pitch_scale = 0.5
 max_distance = 1000.0
@@ -597,10 +596,6 @@ bus = "FX"
 
 [node name="rise" type="Spatial" parent="."]
 script = ExtResource( 11 )
-spawn_node = NodePath("")
-autoplay = false
-volume_range = 0.0
-pitch_range = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="rise"]
 stream = ExtResource( 12 )
@@ -611,10 +606,6 @@ bus = "FX"
 
 [node name="disappear" type="Spatial" parent="."]
 script = ExtResource( 11 )
-spawn_node = NodePath("")
-autoplay = false
-volume_range = 0.0
-pitch_range = 0.0
 
 [node name="1" type="AudioStreamPlayer3D" parent="disappear"]
 stream = ExtResource( 13 )

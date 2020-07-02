@@ -31,19 +31,28 @@ func activate():
 	$spawn_sound.play()
 	on_activate()
 	
-func collide(body):
+func collide(body : Object):
 	if !active: return
-	on_contact(translation)
+	if body is StaticBody:
+		on_contact(translation)
+		remove()
+		if type == "AOE":
+			aoe_spawn()
 	if body.has_method("hit"):
-		if !body.friendly == friendly:
+		on_contact(translation)
+		if body.friendly != friendly:
 			match type:
 				"Absorb":
 					body.hit(damage, translation, body.global_transform.origin.direction_to(translation))
 				"AOE":
-					var s = spawner.instance()
-					s.translation = translation
-					get_parent().add_child(s)
+					aoe_spawn()
 			remove()
+
+func aoe_spawn():
+	var s = spawner.instance()
+	get_parent().add_child(s)
+	s.damage = damage
+	s.global_transform.origin = global_transform.origin
 			
 func on_contact(loc):
 	pass

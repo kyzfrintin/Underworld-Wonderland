@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/shaders/main_ui.tres" type="Theme" id=1]
 [ext_resource path="res://assets/textures/weapon_icons/laser_sword.png" type="Texture" id=2]
@@ -6,8 +6,10 @@
 [ext_resource path="res://assets/shaders/Audiowide-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://scenes/ui elements/UI.gd" type="Script" id=5]
 [ext_resource path="res://assets/textures/crosshair.png" type="Texture" id=6]
+[ext_resource path="res://assets/audio/sound/character/recharge.wav" type="AudioStream" id=7]
+[ext_resource path="res://addons/mixing-desk/sound/2d/polysound.gd" type="Script" id=8]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.258824, 0.74902, 0.960784, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -15,7 +17,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 1, 1, 1, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -23,7 +25,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0, 1, 0.0862745, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -31,7 +33,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 1, 0, 0, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -39,13 +41,21 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=11]
 size = 70
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=12]
 size = 30
 font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.258824, 0.286275, 0.960784, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
 
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2
@@ -90,8 +100,8 @@ margin_left = 84.0
 margin_right = 334.0
 margin_bottom = 21.0
 rect_min_size = Vector2( 250, 21 )
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 7 )
 percent_visible = false
 
 [node name="XPLabel" type="Label" parent="Main/StatsCorner/XP/XPBar"]
@@ -119,8 +129,8 @@ __meta__ = {
 margin_right = 130.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 130, 20 )
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
 value = 100.0
 percent_visible = false
 __meta__ = {
@@ -220,7 +230,7 @@ margin_right = 384.0
 margin_bottom = 90.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 11 )
 text = "YOU DIED"
 align = 1
 __meta__ = {
@@ -231,7 +241,7 @@ __meta__ = {
 margin_top = 190.0
 margin_right = 384.0
 margin_bottom = 229.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 12 )
 text = "Creeps killed: "
 align = 1
 __meta__ = {
@@ -242,7 +252,7 @@ __meta__ = {
 margin_top = 329.0
 margin_right = 384.0
 margin_bottom = 368.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 12 )
 text = "Try again?"
 align = 1
 __meta__ = {
@@ -319,7 +329,7 @@ margin_right = 596.0
 margin_bottom = 90.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 11 )
 text = "GAME PAUSED"
 align = 1
 __meta__ = {
@@ -468,9 +478,9 @@ size_flags_vertical = 8
 
 [node name="WeaponIcons" type="HBoxContainer" parent="Main/BottomPanel"]
 margin_left = 548.0
-margin_top = 17.0
+margin_top = 7.0
 margin_right = 1352.0
-margin_bottom = 142.0
+margin_bottom = 152.0
 grow_horizontal = 2
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
@@ -479,7 +489,8 @@ alignment = 1
 
 [node name="LeftWeaponPanel" type="VBoxContainer" parent="Main/BottomPanel/WeaponIcons"]
 margin_right = 400.0
-margin_bottom = 125.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 400, 145 )
 
 [node name="Icon" type="TextureRect" parent="Main/BottomPanel/WeaponIcons/LeftWeaponPanel"]
 margin_left = 325.0
@@ -506,10 +517,38 @@ rect_min_size = Vector2( 400, 0 )
 text = "DPS:"
 align = 2
 
+[node name="2ndCD" type="ProgressBar" parent="Main/BottomPanel/WeaponIcons/LeftWeaponPanel"]
+margin_left = 250.0
+margin_top = 129.0
+margin_right = 400.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 8
+size_flags_vertical = 3
+custom_styles/fg = SubResource( 13 )
+value = 50.0
+percent_visible = false
+
+[node name="recharged" type="Node2D" parent="Main/BottomPanel/WeaponIcons/LeftWeaponPanel/2ndCD"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_description_": ""
+}
+volume_range = 0.2
+pitch_range = 0.05
+
+[node name="1" type="AudioStreamPlayer2D" parent="Main/BottomPanel/WeaponIcons/LeftWeaponPanel/2ndCD/recharged"]
+position = Vector2( -800, 0 )
+stream = ExtResource( 7 )
+volume_db = -7.0
+pitch_scale = 2.0
+bus = "FX"
+
 [node name="RightWeaponPanel" type="VBoxContainer" parent="Main/BottomPanel/WeaponIcons"]
 margin_left = 404.0
 margin_right = 804.0
-margin_bottom = 125.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 400, 145 )
 
 [node name="Icon" type="TextureRect" parent="Main/BottomPanel/WeaponIcons/RightWeaponPanel"]
 margin_right = 400.0
@@ -529,6 +568,32 @@ margin_right = 400.0
 margin_bottom = 125.0
 rect_min_size = Vector2( 400, 0 )
 text = "DPS:"
+
+[node name="2ndCD" type="ProgressBar" parent="Main/BottomPanel/WeaponIcons/RightWeaponPanel"]
+margin_top = 129.0
+margin_right = 150.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_styles/fg = SubResource( 13 )
+value = 50.0
+percent_visible = false
+
+[node name="recharged" type="Node2D" parent="Main/BottomPanel/WeaponIcons/RightWeaponPanel/2ndCD"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_description_": ""
+}
+volume_range = 0.2
+pitch_range = 0.05
+
+[node name="1" type="AudioStreamPlayer2D" parent="Main/BottomPanel/WeaponIcons/RightWeaponPanel/2ndCD/recharged"]
+position = Vector2( 950, 0 )
+stream = ExtResource( 7 )
+volume_db = -7.0
+pitch_scale = 2.0
+bus = "FX"
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

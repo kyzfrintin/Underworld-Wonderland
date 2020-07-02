@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/meshes/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scenes/projectiles/swarm_arrow_guide.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=3]
+[ext_resource path="res://addons/mixing-desk/sound/3d/ran_cont.gd" type="Script" id=4]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 1 )
@@ -11,14 +13,14 @@ height = 8.0
 radial_segments = 6
 rings = 1
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=2]
 resource_name = "Material.001"
 params_cull_mode = 2
 albedo_color = Color( 0.580392, 0.580392, 0.580392, 1 )
 roughness = 0.75
 
 [sub_resource type="CylinderMesh" id=3]
-material = SubResource( 7 )
+material = SubResource( 2 )
 top_radius = 0.18
 bottom_radius = 0.03
 height = 0.6
@@ -39,3 +41,23 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.02836, 6.56304e-07 )
 mesh = SubResource( 3 )
 material/0 = null
+
+[node name="spawn_sound" type="Spatial" parent="."]
+script = ExtResource( 4 )
+autoplay = true
+volume_range = 4.0
+pitch_range = 0.2
+sound_number = 1
+
+[node name="1" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 3 )
+unit_db = -2.0
+unit_size = 2.0
+pitch_scale = 1.4
+max_distance = 750.0
+bus = "FX"
+
+[node name="OmniLight" type="OmniLight" parent="."]
+light_energy = 0.0
+omni_range = 563.4
+omni_attenuation = 2.73208

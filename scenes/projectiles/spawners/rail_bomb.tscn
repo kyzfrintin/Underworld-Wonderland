@@ -1,0 +1,118 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenes/projectiles/spawners/proj_spawner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/projectiles/spawners/rail_bomb.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/sound/weapons/raingun_swish.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sound/weapons/raingun_boom.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/sound/character/levelup_hit.wav" type="AudioStream" id=5]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=6]
+[ext_resource path="res://assets/audio/sound/weapons/arrow_hit-01.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/sound/weapons/pistol_shot.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/textures/blast_circle.png" type="Texture" id=9]
+
+[sub_resource type="SphereShape" id=4]
+radius = 20.0
+
+[sub_resource type="ParticlesMaterial" id=1]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 6.0
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 75.0
+initial_velocity_random = 1.0
+scale = 15.0
+scale_random = 1.0
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
+
+[sub_resource type="SphereMesh" id=3]
+material = SubResource( 2 )
+radius = 0.05
+height = 0.1
+radial_segments = 4
+rings = 4
+
+[node name="rail_bomb" instance=ExtResource( 1 )]
+input_ray_pickable = false
+monitorable = false
+script = ExtResource( 2 )
+
+[node name="CollisionShape" parent="." index="0"]
+shape = SubResource( 4 )
+
+[node name="remove_timer" parent="." index="1"]
+wait_time = 6.0
+
+[node name="Particles" type="Particles" parent="." index="2"]
+emitting = false
+amount = 400
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )
+
+[node name="boom" type="Spatial" parent="." index="3"]
+script = ExtResource( 6 )
+volume_range = 4.0
+pitch_range = 0.15
+
+[node name="drop" type="AudioStreamPlayer3D" parent="boom" index="0"]
+stream = ExtResource( 5 )
+unit_size = 4.0
+max_distance = 2000.0
+bus = "FX"
+
+[node name="thud" type="AudioStreamPlayer3D" parent="boom" index="1"]
+stream = ExtResource( 7 )
+unit_db = -7.0
+unit_size = 4.0
+pitch_scale = 0.5
+max_distance = 2000.0
+bus = "FX"
+
+[node name="swish" type="AudioStreamPlayer3D" parent="boom" index="2"]
+stream = ExtResource( 3 )
+unit_db = -10.0
+unit_size = 4.0
+pitch_scale = 0.3
+max_distance = 1500.0
+bus = "FX"
+
+[node name="boom" type="AudioStreamPlayer3D" parent="boom" index="3"]
+stream = ExtResource( 4 )
+unit_db = -7.0
+unit_size = 4.0
+pitch_scale = 0.3
+max_distance = 1500.0
+bus = "FX"
+
+[node name="crack" type="AudioStreamPlayer3D" parent="boom" index="4"]
+stream = ExtResource( 8 )
+unit_db = -20.0
+unit_size = 4.0
+pitch_scale = 0.5
+max_distance = 1500.0
+bus = "FX"
+
+[node name="blast" type="Sprite3D" parent="." index="4"]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0 )
+opacity = 0.2
+axis = 1
+billboard = 2
+texture = ExtResource( 9 )
+
+[node name="blasttop" type="Sprite3D" parent="blast" index="0"]
+transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0.2, 0 )
+opacity = 0.2
+axis = 1
+billboard = 2
+texture = ExtResource( 9 )
+
+[node name="blastbottom" type="Sprite3D" parent="blast" index="1"]
+transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -0.2, 0 )
+opacity = 0.2
+axis = 1
+billboard = 2
+texture = ExtResource( 9 )
