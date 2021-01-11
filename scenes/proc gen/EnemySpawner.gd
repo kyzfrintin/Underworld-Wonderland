@@ -9,7 +9,7 @@ export var spawn_max_distance = 100
 var diff = 1.0
 var allocated = 0
 
-onready var game = get_node("../")
+onready var game = get_node("../../")
 onready var player = game.get_node("player")
 onready var nav = game.get_node("World/Navigation")
 onready var root = game.get_node("Enemies")
@@ -24,7 +24,7 @@ func place(loc):
 	randomize()
 	var list = pool.get_resource_list()
 	var enem = pool.get_resource(list[randi() % list.size()]).instance()
-	var ranger = loc + Vector3(rand_range(-spawn_max_distance,spawn_max_distance),0,rand_range(-spawn_max_distance,spawn_max_distance))
+	var ranger = loc + Vector3(rand_range(-spawn_max_distance,spawn_max_distance),233,rand_range(-spawn_max_distance,spawn_max_distance))
 	ranger = nav.get_closest_point(ranger)
 	root.call_deferred("add_child", enem)
 	enem.translation = ranger

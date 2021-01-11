@@ -60,5 +60,5 @@ func collide(area):
 	if phase == 0: return
 	$hit.play()
 	if area.has_method('hit'):
-		area.hit(damage, translation, area.translation.direction_to(translation))
+		area.hit(damage, translation, area.translation.direction_to(translation), player)
 		destroy()

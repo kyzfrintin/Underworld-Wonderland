@@ -1,0 +1,718 @@
+[gd_scene load_steps=54 format=2]
+
+[ext_resource path="res://addons/shaderV/rgba/posterize.gd" type="Script" id=2]
+[ext_resource path="res://addons/shaderV/uv/scaleUV.gd" type="Script" id=3]
+[ext_resource path="res://scenes/entities/allies/drone.gd" type="Script" id=9]
+[ext_resource path="res://assets/audio/sound/weapons/pistol_shot.wav" type="AudioStream" id=10]
+[ext_resource path="res://scenes/entities/states/die.gd" type="Script" id=11]
+[ext_resource path="res://scenes/entities/states/emerge.gd" type="Script" id=12]
+[ext_resource path="res://scenes/entities/states/chase.gd" type="Script" id=13]
+[ext_resource path="res://scenes/entities/states/idle.gd" type="Script" id=14]
+[ext_resource path="res://scenes/entities/states/ready_attack.gd" type="Script" id=15]
+[ext_resource path="res://scenes/entities/states/roam.gd" type="Script" id=16]
+[ext_resource path="res://scenes/entities/states/attack.gd" type="Script" id=17]
+[ext_resource path="res://scenes/ui elements/HealthBar.tscn" type="PackedScene" id=18]
+[ext_resource path="res://assets/audio/sound/weapons/laser_shot.wav" type="AudioStream" id=19]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=20]
+[ext_resource path="res://scenes/entities/states/follow.gd" type="Script" id=21]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Die"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("body/body/arms:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("body/body/arms:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("body:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 3.24901, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 89.252, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("body/body/arms/LEngine/Particles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("body/body/arms/REngine/Particles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Emerge"
+length = 0.833333
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawned"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("body/body/arms:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("body/body/arms:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("body:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 7.21, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -3.9727, 0 ), Vector3( 0, 21.0146, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Idle"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("body/body/arms:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("body/body/arms:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("body/body:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.200001, 0 ), Vector3( -0.2, -0.2, 0 ), Vector3( 0.2, -0.2, 0 ), Vector3( 0, -0.200001, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("body/body:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 180, 0 ), Vector3( 0, 180, 5 ), Vector3( 0, 180, -5 ), Vector3( 0, 180, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "launch"
+length = 0.25
+step = 0.05
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "ready_shot"
+}, {
+"args": [  ],
+"method": "shot"
+}, {
+"args": [  ],
+"method": "attack_over"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("shoot")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.05 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("body/turret/barrel:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -1.20797e-07, 0, -0.8 ), Vector3( -1.20797e-07, 0, -0.404092 ), Vector3( -1.20797e-07, 0, -0.8 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Walk"
+length = 0.833333
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("body/body/arms:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 21.612, 0, 0 ) ]
+}
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 3.4, 0.9, 1 )
+
+[sub_resource type="CylinderMesh" id=7]
+height = 0.75
+radial_segments = 7
+
+[sub_resource type="VisualShaderNodeCustom" id=8]
+default_input_values = [ 1, Vector3( 1, 1, 0 ), 2, Vector3( 0.5, 0.5, 0 ) ]
+script = ExtResource( 3 )
+
+[sub_resource type="VisualShaderNodeTextureUniform" id=9]
+output_port_for_preview = 0
+uniform_name = "Noise"
+
+[sub_resource type="VisualShaderNodeCustom" id=10]
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 2 )
+
+[sub_resource type="VisualShaderNodeColorUniform" id=11]
+output_port_for_preview = 0
+uniform_name = "Colour"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=12]
+output_port_for_preview = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=13]
+uniform_name = "Detail"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=14]
+uniform_name = "Scale"
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=15]
+
+[sub_resource type="VisualShaderNodeInput" id=16]
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=17]
+code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
+uniform vec4 Colour : hint_color;
+uniform float Scale;
+uniform sampler2D Noise;
+uniform float Detail;
+
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ColorUniform:4
+	vec3 n_out4p0 = Colour.rgb;
+	float n_out4p1 = Colour.a;
+
+// Input:9
+	vec3 n_out9p0 = vec3(UV, 0.0);
+
+// ScalarUniform:7
+	float n_out7p0 = Scale;
+
+// VectorCompose:8
+	vec3 n_out8p0 = vec3(n_out7p0, n_out7p0, n_out7p0);
+
+// ScaleUV:10
+	vec3 n_in10p2 = vec3(0.50000, 0.50000, 0.00000);
+	vec3 n_out10p0;
+	{
+		n_out10p0.xy = (n_out9p0.xy - n_in10p2.xy) * n_out8p0.xy + n_in10p2.xy;
+	}
+
+// TextureUniform:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	{
+		vec4 n_tex_read = texture(Noise, n_out10p0.xy);
+		n_out2p0 = n_tex_read.rgb;
+		n_out2p1 = n_tex_read.a;
+	}
+
+// ScalarUniform:6
+	float n_out6p0 = Detail;
+
+// Posterize:3
+	vec3 n_out3p0;
+	{
+		n_out3p0 = p0ster1zeFunc(n_out2p0, n_out6p0);
+	}
+
+// VectorOp:5
+	vec3 n_out5p0 = n_out4p0 * n_out3p0;
+
+// Output:0
+	ALBEDO = n_out5p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -605, 328 )
+nodes/fragment/0/position = Vector2( 1000, 60 )
+nodes/fragment/2/node = SubResource( 9 )
+nodes/fragment/2/position = Vector2( 80, 480 )
+nodes/fragment/3/node = SubResource( 10 )
+nodes/fragment/3/position = Vector2( 480, 280 )
+nodes/fragment/4/node = SubResource( 11 )
+nodes/fragment/4/position = Vector2( 80, 80 )
+nodes/fragment/5/node = SubResource( 12 )
+nodes/fragment/5/position = Vector2( 740, 140 )
+nodes/fragment/6/node = SubResource( 13 )
+nodes/fragment/6/position = Vector2( 80, 340 )
+nodes/fragment/7/node = SubResource( 14 )
+nodes/fragment/7/position = Vector2( -397, 496 )
+nodes/fragment/8/node = SubResource( 15 )
+nodes/fragment/8/position = Vector2( -260, 580 )
+nodes/fragment/9/node = SubResource( 16 )
+nodes/fragment/9/position = Vector2( -800, 620 )
+nodes/fragment/10/node = SubResource( 8 )
+nodes/fragment/10/position = Vector2( -260, 680 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 0, 3, 0, 5, 1, 4, 0, 5, 0, 5, 0, 0, 0, 7, 0, 8, 0, 7, 0, 8, 1, 7, 0, 8, 2, 6, 0, 3, 1, 9, 0, 10, 0, 8, 0, 10, 1, 10, 0, 2, 0 )
+
+[sub_resource type="OpenSimplexNoise" id=18]
+
+[sub_resource type="NoiseTexture" id=19]
+noise = SubResource( 18 )
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 17 )
+shader_param/Colour = Color( 0.396078, 0.545098, 0.690196, 1 )
+shader_param/Scale = 2.26
+shader_param/Detail = 2.902
+shader_param/Noise = SubResource( 19 )
+
+[sub_resource type="CylinderMesh" id=21]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 4.5
+radial_segments = 7
+
+[sub_resource type="SpatialMaterial" id=22]
+albedo_color = Color( 0.427451, 0.819608, 0.921569, 1 )
+emission_enabled = true
+emission = Color( 0.654902, 0.92549, 0.937255, 1 )
+emission_energy = 2.82
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CylinderMesh" id=23]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 4.5
+radial_segments = 5
+
+[sub_resource type="SpatialMaterial" id=24]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="ArrayMesh" id=25]
+surfaces/0 = {
+"aabb": AABB( -1.77, -0.0433013, -1.53287, 3.54, 0.0866125, 3.06573 ),
+"array_data": PoolByteArray( 195, 245, 216, 63, 172, 92, 49, 61, 0, 0, 0, 128, 61, 105, 221, 0, 193, 0, 147, 127, 0, 56, 0, 0, 92, 143, 226, 63, 0, 0, 0, 0, 0, 0, 0, 128, 61, 105, 221, 0, 193, 0, 147, 127, 0, 56, 85, 53, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 191, 61, 105, 221, 0, 193, 0, 147, 127, 85, 57, 85, 53, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 191, 61, 105, 221, 0, 193, 0, 147, 127, 85, 57, 0, 0, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 191, 147, 0, 63, 0, 193, 0, 147, 127, 85, 57, 0, 60, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 191, 147, 0, 63, 0, 193, 0, 147, 127, 85, 57, 85, 57, 195, 245, 216, 63, 172, 92, 49, 189, 0, 0, 0, 128, 147, 0, 63, 0, 193, 0, 147, 127, 0, 56, 85, 57, 195, 245, 216, 63, 172, 92, 49, 61, 0, 0, 0, 128, 147, 0, 63, 0, 193, 0, 147, 127, 0, 56, 0, 60, 195, 245, 216, 63, 172, 92, 49, 189, 0, 0, 0, 128, 61, 151, 221, 0, 193, 0, 147, 127, 0, 56, 85, 57, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 191, 61, 151, 221, 0, 193, 0, 147, 127, 85, 57, 85, 57, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 191, 61, 151, 221, 0, 193, 0, 147, 127, 85, 57, 85, 53, 92, 143, 226, 63, 0, 0, 0, 0, 0, 0, 0, 128, 61, 151, 221, 0, 193, 0, 147, 127, 0, 56, 85, 53, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 191, 0, 105, 186, 0, 129, 0, 0, 127, 85, 57, 85, 53, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 191, 0, 105, 186, 0, 129, 0, 0, 127, 170, 58, 85, 53, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 191, 0, 105, 186, 0, 129, 0, 0, 127, 170, 58, 0, 0, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 191, 0, 105, 186, 0, 129, 0, 0, 127, 85, 57, 0, 0, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 191, 0, 0, 127, 0, 129, 0, 0, 127, 170, 58, 0, 60, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 191, 0, 0, 127, 0, 129, 0, 0, 127, 170, 58, 85, 57, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 191, 0, 0, 127, 0, 129, 0, 0, 127, 85, 57, 85, 57, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 191, 0, 0, 127, 0, 129, 0, 0, 127, 85, 57, 0, 60, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 191, 0, 151, 186, 0, 129, 0, 0, 127, 85, 57, 85, 53, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 191, 0, 151, 186, 0, 129, 0, 0, 127, 85, 57, 85, 57, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 191, 0, 151, 186, 0, 129, 0, 0, 127, 170, 58, 85, 57, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 191, 0, 151, 186, 0, 129, 0, 0, 127, 170, 58, 85, 53, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 191, 195, 105, 221, 0, 193, 0, 109, 127, 170, 58, 85, 53, 92, 143, 226, 191, 0, 0, 0, 0, 37, 38, 38, 180, 195, 105, 221, 0, 193, 0, 109, 127, 0, 60, 85, 53, 195, 245, 216, 191, 172, 92, 49, 61, 218, 27, 31, 180, 195, 105, 221, 0, 193, 0, 109, 127, 0, 60, 0, 0, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 191, 195, 105, 221, 0, 193, 0, 109, 127, 170, 58, 0, 0, 195, 245, 216, 191, 172, 92, 49, 61, 218, 27, 31, 180, 109, 0, 63, 0, 193, 0, 109, 127, 0, 60, 0, 60, 195, 245, 216, 191, 172, 92, 49, 189, 218, 27, 31, 180, 109, 0, 63, 0, 193, 0, 109, 127, 0, 60, 85, 57, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 191, 109, 0, 63, 0, 193, 0, 109, 127, 170, 58, 85, 57, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 191, 109, 0, 63, 0, 193, 0, 109, 127, 170, 58, 0, 60, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 191, 195, 151, 221, 0, 193, 0, 109, 127, 170, 58, 85, 53, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 191, 195, 151, 221, 0, 193, 0, 109, 127, 170, 58, 85, 57, 195, 245, 216, 191, 172, 92, 49, 189, 218, 27, 31, 180, 195, 151, 221, 0, 193, 0, 109, 127, 0, 60, 85, 57, 92, 143, 226, 191, 0, 0, 0, 0, 37, 38, 38, 180, 195, 151, 221, 0, 193, 0, 109, 127, 0, 60, 85, 53, 195, 245, 216, 191, 172, 92, 49, 61, 218, 27, 31, 180, 195, 105, 35, 0, 63, 0, 109, 127, 0, 0, 0, 0, 92, 143, 226, 191, 0, 0, 0, 0, 37, 38, 38, 180, 195, 105, 35, 0, 63, 0, 109, 127, 0, 0, 85, 53, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 63, 195, 105, 35, 0, 63, 0, 109, 127, 85, 49, 85, 53, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 63, 195, 105, 35, 0, 63, 0, 109, 127, 85, 49, 0, 0, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 63, 109, 0, 193, 0, 63, 0, 109, 127, 85, 49, 0, 60, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 63, 109, 0, 193, 0, 63, 0, 109, 127, 85, 49, 85, 57, 195, 245, 216, 191, 172, 92, 49, 189, 218, 27, 31, 180, 109, 0, 193, 0, 63, 0, 109, 127, 0, 0, 85, 57, 195, 245, 216, 191, 172, 92, 49, 61, 218, 27, 31, 180, 109, 0, 193, 0, 63, 0, 109, 127, 0, 0, 0, 60, 92, 143, 226, 191, 0, 0, 0, 0, 37, 38, 38, 180, 195, 151, 35, 0, 63, 0, 109, 127, 0, 0, 85, 53, 195, 245, 216, 191, 172, 92, 49, 189, 218, 27, 31, 180, 195, 151, 35, 0, 63, 0, 109, 127, 0, 0, 85, 57, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 63, 195, 151, 35, 0, 63, 0, 109, 127, 85, 49, 85, 57, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 63, 195, 151, 35, 0, 63, 0, 109, 127, 85, 49, 85, 53, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 63, 0, 105, 70, 0, 127, 0, 0, 127, 85, 49, 0, 0, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 63, 0, 105, 70, 0, 127, 0, 0, 127, 85, 49, 85, 53, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 63, 0, 105, 70, 0, 127, 0, 0, 127, 85, 53, 85, 53, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 63, 0, 105, 70, 0, 127, 0, 0, 127, 85, 53, 0, 0, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 63, 0, 0, 129, 0, 127, 0, 0, 127, 85, 53, 0, 60, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 63, 0, 0, 129, 0, 127, 0, 0, 127, 85, 53, 85, 57, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 63, 0, 0, 129, 0, 127, 0, 0, 127, 85, 49, 85, 57, 191, 245, 88, 191, 172, 92, 49, 61, 149, 228, 187, 63, 0, 0, 129, 0, 127, 0, 0, 127, 85, 49, 0, 60, 191, 245, 88, 191, 172, 92, 49, 189, 149, 228, 187, 63, 0, 151, 70, 0, 127, 0, 0, 127, 85, 49, 85, 57, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 63, 0, 151, 70, 0, 127, 0, 0, 127, 85, 53, 85, 57, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 63, 0, 151, 70, 0, 127, 0, 0, 127, 85, 53, 85, 53, 88, 143, 98, 191, 0, 0, 0, 0, 237, 52, 196, 63, 0, 151, 70, 0, 127, 0, 0, 127, 85, 49, 85, 53, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 63, 61, 105, 35, 0, 63, 0, 147, 127, 85, 53, 0, 0, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 63, 61, 105, 35, 0, 63, 0, 147, 127, 85, 53, 85, 53, 92, 143, 226, 63, 0, 0, 0, 0, 0, 0, 0, 128, 61, 105, 35, 0, 63, 0, 147, 127, 0, 56, 85, 53, 195, 245, 216, 63, 172, 92, 49, 61, 0, 0, 0, 128, 61, 105, 35, 0, 63, 0, 147, 127, 0, 56, 0, 0, 195, 245, 216, 63, 172, 92, 49, 61, 0, 0, 0, 128, 147, 0, 193, 0, 63, 0, 147, 127, 0, 56, 0, 60, 195, 245, 216, 63, 172, 92, 49, 189, 0, 0, 0, 128, 147, 0, 193, 0, 63, 0, 147, 127, 0, 56, 85, 57, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 63, 147, 0, 193, 0, 63, 0, 147, 127, 85, 53, 85, 57, 194, 245, 88, 63, 172, 92, 49, 61, 148, 228, 187, 63, 147, 0, 193, 0, 63, 0, 147, 127, 85, 53, 0, 60, 91, 143, 98, 63, 0, 0, 0, 0, 236, 52, 196, 63, 61, 151, 35, 0, 63, 0, 147, 127, 85, 53, 85, 53, 194, 245, 88, 63, 172, 92, 49, 189, 148, 228, 187, 63, 61, 151, 35, 0, 63, 0, 147, 127, 85, 53, 85, 57, 195, 245, 216, 63, 172, 92, 49, 189, 0, 0, 0, 128, 61, 151, 35, 0, 63, 0, 147, 127, 0, 56, 85, 57, 92, 143, 226, 63, 0, 0, 0, 0, 0, 0, 0, 128, 61, 151, 35, 0, 63, 0, 147, 127, 0, 56, 85, 53 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 1, 0, 0, 0, 3, 0, 2, 0, 4, 0, 6, 0, 5, 0, 4, 0, 7, 0, 6, 0, 8, 0, 10, 0, 9, 0, 11, 0, 10, 0, 8, 0, 12, 0, 14, 0, 13, 0, 15, 0, 14, 0, 12, 0, 16, 0, 18, 0, 17, 0, 16, 0, 19, 0, 18, 0, 20, 0, 22, 0, 21, 0, 20, 0, 23, 0, 22, 0, 24, 0, 26, 0, 25, 0, 27, 0, 26, 0, 24, 0, 28, 0, 30, 0, 29, 0, 28, 0, 31, 0, 30, 0, 32, 0, 34, 0, 33, 0, 32, 0, 35, 0, 34, 0, 36, 0, 38, 0, 37, 0, 36, 0, 39, 0, 38, 0, 40, 0, 42, 0, 41, 0, 40, 0, 43, 0, 42, 0, 44, 0, 46, 0, 45, 0, 44, 0, 47, 0, 46, 0, 48, 0, 50, 0, 49, 0, 48, 0, 51, 0, 50, 0, 52, 0, 54, 0, 53, 0, 52, 0, 55, 0, 54, 0, 56, 0, 58, 0, 57, 0, 59, 0, 58, 0, 56, 0, 60, 0, 62, 0, 61, 0, 60, 0, 63, 0, 62, 0, 64, 0, 66, 0, 65, 0, 64, 0, 67, 0, 66, 0, 68, 0, 70, 0, 69, 0, 68, 0, 71, 0, 70, 0 ),
+"blend_shape_data": [  ],
+"format": 97559,
+"index_count": 108,
+"material": SubResource( 24 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 72
+}
+
+[sub_resource type="ParticlesMaterial" id=26]
+emission_shape = 2
+emission_box_extents = Vector3( 0.5, 0.5, 0.5 )
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.2
+initial_velocity_random = 1.0
+tangential_accel = 2.63
+angle = 142.1
+
+[sub_resource type="SpatialMaterial" id=27]
+params_cull_mode = 2
+params_billboard_mode = 2
+emission_enabled = true
+emission = Color( 0.247059, 0.752941, 0.85098, 1 )
+emission_energy = 3.23
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="PlaneMesh" id=28]
+material = SubResource( 27 )
+size = Vector2( 0.02, 1 )
+
+[sub_resource type="CubeMesh" id=29]
+size = Vector3( 1, 2, 1 )
+
+[sub_resource type="CylinderMesh" id=30]
+top_radius = 0.2
+bottom_radius = 0.5
+height = 1.375
+radial_segments = 5
+
+[sub_resource type="SphereMesh" id=31]
+radius = 0.5
+height = 1.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="SphereMesh" id=32]
+material = SubResource( 22 )
+radius = 0.2
+height = 0.4
+radial_segments = 4
+rings = 1
+
+[sub_resource type="CylinderMesh" id=33]
+material = SubResource( 20 )
+top_radius = 0.2
+bottom_radius = 0.2
+height = 1.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="StyleBoxFlat" id=34]
+bg_color = Color( 0, 1, 0.0862745, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=35]
+bg_color = Color( 1, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="SphereShape" id=36]
+radius = 350.0
+
+[sub_resource type="SphereMesh" id=37]
+
+[sub_resource type="SpatialMaterial" id=38]
+albedo_color = Color( 0.909804, 0.0509804, 0.0509804, 1 )
+
+[node name="drone" type="Area"]
+script = ExtResource( 9 )
+max_health = 80
+roam_range = 20
+attack_speed = 24
+max_attack_range = 100
+attack_dict = {
+"basic_shot": {
+"a_range": 150.0,
+"animation": "launch",
+"cooldown": 3.0,
+"damage": 50.0,
+"track_int": 0.1
+}
+}
+
+[node name="states" type="Node" parent="."]
+
+[node name="idle" type="Node" parent="states"]
+script = ExtResource( 14 )
+
+[node name="roam" type="Node" parent="states"]
+script = ExtResource( 16 )
+
+[node name="follow" type="Node" parent="states"]
+script = ExtResource( 21 )
+
+[node name="chase" type="Node" parent="states"]
+script = ExtResource( 13 )
+
+[node name="attack" type="Node" parent="states"]
+script = ExtResource( 17 )
+
+[node name="ready_attack" type="Node" parent="states"]
+script = ExtResource( 15 )
+
+[node name="emerge" type="Node" parent="states"]
+script = ExtResource( 12 )
+
+[node name="die" type="Node" parent="states"]
+script = ExtResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "emerge"
+playback_default_blend_time = 0.1
+anims/die = SubResource( 1 )
+anims/emerge = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/launch = SubResource( 4 )
+anims/walk = SubResource( 5 )
+
+[node name="body" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9727, 0 )
+shape = SubResource( 6 )
+
+[node name="body" type="MeshInstance" parent="body"]
+transform = Transform( -0.998478, -0.0551503, -8.74228e-08, -0.0551503, 0.998478, 0, 8.72897e-08, 4.82139e-09, -1, 0.126459, -0.2, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 20 )
+
+[node name="arms" type="Spatial" parent="body/body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="light" type="MeshInstance" parent="body/body/arms"]
+transform = Transform( -4.37114e-08, 1, 0, -1.44, -6.29444e-08, 0, 0, 0, 0.6, 0, 0, 0 )
+mesh = SubResource( 21 )
+material/0 = SubResource( 22 )
+
+[node name="tube" type="MeshInstance" parent="body/body/arms"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1.25, 0, 0, 0 )
+mesh = SubResource( 23 )
+material/0 = SubResource( 20 )
+
+[node name="LEngine" type="MeshInstance" parent="body/body/arms"]
+transform = Transform( 0.458, 1.13687e-13, 0, -1.59872e-14, 8, 0, 0, 0, 0.458, 3, 0, 0 )
+mesh = SubResource( 25 )
+material/0 = SubResource( 20 )
+
+[node name="Particles" type="Particles" parent="body/body/arms/LEngine"]
+transform = Transform( 1, 0, 0, 4.23516e-22, -1.75954e-07, -0.09288, 0, 2.1, -2.94235e-08, 0, -0.05, 0 )
+amount = 100
+visibility_aabb = AABB( -4, -1.8, -4, 8, 3.6, 8 )
+process_material = SubResource( 26 )
+draw_pass_1 = SubResource( 28 )
+
+[node name="REngine" type="MeshInstance" parent="body/body/arms"]
+transform = Transform( 0.458, 1.13687e-13, 0, -1.59872e-14, 8, 0, 0, 0, 0.458, -3, 1.56319e-13, 0 )
+mesh = SubResource( 25 )
+material/0 = SubResource( 20 )
+
+[node name="Particles" type="Particles" parent="body/body/arms/REngine"]
+transform = Transform( 1, 4.23516e-22, -1.37643e-21, 3.01094e-22, -1.75089e-07, -0.09288, 0, 2.1, -5.96046e-08, -0.218338, -0.05, 0 )
+amount = 100
+visibility_aabb = AABB( -4, -1.8, -4, 8, 3.6, 8 )
+process_material = SubResource( 26 )
+draw_pass_1 = SubResource( 28 )
+
+[node name="head" type="Spatial" parent="body/body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
+
+[node name="cube" type="MeshInstance" parent="body/body/head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+mesh = SubResource( 29 )
+material/0 = SubResource( 20 )
+
+[node name="face" type="MeshInstance" parent="body/body/head/cube"]
+transform = Transform( 1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 0.3, 0.4 )
+mesh = SubResource( 30 )
+material/0 = SubResource( 22 )
+
+[node name="top" type="MeshInstance" parent="body/body/head/cube"]
+transform = Transform( 0.85, 0, 0, 0, 0.819152, -0.573576, 0, 0.688292, 0.982983, 0, 1, 0.1 )
+mesh = SubResource( 31 )
+material/0 = SubResource( 22 )
+
+[node name="sightline" type="RayCast" parent="body"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -350 )
+collide_with_areas = true
+
+[node name="HealthPoint" type="Position3D" parent="body"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.36, 0 )
+
+[node name="TruePos" type="Position3D" parent="body"]
+
+[node name="turret" type="Spatial" parent="body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8976, 0 )
+
+[node name="hinge" type="MeshInstance" parent="body/turret"]
+transform = Transform( -1, 0, -8.02679e-07, -3.38813e-21, 1, 0, 8.02679e-07, 0, -1, 3.10588e-21, 0, -1.77636e-14 )
+mesh = SubResource( 32 )
+material/0 = null
+
+[node name="barrel" type="MeshInstance" parent="body/turret"]
+transform = Transform( -1, -8.02679e-07, 3.50862e-14, -3.38813e-21, -4.37114e-08, -1, 8.02679e-07, -1, 4.37114e-08, -1.20797e-07, 0, -0.8 )
+mesh = SubResource( 33 )
+material/0 = null
+
+[node name="barrel2" type="MeshInstance" parent="body/turret/barrel"]
+transform = Transform( 0.85, 0, 0, 0, 0.8415, 3.71546e-10, 0, 3.71546e-10, 0.85, 0, 0.2, 0 )
+mesh = SubResource( 33 )
+material/0 = SubResource( 22 )
+
+[node name="bomb_spawn" type="Position3D" parent="body/turret"]
+transform = Transform( -1, 0, -8.02679e-07, -3.38813e-21, 1, 0, 8.02679e-07, 0, -1, -1.12375e-06, 0, -1.4 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 18 )]
+custom_styles/fg = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
+
+[node name="detect" type="Area" parent="."]
+input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="detect"]
+shape = SubResource( 36 )
+
+[node name="reacquire" type="Timer" parent="."]
+one_shot = true
+
+[node name="retarget" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="turn" type="Tween" parent="."]
+
+[node name="target" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 37 )
+material/0 = SubResource( 38 )
+
+[node name="shoot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.7, 0 )
+script = ExtResource( 20 )
+volume_range = 0.3
+pitch_range = 0.04
+
+[node name="1" type="AudioStreamPlayer3D" parent="shoot"]
+stream = ExtResource( 19 )
+unit_db = -4.0
+pitch_scale = 2.0
+max_distance = 1000.0
+bus = "FX"
+
+[node name="2" type="AudioStreamPlayer3D" parent="shoot"]
+stream = ExtResource( 10 )
+unit_db = -15.0
+pitch_scale = 1.2
+max_distance = 1000.0
+bus = "FX"
+
+[node name="fly_tween" type="Tween" parent="."]
+
+[connection signal="tween_completed" from="fly_tween" to="." method="fly_end"]

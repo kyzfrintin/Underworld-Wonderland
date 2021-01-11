@@ -104,4 +104,5 @@ __meta__ = {
 light_energy = 1.76
 omni_range = 8.5
 omni_attenuation = 1.68179
+
 [connection signal="timeout" from="Timer" to="." method="remove"]

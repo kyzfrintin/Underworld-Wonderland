@@ -83,6 +83,8 @@ func _process(delta):
 		r_attack_held = true
 	if Input.is_action_just_released("gp_right_hand_prim_attack"):
 		r_attack_held = false
+		if get_parent().right_weapon.continuous:
+			get_parent().right_weapon.disengage_continuous_attack()
 	if Input.is_action_just_pressed("gp_right_hand_second_attack"):
 		if !Player.in_bubble:
 			get_parent().right_hand_attack2()
@@ -92,6 +94,7 @@ func _process(delta):
 		l_attack_held = true
 	if Input.is_action_just_released("gp_left_hand_prim_attack"):
 		l_attack_held = false
+		get_parent().left_weapon.disengage_continuous_attack()
 	if Input.is_action_just_pressed("gp_left_hand_second_attack"):
 		if !Player.in_bubble:
 			get_parent().left_hand_attack2()
@@ -103,13 +106,13 @@ func _process(delta):
 			if !first_person:
 				ZoomFactor = 1.2
 			else:
-				FovFactor = 120
+				FovFactor = 80
 		else:
 			multi = 1.0
 			if !first_person:
 				ZoomFactor = 0.7
 			else:
-				FovFactor = 100
+				FovFactor = 75
 	
 	Direction = Vector3()
 	

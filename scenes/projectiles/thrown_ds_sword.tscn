@@ -96,6 +96,7 @@ shape = SubResource( 6 )
 wait_time = 4.0
 one_shot = true
 autostart = true
+
 [connection signal="area_entered" from="meshes/dragonslayingsword/Area" to="." method="collide"]
 [connection signal="body_entered" from="meshes/dragonslayingsword/Area" to="." method="collide"]
 [connection signal="timeout" from="remove_timer" to="." method="remove"]

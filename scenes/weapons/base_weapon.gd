@@ -7,12 +7,14 @@ export (float) var secondary_cooldown = 5
 export (float) var primary_damage = 4
 export (float) var secondary_damage = 60
 export var wep_name = ""
+export (bool) var continuous = false
 export (float) var rate = 0.2
 export (Texture) var icon
 
 var cast
 var cooldown_display
 var can_fire = true
+var primary_held = false
 var second_fire = true
 var right_hand : bool
 
@@ -46,9 +48,12 @@ func player_death():
 
 func primary_attack():
 	if can_fire:
-		interval.start()
+		if !continuous:
+			interval.start()
+			attack()
+		else:
+			engage_continuous_attack()
 		can_fire = false
-		attack()
 		on_first_attack()
 
 func secondary_attack():
@@ -82,6 +87,14 @@ func check_held():
 		if parent.controller.l_attack_held:
 			held = true
 	return held
+
+func engage_continuous_attack():
+	$AnimationPlayer.play("primary_attack")
+	primary_held = true
+
+func disengage_continuous_attack():
+	primary_held = false
+	interval.start()
 
 func attack():
 	pass

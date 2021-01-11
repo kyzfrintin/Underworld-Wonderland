@@ -274,7 +274,7 @@ projectile = ExtResource( 5 )
 launch_point = NodePath("meshes/launch_point")
 
 [node name="meshes" type="Spatial" parent="."]
-transform = Transform( 0.4, 0, 0, 0, -1.74846e-08, 0.4, 0, -0.4, -1.74846e-08, 0, 0, 0.172631 )
+transform = Transform( 0.399939, 0.00238759, -0.00655986, 0, 0.375877, 0.136808, 0.00698085, -0.136787, 0.37582, 0, 5, 0.173 )
 
 [node name="Orb" type="MeshInstance" parent="meshes"]
 transform = Transform( 22, 0, 0, 0, -9.61651e-07, 650, 0, -22, -2.84124e-05, 0, 0, 0 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/shaders/glowblue.tres" type="Material" id=1]
 [ext_resource path="res://assets/meshes/DefaultMaterial.material" type="Material" id=2]
@@ -50,6 +50,8 @@ constant = 5.0
 
 [sub_resource type="VisualShader" id=6]
 code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
 
 
 
@@ -111,7 +113,25 @@ surfaces/0 = {
 [sub_resource type="SphereShape" id=9]
 radius = 8.86998
 
-[sub_resource type="ParticlesMaterial" id=10]
+[sub_resource type="OpenSimplexNoise" id=10]
+
+[sub_resource type="NoiseTexture" id=11]
+noise = SubResource( 10 )
+
+[sub_resource type="SpatialMaterial" id=12]
+resource_name = "WhiteBlueGlow"
+flags_transparent = true
+params_cull_mode = 2
+albedo_color = Color( 0.8, 0.8, 0.8, 1 )
+roughness = 0.0764706
+emission_enabled = true
+emission = Color( 0.215686, 0.819608, 0.792157, 1 )
+emission_energy = 13.22
+emission_operator = 1
+emission_on_uv2 = true
+emission_texture = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
 emission_shape = 2
 emission_box_extents = Vector3( 0.1, 2, 0.1 )
 spread = 180.0
@@ -121,17 +141,17 @@ initial_velocity_random = 1.0
 scale = 3.0
 scale_random = 1.0
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=14]
 flags_transparent = true
 flags_unshaded = true
 albedo_color = Color( 0.760784, 0.94902, 0.992157, 0.509804 )
 
-[sub_resource type="SphereMesh" id=12]
-material = SubResource( 11 )
+[sub_resource type="SphereMesh" id=15]
+material = SubResource( 14 )
 radius = 0.01
 height = 0.02
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=16]
 length = 4.0
 loop = true
 step = 0.01
@@ -172,7 +192,7 @@ tracks/2/keys = {
 "values": [ 3.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=17]
 length = 0.37
 step = 0.01
 tracks/0/type = "value"
@@ -240,7 +260,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=18]
 length = 0.37
 step = 0.01
 tracks/0/type = "value"
@@ -308,7 +328,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=19]
 resource_name = "secondary_attack"
 length = 0.2
 loop = true
@@ -337,7 +357,7 @@ tracks/1/keys = {
 "values": [ 12.0 ]
 }
 
-[sub_resource type="BoxShape" id=17]
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 5.57789, 3.74564, 3.38414 )
 
 [node name="lasersword" type="Spatial"]
@@ -408,10 +428,11 @@ bus = "FX"
 
 [node name="Particles" type="Particles" parent="meshes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.95431, 0 )
+material_override = SubResource( 12 )
 amount = 40
 local_coords = false
-process_material = SubResource( 10 )
-draw_pass_1 = SubResource( 12 )
+process_material = SubResource( 13 )
+draw_pass_1 = SubResource( 15 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -419,10 +440,10 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "def"
 playback_default_blend_time = 0.1
-anims/def = SubResource( 13 )
-anims/prim_left = SubResource( 14 )
-anims/prim_right = SubResource( 15 )
-anims/secondary_attack = SubResource( 16 )
+anims/def = SubResource( 16 )
+anims/prim_left = SubResource( 17 )
+anims/prim_right = SubResource( 18 )
+anims/secondary_attack = SubResource( 19 )
 
 [node name="secondary_hit" type="Timer" parent="."]
 wait_time = 0.1
@@ -437,8 +458,9 @@ angular_damp = 0.0
 
 [node name="CollisionShape" type="CollisionShape" parent="prim_attack"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 17 )
+shape = SubResource( 20 )
 
 [node name="secondary_tween" type="Tween" parent="."]
+
 [connection signal="timeout" from="secondary_hit" to="." method="secondary_hit"]
 [connection signal="tween_completed" from="secondary_tween" to="." method="on_end_secondary"]

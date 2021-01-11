@@ -9,7 +9,7 @@ func get_info():
 		"rate": item.rate,
 		"cooldown": item.secondary_cooldown,
 		}
-	price = int(round(((item.primary_damage/item.rate) + ((item.secondary_damage/item.secondary_cooldown) * 0.8)) * (game.get_node("EnemySpawner").diff * 0.75)))
+	price = int(round(((item.primary_damage/item.rate) + ((item.secondary_damage/item.secondary_cooldown) * 0.8)) * (game.get_node("World/EnemySpawner").diff * 0.75)))
 	
 func get_input():
 	if Input.is_action_just_pressed("gp_right_hand_second_attack"):

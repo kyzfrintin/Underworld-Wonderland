@@ -15,7 +15,7 @@ func damage():
 	var nrm = $meshes/secondary.global_transform.origin
 	for i in col:
 		if i.has_method("hit") and !i.friendly:
-			i.hit(secondary_damage, loc, nrm)
+			i.hit(secondary_damage, loc, nrm, parent)
 
 func on_end_secondary(object, key):
 	$meshes/looper.stop()

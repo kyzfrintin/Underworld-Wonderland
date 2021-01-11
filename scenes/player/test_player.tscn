@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/player/3rdPersonController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=2]
-[ext_resource path="res://scenes/weapons/railgun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/weapons/godhammer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/shaders/glowblue.tres" type="Material" id=4]
+[ext_resource path="res://scenes/weapons/protoncannon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=6]
 [ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=7]
-[ext_resource path="res://scenes/weapons/elfbow.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/shaders/nfc_particles.tres" type="Material" id=9]
 [ext_resource path="res://assets/audio/sound/character/levelup_woosh.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/sound/character/levelup_hum.wav" type="AudioStream" id=11]
@@ -22,7 +22,26 @@ material = ExtResource( 4 )
 radius = 0.3
 height = 0.6
 
-[sub_resource type="SphereMesh" id=3]
+[sub_resource type="OpenSimplexNoise" id=3]
+
+[sub_resource type="NoiseTexture" id=4]
+noise = SubResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=5]
+resource_name = "WhiteBlueGlow"
+flags_transparent = true
+params_cull_mode = 2
+albedo_color = Color( 0.8, 0.8, 0.8, 1 )
+roughness = 0.0764706
+emission_enabled = true
+emission = Color( 0.215686, 0.819608, 0.792157, 1 )
+emission_energy = 13.22
+emission_operator = 1
+emission_on_uv2 = true
+emission_texture = SubResource( 4 )
+
+[sub_resource type="SphereMesh" id=6]
+material = SubResource( 5 )
 radius = 0.01
 height = 0.02
 
@@ -49,8 +68,7 @@ MaxZoom = 0.15
 [node name="WeaponMountR" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.832, 0, -1.282 )
 
-[node name="railgun" parent="WeaponMountR" instance=ExtResource( 3 )]
-hurt_box = NodePath("../railgun/damage")
+[node name="godhammer" parent="WeaponMountR" instance=ExtResource( 3 )]
 
 [node name="hand" type="MeshInstance" parent="WeaponMountR"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.283075, 1.23728 )
@@ -58,18 +76,18 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="WeaponMountR/hand"]
-material_override = ExtResource( 4 )
+material_override = SubResource( 5 )
 amount = 16
 lifetime = 2.0
 preprocess = 10.0
 speed_scale = 0.2
 process_material = ExtResource( 9 )
-draw_pass_1 = SubResource( 3 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="WeaponMountL" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.926, 0, -1.282 )
 
-[node name="elf_bow" parent="WeaponMountL" instance=ExtResource( 8 )]
+[node name="proton_cannon" parent="WeaponMountL" instance=ExtResource( 5 )]
 
 [node name="hand" type="MeshInstance" parent="WeaponMountL"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.283075, 1.23728 )
@@ -77,13 +95,13 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="WeaponMountL/hand"]
-material_override = ExtResource( 4 )
+material_override = SubResource( 5 )
 amount = 16
 lifetime = 2.0
 preprocess = 10.0
 speed_scale = 0.2
 process_material = ExtResource( 9 )
-draw_pass_1 = SubResource( 3 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="jump" type="Spatial" parent="."]
 script = ExtResource( 6 )
@@ -131,10 +149,10 @@ one_shot = true
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, -1.06966 )
-doppler_tracking = 2
-fov = 100.0
+doppler_tracking = 1
+fov = 75.0
 near = 0.01
-far = 4000.0
+far = 50000.0
 
 [node name="RayCast" type="RayCast" parent="Camera"]
 enabled = true
@@ -153,5 +171,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.48704, 0 )
 enabled = true
 cast_to = Vector3( 0, -4, 0 )
+
+[node name="Chest" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+
 [connection signal="timeout" from="heal_timer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="heal_interval" to="." method="heal"]

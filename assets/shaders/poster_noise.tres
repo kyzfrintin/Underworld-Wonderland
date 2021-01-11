@@ -1,0 +1,154 @@
+[gd_resource type="ShaderMaterial" load_steps=16 format=2]
+
+[ext_resource path="res://addons/shaderV/rgba/posterize.gd" type="Script" id=1]
+[ext_resource path="res://addons/shaderV/uv/scaleUV.gd" type="Script" id=2]
+
+[sub_resource type="VisualShaderNodeCustom" id=1]
+default_input_values = [ 1, Vector3( 1, 1, 0 ), 2, Vector3( 0.5, 0.5, 0 ) ]
+script = ExtResource( 2 )
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=2]
+uniform_name = "Rough"
+
+[sub_resource type="VisualShaderNodeTextureUniform" id=3]
+output_port_for_preview = 0
+uniform_name = "Noise"
+
+[sub_resource type="VisualShaderNodeCustom" id=4]
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 1 )
+
+[sub_resource type="VisualShaderNodeColorUniform" id=5]
+output_port_for_preview = 0
+uniform_name = "Colour"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=6]
+output_port_for_preview = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=7]
+uniform_name = "Detail"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=8]
+uniform_name = "Scale"
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=9]
+
+[sub_resource type="VisualShaderNodeInput" id=10]
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=11]
+code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
+uniform vec4 Colour : hint_color;
+uniform float Scale;
+uniform sampler2D Noise;
+uniform float Detail;
+uniform float Rough;
+
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ColorUniform:4
+	vec3 n_out4p0 = Colour.rgb;
+	float n_out4p1 = Colour.a;
+
+// Input:9
+	vec3 n_out9p0 = vec3(UV, 0.0);
+
+// ScalarUniform:7
+	float n_out7p0 = Scale;
+
+// VectorCompose:8
+	vec3 n_out8p0 = vec3(n_out7p0, n_out7p0, n_out7p0);
+
+// ScaleUV:10
+	vec3 n_in10p2 = vec3(0.50000, 0.50000, 0.00000);
+	vec3 n_out10p0;
+	{
+		n_out10p0.xy = (n_out9p0.xy - n_in10p2.xy) * n_out8p0.xy + n_in10p2.xy;
+	}
+
+// TextureUniform:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	{
+		vec4 n_tex_read = texture(Noise, n_out10p0.xy);
+		n_out2p0 = n_tex_read.rgb;
+		n_out2p1 = n_tex_read.a;
+	}
+
+// ScalarUniform:6
+	float n_out6p0 = Detail;
+
+// Posterize:3
+	vec3 n_out3p0;
+	{
+		n_out3p0 = p0ster1zeFunc(n_out2p0, n_out6p0);
+	}
+
+// VectorOp:5
+	vec3 n_out5p0 = n_out4p0 * n_out3p0;
+
+// ScalarUniform:11
+	float n_out11p0 = Rough;
+
+// Output:0
+	ALBEDO = n_out5p0;
+	ROUGHNESS = n_out11p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -139, 60 )
+nodes/fragment/0/position = Vector2( 1000, 60 )
+nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/position = Vector2( 80, 480 )
+nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/position = Vector2( 480, 280 )
+nodes/fragment/4/node = SubResource( 5 )
+nodes/fragment/4/position = Vector2( 80, 80 )
+nodes/fragment/5/node = SubResource( 6 )
+nodes/fragment/5/position = Vector2( 740, 140 )
+nodes/fragment/6/node = SubResource( 7 )
+nodes/fragment/6/position = Vector2( 80, 340 )
+nodes/fragment/7/node = SubResource( 8 )
+nodes/fragment/7/position = Vector2( -397, 496 )
+nodes/fragment/8/node = SubResource( 9 )
+nodes/fragment/8/position = Vector2( -260, 580 )
+nodes/fragment/9/node = SubResource( 10 )
+nodes/fragment/9/position = Vector2( -800, 620 )
+nodes/fragment/10/node = SubResource( 1 )
+nodes/fragment/10/position = Vector2( -260, 680 )
+nodes/fragment/11/node = SubResource( 2 )
+nodes/fragment/11/position = Vector2( 680, 20 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 0, 3, 0, 5, 1, 4, 0, 5, 0, 5, 0, 0, 0, 7, 0, 8, 0, 7, 0, 8, 1, 7, 0, 8, 2, 6, 0, 3, 1, 9, 0, 10, 0, 8, 0, 10, 1, 10, 0, 2, 0, 11, 0, 0, 3 )
+
+[sub_resource type="OpenSimplexNoise" id=12]
+
+[sub_resource type="NoiseTexture" id=13]
+noise = SubResource( 12 )
+
+[resource]
+shader = SubResource( 11 )
+shader_param/Colour = Color( 0.203922, 0.0352941, 0.0352941, 1 )
+shader_param/Scale = 3.438
+shader_param/Detail = 8.0
+shader_param/Rough = 1.522
+shader_param/Noise = SubResource( 13 )

@@ -1,6 +1,8 @@
 extends base_proj_spawner
 
+
 func on_spawn():
+	friendly = true
 	$Particles.emitting = true
 	$blast.opacity = -0.15
 	$blast/blasttop.opacity = -0.15
@@ -15,6 +17,6 @@ func _process(delta):
 		$blast.opacity += 0.0005
 		$blast/blasttop.opacity += 0.0005
 		$blast/blastbottom.opacity += 0.0005
-	else:
-		if $blast.visible:
-			$blast.hide()
+#	else:
+#		if $blast.visible:
+#			$blast.hide()

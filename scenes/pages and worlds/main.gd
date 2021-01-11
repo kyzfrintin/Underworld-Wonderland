@@ -15,8 +15,12 @@ var danger = 0.0 setget danger_changed
 func _ready():
 	Engine.time_scale = 1
 	music.danger = 0
+#	music.get_node("main_playlist").connect("beat", self, "beat")
 	if randomise_spawn:
 		random_spawn()
+
+func beat(beat):
+	print($Allies/ziggurat.state)
 
 func danger_changed(value):
 	danger = value
@@ -25,8 +29,8 @@ func danger_changed(value):
 
 func random_spawn():
 	randomize()
-	var ran_pos = nav.get_closest_point(Vector3(rand_range(-random_range,random_range),height,rand_range(-random_range,random_range)))
-	player.global_transform.origin = ran_pos + Vector3(0,5,0)
+	var ran_pos = nav.get_closest_point(Vector3(rand_range(-random_range,random_range),rand_range(-random_range,random_range),rand_range(-random_range,random_range)))
+	player.global_transform.origin = ran_pos + Vector3(0,100,0)
 
 func _process(delta):
 	$UI/Main/TopRight/GameStats/FPSLabel.text = ("FPS: " + str(Engine.get_frames_per_second()))
@@ -44,4 +48,4 @@ func died(stats):
 	
 func remove_parts():
 	player.queue_free()
-	$EnemySpawner.queue_free()
+	$World/EnemySpawner.queue_free()

@@ -1,44 +1,138 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/proc gen/StructureSpawner.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player/test_player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui elements/UI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/pages and worlds/World2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/pages and worlds/World4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/entities/allies/ziggurat.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/entities/allies/drone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/pages and worlds/main.gd" type="Script" id=7]
+[ext_resource path="res://scenes/entities/enemies/flying_spitter.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/proc gen/EnemySpawner.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/proc gen/PickUpSpawner.tscn" type="PackedScene" id=10]
 
 [node name="main" type="Spatial"]
 script = ExtResource( 7 )
 randomise_spawn = false
-random_range = 250
+random_range = 2500
 
 [node name="LightsAndFX" type="Spatial" parent="."]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="LightsAndFX"]
-transform = Transform( -0.895355, 0.210651, -0.392386, 0.0139501, 0.893897, 0.448055, 0.445136, 0.395694, -0.803294, -0.86769, 1345.89, 0 )
+transform = Transform( -1, 2.54056e-08, -1.27819e-07, -4.65416e-08, 0.846509, 0.532374, 1.21726e-07, 0.532374, -0.846509, -0.86769, 9262.89, 0 )
 light_color = Color( 0.980392, 0.937255, 0.921569, 1 )
-light_energy = 0.49
+light_energy = 0.61
 light_indirect_energy = 0.0
 light_specular = 0.73
 light_bake_mode = 2
-shadow_enabled = true
-shadow_bias = -0.54
+shadow_bias = 0.08
 directional_shadow_mode = 0
-directional_shadow_split_1 = 0.131
-directional_shadow_split_2 = 0.446
-directional_shadow_split_3 = 0.707
-directional_shadow_blend_splits = true
-directional_shadow_normal_bias = 10.67
-directional_shadow_bias_split_scale = 0.23
-directional_shadow_max_distance = 42.7
+directional_shadow_split_1 = 0.454
+directional_shadow_split_2 = 0.731
+directional_shadow_split_3 = 0.963
+directional_shadow_normal_bias = 16.0
+directional_shadow_bias_split_scale = 0.9
+directional_shadow_depth_range = 1
+directional_shadow_max_distance = 101.9
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.928012, 0, 0.37255, 0, 1, 0, -0.37255, 0, -0.928012, 1741.9, 925.77, -226 )
 
 [node name="World" parent="." instance=ExtResource( 4 )]
 
-[node name="player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.141368, 0, -0.989957, 0, 1, 0, 0.989957, 0, 0.141368, 0, 461, 0 )
+[node name="EnemySpawner" parent="World" instance=ExtResource( 9 )]
+max_allocation = 10
+max_per_spawn = 2
+diff_level_interval = 45
+spawn_max_distance = 10
+
+[node name="StructureSpawner" parent="World" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 477, 0 )
+enabled = false
+root_path = NodePath("../../Structures")
+max_num = 10
+min_height = -30.0
+max_height = 0.0
+spawn_range = 2000.0
+
+[node name="PickUpSpawner" parent="World" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 477, 0 )
+root_path = NodePath("../../Items")
+max_num = 200
+min_height = 3.0
+max_height = 9.0
+spawn_range = 2500.0
 
 [node name="Enemies" type="Spatial" parent="."]
+
+[node name="flying_spitter" parent="Enemies" instance=ExtResource( 8 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1712, 908, -104 )
+attack_dict = {
+"launch_fb": {
+"a_range": 125.0,
+"animation": "launch_proj",
+"cooldown": 6.0,
+"damage": 12.0,
+"track_int": 0.2
+}
+}
+
+[node name="flying_spitter2" parent="Enemies" instance=ExtResource( 8 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1727, 908, -104 )
+attack_dict = {
+"launch_fb": {
+"a_range": 125.0,
+"animation": "launch_proj",
+"cooldown": 6.0,
+"damage": 12.0,
+"track_int": 0.2
+}
+}
+
+[node name="flying_spitter3" parent="Enemies" instance=ExtResource( 8 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1744, 908, -104 )
+attack_dict = {
+"launch_fb": {
+"a_range": 125.0,
+"animation": "launch_proj",
+"cooldown": 6.0,
+"damage": 12.0,
+"track_int": 0.2
+}
+}
+
+[node name="Allies" type="Spatial" parent="."]
+
+[node name="drone" parent="Allies" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1723, 914, -191 )
+attack_dict = {
+"basic_shot": {
+"a_range": 150.0,
+"animation": "launch",
+"cooldown": 3.0,
+"damage": 50.0,
+"track_int": 0.1
+}
+}
+
+[node name="ziggurat" parent="Allies" instance=ExtResource( 5 )]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 1700.96, 909.864, -241 )
+attack_dict = {
+"basic_shot": {
+"a_range": 100.0,
+"animation": "basic_shot",
+"cooldown": 0.5,
+"damage": 16.0,
+"track_int": 0.1
+},
+"tempest": {
+"a_range": 16.0,
+"animation": "tempest",
+"cooldown": 8.0,
+"damage": 40.0,
+"track_int": 0.1
+}
+}
 
 [node name="Structures" type="Spatial" parent="."]
 
@@ -47,24 +141,5 @@ transform = Transform( 0.141368, 0, -0.989957, 0, 1, 0, 0.989957, 0, 0.141368, 0
 [node name="Projectiles" type="Spatial" parent="."]
 
 [node name="Paths" type="Spatial" parent="."]
-
-[node name="EnemySpawner" parent="." instance=ExtResource( 9 )]
-max_allocation = 10
-max_per_spawn = 2
-diff_level_interval = 45
-spawn_max_distance = 10
-
-[node name="StructureSpawner" parent="." instance=ExtResource( 1 )]
-root_path = NodePath("../Structures")
-max_num = 2
-min_height = -30.0
-max_height = 0.0
-spawn_range = 400.0
-
-[node name="PickUpSpawner" parent="." instance=ExtResource( 10 )]
-root_path = NodePath("../Items")
-min_height = 2.0
-max_height = 5.0
-spawn_range = 600.0
 
 [node name="UI" parent="." instance=ExtResource( 3 )]

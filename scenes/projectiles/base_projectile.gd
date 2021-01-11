@@ -13,6 +13,7 @@ var active
 var swarm
 var friendly
 var damage
+var entity
 
 func _ready():
 	connect("area_entered", self, "collide")
@@ -28,7 +29,8 @@ func _ready():
 
 func activate():
 	active = true
-	$spawn_sound.play()
+	if $spawn_sound:
+		$spawn_sound.play()
 	on_activate()
 	
 func collide(body : Object):
@@ -39,20 +41,23 @@ func collide(body : Object):
 		if type == "AOE":
 			aoe_spawn()
 	if body.has_method("hit"):
+		if body == entity: return
 		on_contact(translation)
-		if body.friendly != friendly:
-			match type:
-				"Absorb":
-					body.hit(damage, translation, body.global_transform.origin.direction_to(translation))
-				"AOE":
-					aoe_spawn()
-			remove()
+		match type:
+			"Absorb":
+				body.hit(damage, translation, body.global_transform.origin.direction_to(translation), entity)
+			"AOE":
+				aoe_spawn()
+		remove()
 
 func aoe_spawn():
 	var s = spawner.instance()
-	get_parent().add_child(s)
 	s.damage = damage
 	s.global_transform.origin = global_transform.origin
+	s.parent = entity
+	s.entity = entity
+	s.friendly = friendly
+	get_parent().add_child(s)
 			
 func on_contact(loc):
 	pass
@@ -65,7 +70,8 @@ func _process(delta):
 		translate(dir*speed)
 
 func remove():
-	parent.projectiles.remove(parent.projectiles.find(self))
+	if parent:
+		parent.projectiles.remove(parent.projectiles.find(self))
 	call_deferred("queue_free")
 
 func on_activate():

@@ -12,6 +12,7 @@ func heavy_fire():
 	rp.translation = pos
 	rp.parent = self
 	rp.friendly = true
+	rp.entity = parent
 	rp.damage = secondary_damage
 	rp.get_node("spawn_sound").spawn_node = self
 	rp.dir = pos.direction_to(parent.cast_to)

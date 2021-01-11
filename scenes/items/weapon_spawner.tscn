@@ -189,8 +189,6 @@ visible = false
 
 [node name="enter" type="Spatial" parent="."]
 script = ExtResource( 5 )
-spawn_node = NodePath("")
-autoplay = false
 volume_range = 2.0
 pitch_range = 0.01
 
@@ -204,8 +202,6 @@ bus = "FX"
 
 [node name="buy" type="Spatial" parent="."]
 script = ExtResource( 5 )
-spawn_node = NodePath("")
-autoplay = false
 volume_range = 4.0
 pitch_range = 0.2
 
@@ -229,8 +225,8 @@ bus = "FX"
 stream = ExtResource( 10 )
 unit_size = 2.0
 pitch_scale = 0.8
-autoplay = true
 max_distance = 500.0
 bus = "Ambience"
+
 [connection signal="body_entered" from="Area" to="." method="enter"]
 [connection signal="body_exited" from="Area" to="." method="exited"]

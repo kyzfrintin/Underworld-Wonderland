@@ -1,0 +1,659 @@
+[gd_scene load_steps=43 format=2]
+
+[ext_resource path="res://scenes/weapons/teslazooka_model.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/textures/weapon_icons/plasma_rifle.png" type="Texture" id=2]
+[ext_resource path="res://addons/shaderV/rgba/posterize.gd" type="Script" id=3]
+[ext_resource path="res://addons/shaderV/uv/scaleUV.gd" type="Script" id=4]
+[ext_resource path="res://scenes/weapons/protoncannon.gd" type="Script" id=5]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=6]
+[ext_resource path="res://assets/audio/sound/weapons/laser_shot.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/sound/character/woosh.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/audio/sound/weapons/laser_sword_swing.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/sound/weapons/laser_sword_spin.wav" type="AudioStream" id=10]
+
+[sub_resource type="VisualShaderNodeCustom" id=41]
+default_input_values = [ 1, Vector3( 1, 1, 0 ), 2, Vector3( 0.5, 0.5, 0 ) ]
+script = ExtResource( 4 )
+
+[sub_resource type="VisualShaderNodeTextureUniform" id=42]
+output_port_for_preview = 0
+uniform_name = "Noise"
+
+[sub_resource type="VisualShaderNodeCustom" id=43]
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 3 )
+
+[sub_resource type="VisualShaderNodeColorUniform" id=44]
+output_port_for_preview = 0
+uniform_name = "Colour"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=45]
+output_port_for_preview = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=46]
+uniform_name = "Detail"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=47]
+uniform_name = "Scale"
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=48]
+
+[sub_resource type="VisualShaderNodeInput" id=49]
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=50]
+code = "shader_type spatial;
+render_mode depth_draw_always, cull_disabled, specular_schlick_ggx;
+
+uniform vec4 Colour : hint_color;
+uniform float Scale;
+uniform sampler2D Noise;
+uniform float Detail;
+
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ColorUniform:4
+	vec3 n_out4p0 = Colour.rgb;
+	float n_out4p1 = Colour.a;
+
+// Input:9
+	vec3 n_out9p0 = vec3(UV, 0.0);
+
+// ScalarUniform:7
+	float n_out7p0 = Scale;
+
+// VectorCompose:8
+	vec3 n_out8p0 = vec3(n_out7p0, n_out7p0, n_out7p0);
+
+// ScaleUV:10
+	vec3 n_in10p2 = vec3(0.50000, 0.50000, 0.00000);
+	vec3 n_out10p0;
+	{
+		n_out10p0.xy = (n_out9p0.xy - n_in10p2.xy) * n_out8p0.xy + n_in10p2.xy;
+	}
+
+// TextureUniform:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	{
+		vec4 n_tex_read = texture(Noise, n_out10p0.xy);
+		n_out2p0 = n_tex_read.rgb;
+		n_out2p1 = n_tex_read.a;
+	}
+
+// ScalarUniform:6
+	float n_out6p0 = Detail;
+
+// Posterize:3
+	vec3 n_out3p0;
+	{
+		n_out3p0 = p0ster1zeFunc(n_out2p0, n_out6p0);
+	}
+
+// VectorOp:5
+	vec3 n_out5p0 = n_out4p0 * n_out3p0;
+
+// Output:0
+	ALBEDO = n_out5p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 358, 59 )
+modes/cull = 2
+modes/depth_draw = 1
+nodes/fragment/0/position = Vector2( 1000, 60 )
+nodes/fragment/2/node = SubResource( 42 )
+nodes/fragment/2/position = Vector2( 80, 480 )
+nodes/fragment/3/node = SubResource( 43 )
+nodes/fragment/3/position = Vector2( 480, 280 )
+nodes/fragment/4/node = SubResource( 44 )
+nodes/fragment/4/position = Vector2( 80, 80 )
+nodes/fragment/5/node = SubResource( 45 )
+nodes/fragment/5/position = Vector2( 740, 140 )
+nodes/fragment/6/node = SubResource( 46 )
+nodes/fragment/6/position = Vector2( 80, 340 )
+nodes/fragment/7/node = SubResource( 47 )
+nodes/fragment/7/position = Vector2( -397, 496 )
+nodes/fragment/8/node = SubResource( 48 )
+nodes/fragment/8/position = Vector2( -260, 580 )
+nodes/fragment/9/node = SubResource( 49 )
+nodes/fragment/9/position = Vector2( -800, 620 )
+nodes/fragment/10/node = SubResource( 41 )
+nodes/fragment/10/position = Vector2( -260, 680 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 0, 3, 0, 5, 1, 4, 0, 5, 0, 5, 0, 0, 0, 7, 0, 8, 0, 7, 0, 8, 1, 7, 0, 8, 2, 6, 0, 3, 1, 9, 0, 10, 0, 8, 0, 10, 1, 10, 0, 2, 0 )
+
+[sub_resource type="OpenSimplexNoise" id=13]
+
+[sub_resource type="NoiseTexture" id=51]
+noise = SubResource( 13 )
+
+[sub_resource type="ShaderMaterial" id=52]
+resource_local_to_scene = true
+shader = SubResource( 50 )
+shader_param/Colour = Color( 0.282353, 0.223529, 0.223529, 1 )
+shader_param/Scale = 0.821042
+shader_param/Detail = 1.84794
+shader_param/Noise = SubResource( 51 )
+
+[sub_resource type="StreamTexture" id=38]
+flags = 23
+load_path = "res://.import/soft_circle.png-d94b8baa5b2978ce579735d23f0674a9.s3tc.stex"
+
+[sub_resource type="SpatialMaterial" id=39]
+flags_transparent = true
+params_blend_mode = 2
+params_cull_mode = 2
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 0.733333, 0.854902, 0.882353, 1 )
+albedo_texture = SubResource( 38 )
+emission_enabled = true
+emission = Color( 0.835294, 0.933333, 0.937255, 1 )
+emission_energy = 2.82
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="QuadMesh" id=40]
+resource_local_to_scene = true
+material = SubResource( 39 )
+size = Vector2( 0.1, 0.1 )
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.3
+bottom_radius = 0.25
+height = 1.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="VisualShaderNodeCustom" id=3]
+default_input_values = [ 1, Vector3( 1, 1, 0 ), 2, Vector3( 0.5, 0.5, 0 ) ]
+script = ExtResource( 4 )
+
+[sub_resource type="VisualShaderNodeTextureUniform" id=4]
+output_port_for_preview = 0
+uniform_name = "Noise"
+
+[sub_resource type="VisualShaderNodeCustom" id=5]
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 3 )
+
+[sub_resource type="VisualShaderNodeColorUniform" id=6]
+output_port_for_preview = 0
+uniform_name = "Colour"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=7]
+output_port_for_preview = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=8]
+uniform_name = "Detail"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=9]
+uniform_name = "Scale"
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=10]
+
+[sub_resource type="VisualShaderNodeInput" id=11]
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=12]
+code = "shader_type spatial;
+render_mode blend_add, depth_draw_always, cull_disabled, specular_schlick_ggx;
+
+uniform vec4 Colour : hint_color;
+uniform float Scale;
+uniform sampler2D Noise;
+uniform float Detail;
+
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ColorUniform:4
+	vec3 n_out4p0 = Colour.rgb;
+	float n_out4p1 = Colour.a;
+
+// Input:9
+	vec3 n_out9p0 = vec3(UV, 0.0);
+
+// ScalarUniform:7
+	float n_out7p0 = Scale;
+
+// VectorCompose:8
+	vec3 n_out8p0 = vec3(n_out7p0, n_out7p0, n_out7p0);
+
+// ScaleUV:10
+	vec3 n_in10p2 = vec3(0.50000, 0.50000, 0.00000);
+	vec3 n_out10p0;
+	{
+		n_out10p0.xy = (n_out9p0.xy - n_in10p2.xy) * n_out8p0.xy + n_in10p2.xy;
+	}
+
+// TextureUniform:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	{
+		vec4 n_tex_read = texture(Noise, n_out10p0.xy);
+		n_out2p0 = n_tex_read.rgb;
+		n_out2p1 = n_tex_read.a;
+	}
+
+// ScalarUniform:6
+	float n_out6p0 = Detail;
+
+// Posterize:3
+	vec3 n_out3p0;
+	{
+		n_out3p0 = p0ster1zeFunc(n_out2p0, n_out6p0);
+	}
+
+// VectorOp:5
+	vec3 n_out5p0 = n_out4p0 * n_out3p0;
+
+// Output:0
+	ALBEDO = n_out5p0;
+	ALPHA = dot(n_out5p0, vec3(0.333333, 0.333333, 0.333333));
+	EMISSION = n_out5p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 358, 59 )
+modes/blend = 1
+modes/cull = 2
+modes/depth_draw = 1
+nodes/fragment/0/position = Vector2( 1000, 60 )
+nodes/fragment/2/node = SubResource( 4 )
+nodes/fragment/2/position = Vector2( 80, 480 )
+nodes/fragment/3/node = SubResource( 5 )
+nodes/fragment/3/position = Vector2( 480, 280 )
+nodes/fragment/4/node = SubResource( 6 )
+nodes/fragment/4/position = Vector2( 80, 80 )
+nodes/fragment/5/node = SubResource( 7 )
+nodes/fragment/5/position = Vector2( 740, 140 )
+nodes/fragment/6/node = SubResource( 8 )
+nodes/fragment/6/position = Vector2( 80, 340 )
+nodes/fragment/7/node = SubResource( 9 )
+nodes/fragment/7/position = Vector2( -397, 496 )
+nodes/fragment/8/node = SubResource( 10 )
+nodes/fragment/8/position = Vector2( -260, 580 )
+nodes/fragment/9/node = SubResource( 11 )
+nodes/fragment/9/position = Vector2( -800, 620 )
+nodes/fragment/10/node = SubResource( 3 )
+nodes/fragment/10/position = Vector2( -260, 680 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 0, 3, 0, 5, 1, 4, 0, 5, 0, 5, 0, 0, 0, 7, 0, 8, 0, 7, 0, 8, 1, 7, 0, 8, 2, 6, 0, 3, 1, 9, 0, 10, 0, 8, 0, 10, 1, 10, 0, 2, 0, 5, 0, 0, 1, 5, 0, 0, 5 )
+
+[sub_resource type="NoiseTexture" id=14]
+noise = SubResource( 13 )
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 12 )
+shader_param/Colour = Color( 1, 1, 1, 1 )
+shader_param/Scale = 0.812
+shader_param/Detail = 1.85
+shader_param/Noise = SubResource( 14 )
+
+[sub_resource type="Animation" id=16]
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("teslazooka:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.0810655, 0 ), Vector3( 0, -0.101715, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("beam:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("teslazooka/Tube/Particles2:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("beam/Bullettrail2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 60, 90, 90 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("beam/Bullettrail3:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -60, 90, 90 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("beam/Bullettrail:material/0:shader_param/Scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.18, 0.42, 0.594 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.812, 0.881, 0.808, 0.812 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("beam/Bullettrail:material/0:shader_param/Detail")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.12, 0.3, 0.48, 0.594 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.85, 1.517, 2.18, 1.405, 1.85 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("beam:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("teslazooka/Tube/Particles2:speed_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 5.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("beam/Bullettrail3:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -60, 90, 90 ), Vector3( -420, 90, 90 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("beam/Bullettrail2:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 90, 90 ), Vector3( 420, 90, 90 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+tracks/0/type = "value"
+tracks/0/path = NodePath("teslazooka:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0.535484 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("beam:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("teslazooka/Tube/Particles2:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "heavy_fire"
+}, {
+"args": [  ],
+"method": "reenable_primary"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("shoot2")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ null ],
+"method": "play"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("beam/Bullettrail2:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 60, 90, 90 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("beam/Bullettrail3:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -60, 90, 90 ) ]
+}
+
+[node name="proton_cannon" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.549632, 0.828236 )
+script = ExtResource( 5 )
+primary_damage = 0.5
+wep_name = "Proton Cannon"
+continuous = true
+icon = ExtResource( 2 )
+
+[node name="teslazooka" parent="." instance=ExtResource( 1 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+
+[node name="Tube" parent="teslazooka" index="0"]
+material/0 = SubResource( 52 )
+
+[node name="RearHandle" parent="teslazooka/Tube" index="2"]
+material/0 = SubResource( 52 )
+
+[node name="FrontHandle" parent="teslazooka/Tube" index="3"]
+material/0 = SubResource( 52 )
+
+[node name="Sight" parent="teslazooka/Tube" index="4"]
+material/0 = SubResource( 52 )
+
+[node name="Particles2" parent="teslazooka/Tube" index="9"]
+speed_scale = 2.0
+draw_pass_1 = SubResource( 40 )
+
+[node name="beam" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14401, -5.71078 )
+visible = false
+
+[node name="Bullettrail" type="MeshInstance" parent="beam"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.5 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = SubResource( 15 )
+
+[node name="Bullettrail2" type="MeshInstance" parent="beam"]
+transform = Transform( 0.866025, 2.18272e-08, 0.5, 0.5, -8.14603e-08, -0.866025, 2.18272e-08, 1, -8.14603e-08, 0, 0, -0.5 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = SubResource( 15 )
+
+[node name="Bullettrail3" type="MeshInstance" parent="beam"]
+transform = Transform( -0.866025, 3.04014e-07, 0.5, 0.5, -8.14603e-08, 0.866025, 3.04014e-07, 1, -8.14603e-08, 0, 0, -0.5 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = SubResource( 15 )
+
+[node name="shoot_loop" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14159, -2.91828 )
+stream = ExtResource( 10 )
+unit_db = -60.0
+pitch_scale = 0.6
+max_distance = 400.0
+bus = "FX"
+
+[node name="shoot2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16589, -3.21054 )
+script = ExtResource( 6 )
+volume_range = 0.3
+pitch_range = 0.04
+
+[node name="1" type="AudioStreamPlayer3D" parent="shoot2"]
+stream = ExtResource( 7 )
+unit_db = -4.0
+pitch_scale = 0.4
+max_distance = 250.0
+bus = "FX"
+
+[node name="2" type="AudioStreamPlayer3D" parent="shoot2"]
+stream = ExtResource( 9 )
+unit_db = -11.0
+pitch_scale = 0.8
+max_distance = 250.0
+bus = "FX"
+
+[node name="3" type="AudioStreamPlayer3D" parent="shoot2"]
+stream = ExtResource( 8 )
+unit_db = -5.0
+pitch_scale = 0.2
+max_distance = 250.0
+bus = "FX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "def"
+playback_default_blend_time = 0.1
+anims/def = SubResource( 16 )
+anims/primary_attack = SubResource( 17 )
+anims/secondary_attack = SubResource( 18 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="launch_point" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10933, -5.73207 )
+
+[editable path="teslazooka"]

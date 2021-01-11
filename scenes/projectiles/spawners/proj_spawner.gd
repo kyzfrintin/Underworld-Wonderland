@@ -1,6 +1,9 @@
 extends Area
 
 var damage
+var parent
+var friendly
+var entity
 
 class_name base_proj_spawner
 
@@ -11,7 +14,7 @@ func _ready():
 	for i in cols:
 		if "friendly" in i:
 			if !i.friendly and i.has_method("hit"):
-				i.hit(damage, translation, i.translation.direction_to(translation))
+				i.hit(damage, translation, i.translation.direction_to(translation), parent)
 
 func remove():
 	call_deferred("queue_free")

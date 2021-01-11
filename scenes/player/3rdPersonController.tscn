@@ -16,13 +16,14 @@ MinZoom = 2.0
 [node name="InnerGimbal" type="Spatial" parent="."]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.45646, 0 )
 
-[node name="Camera" type="Camera" parent="InnerGimbal"]
+[node name="Camera" type="ClippedCamera" parent="InnerGimbal"]
 transform = Transform( 0.333333, 0, 0, 0, 0.319712, 0.0943143, 0, -0.0943143, 0.319712, 0.356198, 0.936855, 3.75437 )
 doppler_tracking = 1
 current = true
-fov = 100.0
+fov = 75.0
 near = 0.01
-far = 4000.0
+far = 50000.0
+margin = 10.63
 
 [node name="RayCast" type="RayCast" parent="InnerGimbal/Camera"]
 enabled = true
@@ -33,5 +34,4 @@ collide_with_areas = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -750 )
 
 [node name="RayCast" type="RayCast" parent="InnerGimbal"]
-enabled = true
 cast_to = Vector3( 0.36, 0.946, 3.792 )

@@ -6,7 +6,7 @@ func get_info():
 		"icon": item.icon,
 		"desc": item.description
 		}
-	price = int(round(50 * (game.get_node("EnemySpawner").diff * 0.5)))
+	price = int(round(50 * (game.get_node("World/EnemySpawner").diff * 0.5)))
 	
 func get_input():
 	if Input.is_action_just_pressed("gp_interact"):

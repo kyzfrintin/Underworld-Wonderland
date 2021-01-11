@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/shaders/main_ui.tres" type="Theme" id=1]
 [ext_resource path="res://assets/textures/weapon_icons/plasma_rifle.png" type="Texture" id=2]
@@ -8,11 +8,19 @@
 [ext_resource path="res://assets/textures/weapon_icons/dragonslaying_sword.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/weapon_icons/fire_staff.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/weapon_icons/stick.png" type="Texture" id=8]
+[ext_resource path="res://addons/mixing-desk/music/transition_song.gd" type="Script" id=9]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=10]
+[ext_resource path="res://assets/audio/music/05 Pad.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/audio/music/01 Toms.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/audio/music/07 Bass.wav" type="AudioStream" id=13]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=14]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=15]
+[ext_resource path="res://assets/textures/soft_circle.png" type="Texture" id=16]
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=5]
 lifetime_randomness = 1.0
 emission_shape = 2
-emission_box_extents = Vector3( 1000, 1, 1 )
+emission_box_extents = Vector3( 10000, 1, 1 )
 flag_disable_z = true
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -21,30 +29,14 @@ initial_velocity = 50.0
 initial_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 20.0
+scale = 15.0
 scale_random = 1.0
 color = Color( 0.635294, 0.0431373, 0.0431373, 1 )
 
 [sub_resource type="ParticlesMaterial" id=2]
 lifetime_randomness = 1.0
 emission_shape = 2
-emission_box_extents = Vector3( 1000, 1, 1 )
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 180.0
-gravity = Vector3( 0, -16, 0 )
-initial_velocity = 50.0
-initial_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 16.0
-scale_random = 1.0
-color = Color( 0.635294, 0.388235, 0.0431373, 1 )
-
-[sub_resource type="ParticlesMaterial" id=3]
-lifetime_randomness = 1.0
-emission_shape = 2
-emission_box_extents = Vector3( 1000, 1, 1 )
+emission_box_extents = Vector3( 10000, 1, 1 )
 flag_disable_z = true
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -53,7 +45,23 @@ initial_velocity = 50.0
 initial_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 12.0
+scale = 13.0
+scale_random = 1.0
+color = Color( 0.635294, 0.388235, 0.0431373, 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_box_extents = Vector3( 10000, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, -10, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 10.0
 scale_random = 1.0
 color = Color( 0.87451, 0.843137, 0.0392157, 1 )
 
@@ -99,27 +107,33 @@ __meta__ = {
 
 [node name="Red" type="Particles2D" parent="Bottom/Control"]
 position = Vector2( 7.38205, 54.2026 )
-amount = 1000
-lifetime = 20.0
+scale = Vector2( 0.1, 0.1 )
+amount = 2000
+lifetime = 120.0
 preprocess = 120.0
-speed_scale = 0.2
-process_material = SubResource( 1 )
+visibility_rect = Rect2( -1000, -1000, 2000, 2000 )
+process_material = SubResource( 5 )
+texture = ExtResource( 16 )
 
 [node name="Orange" type="Particles2D" parent="Bottom/Control"]
 position = Vector2( 7.38205, 54.2026 )
-amount = 800
-lifetime = 20.0
+scale = Vector2( 0.1, 0.1 )
+amount = 1200
+lifetime = 120.0
 preprocess = 120.0
-speed_scale = 0.2
+visibility_rect = Rect2( -1000, -1000, 2000, 2000 )
 process_material = SubResource( 2 )
+texture = ExtResource( 16 )
 
 [node name="Yellow" type="Particles2D" parent="Bottom/Control"]
 position = Vector2( 7.38205, 54.2026 )
-amount = 600
-lifetime = 20.0
+scale = Vector2( 0.1, 0.1 )
+amount = 800
+lifetime = 120.0
 preprocess = 120.0
-speed_scale = 0.2
+visibility_rect = Rect2( -1000, -1000, 2000, 2000 )
 process_material = SubResource( 3 )
+texture = ExtResource( 16 )
 
 [node name="Middle" type="CenterContainer" parent="."]
 margin_right = 1920.0
@@ -207,5 +221,52 @@ margin_top = 316.0
 margin_right = 75.0
 margin_bottom = 391.0
 texture = ExtResource( 6 )
+
+[node name="main_playlist" type="Node" parent="."]
+script = ExtResource( 10 )
+play_mode = 1
+autoplay_song = NodePath("lead_to_main")
+
+[node name="main" type="Node" parent="main_playlist"]
+script = ExtResource( 15 )
+tempo = 120
+bars = 16
+beats_in_bar = 4
+transition_beats = 1.0
+
+[node name="CoreContainer" type="Node" parent="main_playlist/main"]
+script = ExtResource( 14 )
+
+[node name="pad" type="AudioStreamPlayer" parent="main_playlist/main/CoreContainer"]
+stream = ExtResource( 11 )
+bus = "Music"
+
+[node name="lead_to_main" type="Node" parent="main_playlist"]
+script = ExtResource( 9 )
+tempo = 120
+bars = 16
+beats_in_bar = 4
+target_song = NodePath("../main")
+transition_beats = 1.0
+
+[node name="CoreContainer" type="Node" parent="main_playlist/lead_to_main"]
+script = ExtResource( 14 )
+
+[node name="toms" type="AudioStreamPlayer" parent="main_playlist/lead_to_main/CoreContainer"]
+stream = ExtResource( 12 )
+
+[node name="other" type="Node" parent="main_playlist"]
+script = ExtResource( 15 )
+tempo = 120
+bars = 16
+beats_in_bar = 4
+transition_beats = 1.0
+
+[node name="CoreContainer" type="Node" parent="main_playlist/other"]
+script = ExtResource( 14 )
+
+[node name="bass" type="AudioStreamPlayer" parent="main_playlist/other/CoreContainer"]
+stream = ExtResource( 13 )
+
 [connection signal="pressed" from="Middle/Divide/Menu/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Middle/Divide/Menu/Quit" to="." method="_on_Quit_pressed"]

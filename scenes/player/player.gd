@@ -38,6 +38,7 @@ onready var l_mount = $WeaponMountL
 onready var body = $body_pivot/robot
 onready var anim = body.get_node("AnimationTree")
 
+onready var true_pos = $Chest
 onready var game = get_parent()
 onready var dnum_res = preload("res://scenes/ui elements/DamageNum2D.tscn")
 onready var stats_ui = game.get_node("UI/Main/StatsCorner")
@@ -95,8 +96,8 @@ func enter_first_person():
 	$body_pivot.hide()
 	AudioServer.set_bus_volume_db(4, -5)
 	$Controller/InnerGimbal/Camera.current = false
-	$WeaponMountR.translation = Vector3(2.632, 0, -4.282)
-	$WeaponMountL.translation = Vector3(-2.732, 0, -4.282)
+	$WeaponMountR.translation = Vector3(5.632, -1, -4.282)
+	$WeaponMountL.translation = Vector3(-5.732, -1, -4.282)
 	$Camera.look_at(cast_point, Vector3(0,1,0))
 	$Camera.current = true
 
@@ -141,7 +142,7 @@ func _ready():
 	weapon_changed(false, $WeaponMountL.get_child(0))
 	update_exp()
 
-func hit(amnt, loc, nrm):
+func hit(amnt, loc, nrm, entity):
 	self.healing = false
 	hp -= amnt
 	update_hp()
@@ -155,6 +156,10 @@ func hit(amnt, loc, nrm):
 func die():
 	call_deferred("remove_parts")
 	game.died(perf_stats)
+	on_death()
+		
+func on_death():
+	pass
 
 func replace_weapon(right, weapon):
 	if right:
@@ -228,10 +233,10 @@ func _process(delta):
 		else:
 			self.healing = false
 	
-	if cam_cast.is_colliding():
-		cam.global_transform.origin = (cam_cast.get_collision_point() + cam_cast.get_collision_normal() * 0.1)
-	else:
-		cam.translation = cam_cast.cast_to
+#	if cam_cast.is_colliding():
+#		cam.global_transform.origin = (cam_cast.get_collision_point() + cam_cast.get_collision_normal() * 0.1)
+#	else:
+#		cam.translation = cam_cast.cast_to
 
 func _on_heal_timer_timeout():
 	self.healing = true

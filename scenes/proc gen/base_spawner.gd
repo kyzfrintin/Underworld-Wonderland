@@ -8,7 +8,7 @@ export (float) var max_height = 1
 export (float) var spawn_range = 4500
 
 onready var pool = $Pool
-onready var nav = get_node("../World/Navigation")
+onready var nav = get_node("../Navigation")
 
 var root
 
@@ -20,6 +20,6 @@ func _ready():
 	for i in n:
 		var list = pool.get_resource_list()
 		var item = pool.get_resource(list[randi() % list.size()]).instance()
-		var ran_pos = nav.get_closest_point(Vector3(rand_range(-spawn_range,spawn_range),500,rand_range(-spawn_range,spawn_range)))
+		var ran_pos = nav.get_closest_point(Vector3(rand_range(-spawn_range,spawn_range),rand_range(-spawn_range,spawn_range),rand_range(-spawn_range,spawn_range)))
 		root.add_child(item)
 		item.global_transform.origin = ran_pos + Vector3(0,rand_range(min_height,max_height),0)

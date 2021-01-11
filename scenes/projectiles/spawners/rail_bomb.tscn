@@ -10,10 +10,10 @@
 [ext_resource path="res://assets/audio/sound/weapons/pistol_shot.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/textures/blast_circle.png" type="Texture" id=9]
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="SphereShape" id=1]
 radius = 20.0
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=2]
 lifetime_randomness = 1.0
 emission_shape = 1
 emission_sphere_radius = 6.0
@@ -24,11 +24,11 @@ initial_velocity_random = 1.0
 scale = 15.0
 scale_random = 1.0
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=3]
 flags_unshaded = true
 
-[sub_resource type="SphereMesh" id=3]
-material = SubResource( 2 )
+[sub_resource type="SphereMesh" id=4]
+material = SubResource( 3 )
 radius = 0.05
 height = 0.1
 radial_segments = 4
@@ -40,7 +40,7 @@ monitorable = false
 script = ExtResource( 2 )
 
 [node name="CollisionShape" parent="." index="0"]
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="remove_timer" parent="." index="1"]
 wait_time = 6.0
@@ -50,8 +50,8 @@ emitting = false
 amount = 400
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 3 )
+process_material = SubResource( 2 )
+draw_pass_1 = SubResource( 4 )
 
 [node name="boom" type="Spatial" parent="." index="3"]
 script = ExtResource( 6 )

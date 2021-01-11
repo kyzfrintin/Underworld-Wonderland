@@ -13,7 +13,7 @@ func wake(num, p, v):
 	set_pos()
 	point = p
 	offset = Vector2(rand_range(-35,35),rand_range(-35,35))
-	text = str(num)
+	text = str(round(num))
 	modulate.a = 1
 
 func _process(delta):

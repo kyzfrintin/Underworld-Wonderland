@@ -8,3 +8,4 @@ background_sky = SubResource( 1 )
 tonemap_mode = 2
 tonemap_exposure = 0.57
 tonemap_white = 8.64
+glow_enabled = true

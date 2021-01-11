@@ -7,6 +7,8 @@ var holster : Vector3
 
 func on_equip():
 	holster = translation
+	parent.get_node("Camera/RayCast").add_exception(get_node(hurt_box))
+	parent.get_node("Controller/InnerGimbal/Camera/RayCast").add_exception(get_node(hurt_box))
 
 func attack():
 	if right_hand:
@@ -19,8 +21,8 @@ func melee_attack():
 	var loc = get_node(hurt_box).global_transform.origin
 	var nrm = get_node(hurt_box).global_transform.origin
 	for i in col:
-		if i.has_method("hit") and !i.friendly:
-			i.hit(primary_damage, loc, nrm)
+		if i.has_method("hit"):
+			i.hit(primary_damage, loc, nrm, parent)
 			contact()
 
 func contact():

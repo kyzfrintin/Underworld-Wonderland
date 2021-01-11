@@ -1,0 +1,147 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenes/projectiles/proton_missile.gd" type="Script" id=1]
+[ext_resource path="res://addons/mixing-desk/sound/3d/polysound.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/sound/weapons/staff_woosh.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/sound/weapons/raingun_swish.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/sound/weapons/raingun_boom.wav" type="AudioStream" id=5]
+[ext_resource path="res://scenes/projectiles/spawners/rail_bomb.tscn" type="PackedScene" id=6]
+
+[sub_resource type="StreamTexture" id=38]
+flags = 23
+load_path = "res://.import/soft_circle.png-d94b8baa5b2978ce579735d23f0674a9.s3tc.stex"
+
+[sub_resource type="SpatialMaterial" id=40]
+flags_transparent = true
+params_blend_mode = 2
+params_cull_mode = 2
+albedo_color = Color( 0.733333, 0.854902, 0.882353, 1 )
+albedo_texture = SubResource( 38 )
+emission_enabled = true
+emission = Color( 0.835294, 0.933333, 0.937255, 1 )
+emission_energy = 2.82
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CylinderMesh" id=41]
+material = SubResource( 40 )
+top_radius = 0.14
+bottom_radius = 0.02
+radial_segments = 4
+
+[sub_resource type="ParticlesMaterial" id=43]
+emission_shape = 1
+emission_sphere_radius = 0.2
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.5
+initial_velocity_random = 1.0
+scale = 2.0
+scale_random = 1.0
+
+[sub_resource type="SpatialMaterial" id=39]
+flags_transparent = true
+params_blend_mode = 2
+params_cull_mode = 2
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 0.733333, 0.854902, 0.882353, 1 )
+albedo_texture = SubResource( 38 )
+emission_enabled = true
+emission = Color( 0.835294, 0.933333, 0.937255, 1 )
+emission_energy = 2.82
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="QuadMesh" id=44]
+resource_local_to_scene = true
+material = SubResource( 39 )
+size = Vector2( 0.1, 0.1 )
+
+[sub_resource type="CapsuleShape" id=45]
+radius = 0.143022
+height = 1.57025
+
+[node name="proton_missile" type="Area"]
+input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+monitoring = false
+monitorable = false
+script = ExtResource( 1 )
+speed = 0.7
+type = "AOE"
+spawner = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 12.0
+one_shot = true
+
+[node name="spawn_sound" type="Spatial" parent="."]
+script = ExtResource( 2 )
+volume_range = 2.0
+pitch_range = 0.2
+
+[node name="thud" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 3 )
+unit_size = 3.0
+max_distance = 1250.0
+bus = "FX"
+
+[node name="swish" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 4 )
+unit_db = -10.0
+unit_size = 3.0
+pitch_scale = 0.7
+max_distance = 500.0
+bus = "FX"
+
+[node name="boom" type="AudioStreamPlayer3D" parent="spawn_sound"]
+stream = ExtResource( 5 )
+unit_db = -7.0
+unit_size = 3.0
+pitch_scale = 0.3
+max_distance = 500.0
+bus = "FX"
+
+[node name="missile_root" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="missile_root"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -1.14504 )
+mesh = SubResource( 41 )
+material/0 = null
+
+[node name="Particles2" type="Particles" parent="missile_root"]
+transform = Transform( 0.4, 0, -1.40833e-15, 0, 0.4, 0, 1.40833e-15, 0, 0.4, 0, 0, -0.00560132 )
+amount = 30
+local_coords = false
+process_material = SubResource( 43 )
+draw_pass_1 = SubResource( 44 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="hurtbox" type="Area" parent="missile_root"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.08128 )
+input_ray_pickable = false
+gravity_vec = Vector3( 0, 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="missile_root/hurtbox"]
+shape = SubResource( 45 )
+
+[node name="OmniLight" type="OmniLight" parent="missile_root"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0506971 )
+light_energy = 1.76
+omni_range = 8.5
+omni_attenuation = 1.68179
+
+[connection signal="timeout" from="Timer" to="." method="remove"]
+[connection signal="area_entered" from="missile_root/hurtbox" to="." method="collision"]
+[connection signal="body_entered" from="missile_root/hurtbox" to="." method="collision"]

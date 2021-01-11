@@ -16,6 +16,7 @@ func spawn_projectile():
 	proj.translation = point
 	proj.parent = self
 	proj.friendly = true
+	proj.entity = parent
 	proj.damage = primary_damage
 	proj.get_node("spawn_sound").spawn_node = self
 	proj.dir = point.direction_to(parent.cast_to)
