@@ -362,6 +362,5 @@ stream = ExtResource( 12 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.8137, 0.581286, 0, -0.581286, -0.8137, 0, 0, 0 )
-
 [connection signal="pressed" from="Main/Middle/Divide/Menu/Play" to="Main" method="_on_Play_pressed"]
 [connection signal="pressed" from="Main/Middle/Divide/Menu/Quit" to="Main" method="_on_Quit_pressed"]
